@@ -1,7 +1,13 @@
 @extends('layouts.main')
 @section('content')
 <div class="row">
-    <div id="calendar"></div>
+    <div class="col-sm-12">
+        <div class="custom-panel">
+            <div class="custom-panel-heading">{{trans('app.leave.calendar.main')}}</div>
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('additionalCSS')

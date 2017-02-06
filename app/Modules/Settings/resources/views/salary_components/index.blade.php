@@ -18,6 +18,24 @@
                     <th>{{trans('app.settings.salary_components.is_cost')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.settings.salary_components.name')}}"/>
+                    </th>
+                    <th>
+                        {!! Form::select('contract_type_id', $contractTypes, null, ['placeholder' => trans('app.settings.salary_components.contract_type')]) !!}
+                    </th>
+                    <th>
+                        {!! Form::select('type', salary_component_types(), null, ['placeholder' => trans('app.settings.salary_components.type')]) !!}
+                    </th>
+                    <th>
+                        {!! Form::select('is_cost', [trans('app.no'), trans('app.yes')], null, ['placeholder' => trans('app.settings.salary_components.type')]) !!}
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -30,18 +48,31 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#positionsTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("settings.salary_components.datatable")}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "name" },
-                    { "aaData": "contract_type" },
-                    { "aaData": "type" },
-                    { "aaData": "is_cost" },
-                    { "aaData": "actions"}
-                ]
+        var table = $('#positionsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("settings.salary_components.datatable")}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'name'},
+                {data: 2, name: 'contract_type_id'},
+                {data: 3, name: 'type'},
+                {data: 4, name: 'is_cost'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+            $('select', this.footer()).on( 'change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

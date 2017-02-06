@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'HRM',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,13 +174,15 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -231,7 +233,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Datatables'=> Yajra\Datatables\Facades\Datatables::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

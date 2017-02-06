@@ -37,7 +37,8 @@ class EmployeeLeaveRequest extends FormRequest
             'user_id' => ['required'],
             'leave_type_id' => ['required'],
             'start_date' => ['required'],
-            'end_date' => ['required']
+            'end_date' => ['required'],
+            'attachment' => ['mimes:png,jpg,pdf,xls,xlsx,csv,txt']
         ];
     }
 
@@ -45,6 +46,10 @@ class EmployeeLeaveRequest extends FormRequest
     {
         $validator = parent::getValidatorInstance();
 
+        if($validator->errors()->any()) {
+            return $validator;
+        }
+        
         $validator->after(function($validator) {
 
             $available = $this->employeeLeaveRepository->checkAvailableDays(

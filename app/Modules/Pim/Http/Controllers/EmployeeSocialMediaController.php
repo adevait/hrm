@@ -33,7 +33,8 @@ class EmployeeSocialMediaController extends Controller
         $employee = $this->employeeRepository->getById($employeeId);
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         $accounts = $this->employeeSocialMediaRepository->getByMany(['user_id' => $employeeId])->get();
         return view('pim::employee_social_media.index', compact('breadcrumb', 'accounts'));
@@ -50,7 +51,8 @@ class EmployeeSocialMediaController extends Controller
         $employee = $this->employeeRepository->getById($employeeId);
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         return view('pim::employee_social_media.create', compact('breadcrumb'));
     }
@@ -95,7 +97,8 @@ class EmployeeSocialMediaController extends Controller
         $account = $this->employeeSocialMediaRepository->getById($id);
         $breadcrumb = [
             'parent_id' => $employee->id,
-            'parent_title' => $employee->first_name.' '.$employee->last_name, 
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role), 
             'id' => $account->id,
             'title' => get_account_name($account->type)
         ];

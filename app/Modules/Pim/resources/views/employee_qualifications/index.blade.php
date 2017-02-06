@@ -38,6 +38,24 @@
                     <th>{{trans('app.pim.employees.qualifications.work_experience.company_name')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.qualifications.work_experience.job_title')}}"/>
+                    </th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.pim.employees.qualifications.work_experience.start_date')}}"/>
+                    </th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.pim.employees.qualifications.work_experience.end_date')}}"/>
+                    </th>
+                    <th>
+                        {!! Form::select('company_id', $companies, null, ['placeholder' => trans('app.pim.employees.qualifications.work_experience.company_name')]) !!}
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -58,11 +76,26 @@
                     <th>{{trans('app.pim.employees.qualifications.education.institution')}}</th>
                     <th>{{trans('app.pim.employees.qualifications.education.major')}}</th>
                     <th>{{trans('app.pim.employees.qualifications.education.year')}}</th>
-                    <th>{{trans('app.pim.employees.qualifications.education.grade')}}</th>
-                    <th>{{trans('app.pim.employees.qualifications.education.start_date')}}</th>
-                    <th>{{trans('app.pim.employees.qualifications.education.end_date')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        {!! Form::select('type', education_types(), null, ['placeholder' => trans('app.pim.employees.qualifications.education.type')]) !!}
+                    </th>
+                    <th>
+                        {!! Form::select('education_institution_id', $education_institutions, null, ['placeholder' => trans('app.pim.employees.qualifications.education.institution')]) !!}
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.qualifications.education.major')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.qualifications.education.year')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -84,6 +117,21 @@
                     <th>{{trans('app.pim.employees.qualifications.languages.skill')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        {!! Form::select('language_id', $languages, null, ['placeholder' => trans('app.pim.employees.qualifications.languages.language')]) !!}
+                    </th>
+                    <th>
+                        {!! Form::select('level', language_levels(), null, ['placeholder' => trans('app.pim.employees.qualifications.languages.level')]) !!}
+                    </th>
+                    <th>
+                        {!! Form::select('skill', language_skills(), null, ['placeholder' => trans('app.pim.employees.qualifications.languages.skill')]) !!}
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -104,47 +152,86 @@
         })
 
         var qualificationsTable = $('#workExperienceTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("pim.employees.qualifications.work_experience.datatable", Route::input("employeeId"))}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "job_title" },
-                    { "aaData": "start_date" },
-                    { "aaData": "end_date" },
-                    { "aaData": "company" },
-                    { "aaData": "actions"}
-                ]
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("pim.employees.qualifications.work_experience.datatable", Route::input("employeeId"))}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'job_title'},
+                {data: 2, name: 'start_date'},
+                {data: 3, name: 'end_date'},
+                {data: 4, name: 'company_id'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+
+        qualificationsTable.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+            $('select', this.footer()).on( 'change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
 
         var educationTable = $('#educationTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("pim.employees.qualifications.education.datatable", Route::input("employeeId"))}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "type" },
-                    { "aaData": "education_institution_id" },
-                    { "aaData": "major" },
-                    { "aaData": "year" },
-                    { "aaData": "grade" },
-                    { "aaData": "start_date" },
-                    { "aaData": "end_date" },
-                    { "aaData": "actions"}
-                ]
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("pim.employees.qualifications.education.datatable", Route::input("employeeId"))}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'type'},
+                {data: 2, name: 'education_institution_id'},
+                {data: 3, name: 'major'},
+                {data: 4, name: 'year'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+
+        educationTable.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+            $('select', this.footer()).on( 'change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
 
         var languageTable = $('#languageTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("pim.employees.qualifications.languages.datatable", Route::input("employeeId"))}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "language_id" },
-                    { "aaData": "level" },
-                    { "aaData": "skill" },
-                    { "aaData": "actions"}
-                ]
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("pim.employees.qualifications.languages.datatable", Route::input("employeeId"))}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'language_id'},
+                {data: 2, name: 'level'},
+                {data: 3, name: 'skill'},
+                {data: 4, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+
+        languageTable.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+            $('select', this.footer()).on( 'change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

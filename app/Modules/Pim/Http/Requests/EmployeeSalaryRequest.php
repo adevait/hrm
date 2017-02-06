@@ -27,7 +27,8 @@ class EmployeeSalaryRequest extends FormRequest
         // $fields = $salaryComponentRepository->getAll();
         $rules = [
             'components' => ['required'],
-            'payment_date' => ['required']
+            'payment_date' => ['required'],
+            'attachment' => ['mimes:png,jpg,pdf,xls,xlsx,csv,txt']
         ];
 
         return $rules;

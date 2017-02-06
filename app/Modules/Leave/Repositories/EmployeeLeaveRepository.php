@@ -5,15 +5,15 @@ namespace App\Modules\Leave\Repositories;
 use App\Repositories\EloquentRepository;
 use App\Modules\Leave\Models\EmployeeLeave;
 use App\Modules\Leave\Repositories\Interfaces\EmployeeLeaveRepositoryInterface;
-use App\Modules\Leave\Repositories\Interfaces\EmployeeLeaveStatusRepositoryInterface as EmployeeLeaveStatusRepository;
-use App\Modules\Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface as LeaveTypeRepository;
+use App\Modules\Leave\Repositories\Interfaces\EmployeeLeaveStatusRepositoryInterface;
+use App\Modules\Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface;
 use Carbon\Carbon;
 
 class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeaveRepositoryInterface
 {
     public function __construct(EmployeeLeave $model,
-        EmployeeLeaveStatusRepository $employeeLeaveStatusRepository,
-        LeaveTypeRepository $leaveTypeRepository)
+        EmployeeLeaveStatusRepositoryInterface $employeeLeaveStatusRepository,
+        LeaveTypeRepositoryInterface $leaveTypeRepository)
     {
         $this->model = $model;
         $this->employeeLeaveStatusRepository = $employeeLeaveStatusRepository;
@@ -84,7 +84,6 @@ class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeav
 
     public function checkAvailableDays($userId, $leaveTypeId, $startDate, $endDate, $id = false)
     {
-        // to do: use exception
         // to do: difference in working days
         $leaveStatus = $this->employeeLeaveStatusRepository->getByMany(['user_id' => $userId, 'leave_type_id' => $leaveTypeId])->first();
         if($leaveStatus) {

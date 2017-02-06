@@ -35,11 +35,11 @@
                 </div>
                 <div class="col-md-3">
                     {!! Form::label('contract_type_id', trans('app.recruitment.reports.contract_type').':') !!}
-                    {!! Form::select('contract_type_id', $contractTypes, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('contract_type_id', $contractTypes, null, ['class' => 'form-control', 'placeholder' => trans('app.recruitment.reports.contract_type')]) !!}
                 </div>
                 <div class="col-md-3">
                     {!! Form::label('location', trans('app.recruitment.reports.location').':') !!}
-                    {!! Form::select('location', locations(), null, ['class' => 'form-control']) !!}
+                    {!! Form::select('location', locations(), null, ['class' => 'form-control', 'placeholder' => trans('app.recruitment.reports.location')]) !!}
                 </div>
             </div>
             <div class="row">
@@ -55,7 +55,7 @@
     <div class="col-sm-12">
         <div class="custom-panel">
             <div class="custom-panel-heading">{{trans('app.recruitment.reports.main')}}</div>
-            <table class="table table-bordered table-hover" id="companiesTable">
+            <table class="table table-bordered table-hover" id="recruitmentTable">
                 <thead>
                     <th>{{trans('app.recruitment.reports.first_name')}}</th>
                     <th>{{trans('app.recruitment.reports.last_name')}}</th>
@@ -87,22 +87,22 @@
             tags: true
         });
 
-        $('#companiesTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("recruitment.reports.datatable")}}?{!!$filter!!}',
-                "aoColumns": [
-                    { "aaData": "first_name" },
-                    { "aaData": "last_name" },
-                    { "aaData": "email" },
-                    { "aaData": "phone" },
-                    { "aaData": "skills" },
-                    { "aaData": "salary" },
-                    { "aaData": "contract_type" },
-                    { "aaData": "location" },
-                    { "aaData": "comments" },
-                    { "aaData": "actions" }
-                ]
+        var table = $('#recruitmentTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("recruitment.reports.datatable")}}?{!!$filter!!}',
+            columns: [
+                {data: 0, name: 'first_name'},
+                {data: 1, name: 'last_name'},
+                {data: 2, name: 'email'},
+                {data: 3, name: 'phone', sortable: false, searchable: false},
+                {data: 4, name: 'skills', sortable: false, searchable: false},
+                {data: 5, name: 'salary', sortable: false, searchable: false},
+                {data: 6, name: 'contract_type', sortable: false, searchable: false},
+                {data: 7, name: 'location', sortable: false, searchable: false},
+                {data: 8, name: 'comments', sortable: false, searchable: false},
+                {data: 9, name: 'actions', sortable: false, searchable: false}
+            ]
         });
     });
 </script>

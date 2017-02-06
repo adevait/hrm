@@ -32,7 +32,7 @@ class EmployeeLanguagesController extends Controller
      */
     public function getDatatable($employeeId)
     {
-        return Datatables::of($this->employeeLanguageRepository->getQry([
+        return Datatables::of($this->employeeLanguageRepository->getCollection([
             [
                 'key' => 'user_id', 
                 'operator' => '=', 
@@ -75,7 +75,8 @@ class EmployeeLanguagesController extends Controller
         $employee = $this->employeeRepository->getById($employeeId);
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         $languages = $languageRepository->pluck('name','id');
         return view('pim::employee_qualifications.languages.create', compact('breadcrumb', 'languages'));
@@ -124,6 +125,7 @@ class EmployeeLanguagesController extends Controller
         $breadcrumb = [
             'parent_id' => $employeeId, 
             'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role),
             'id' => $id,
             'title' => $language->language->name
         ];

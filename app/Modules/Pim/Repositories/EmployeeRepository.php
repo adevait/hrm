@@ -17,21 +17,17 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
         $this->model = $model;
     }
 
-    public function getQry($filter = array(), $columns = [])
+    public function getAll()
     {
-        $response = $this->model->whereNull('deleted_at');
+        return $this->model->where('role', $this->model::USER_ROLE_EMPLOYEE)->get();
+    }
 
-        foreach ($filter as $key => $value) {
-            $response->where($value['key'], $value['operator'], $value['value']);
-        }
+    public function pluckName()
+    {
+        return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))
+            ->where('role', $this->model::USER_ROLE_EMPLOYEE)
+            ->pluck('name','id');
 
-        if ($columns) {
-            return $response->select($columns);
-        }
-
-        $response = $response->get();
-
-        return $response;
     }
 
     public function getSelect2Data($filter = '', $offset = 0, $limit = 10)

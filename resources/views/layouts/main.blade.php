@@ -3,7 +3,7 @@
 <head>
   @include('includes.head')
 </head>
-<body style="z-index:-1; background-color: #f6f6f6 ">
+<body style="z-index:-1;background-color: #f6f6f6">
     @include('includes.header')
 
     <div class="container">

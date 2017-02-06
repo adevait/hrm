@@ -73,7 +73,7 @@ class ReportsController extends Controller
 
     public function show($id)
     {
-        $candidate = $this->candidateRepository->getById($id);
+        $candidate = $this->reportRepository->getById($id);
         $breadcrumb = ['title' => $candidate->first_name.' '.$candidate->last_name, 'id' => $candidate->id];
         return view('recruitment::reports.show', compact('candidate', 'breadcrumb'));
     }

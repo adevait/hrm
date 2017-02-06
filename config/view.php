@@ -19,6 +19,8 @@ return [
         realpath(base_path('app/Modules/Settings/resources/views')),
         realpath(base_path('app/Modules/Leave/resources/views')),
         realpath(base_path('app/Modules/Recruitment/resources/views')),
+        realpath(base_path('app/Modules/Discipline/resources/views')),
+        realpath(base_path('app/Modules/Time/resources/views')),
     ],
 
     /*

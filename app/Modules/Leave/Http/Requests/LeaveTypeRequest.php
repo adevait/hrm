@@ -24,7 +24,10 @@ class LeaveTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required']
+            'name' => ['required'],
+            'available_days' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
         ];
     }
 }

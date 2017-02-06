@@ -17,6 +17,21 @@
                     <th>{{trans('app.pim.employees.salaries.payment_date')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.salaries.gross_total')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.salaries.nett_total')}}"/>
+                    </th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.pim.employees.salaries.payment_date')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -29,17 +44,25 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#salariesTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("pim.employees.salaries.datatable", Route::input("employeeId"))}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "gross_total" },
-                    { "aaData": "nett_total" },
-                    { "aaData": "payment_date" },
-                    { "aaData": "actions"}
-                ]
+        var table = $('#salariesTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("pim.employees.salaries.datatable", Route::input("employeeId"))}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'gross_total'},
+                {data: 2, name: 'nett_total'},
+                {data: 3, name: 'payment_date'},
+                {data: 4, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

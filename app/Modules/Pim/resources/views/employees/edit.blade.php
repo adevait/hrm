@@ -16,28 +16,29 @@
             <div class="custom-panel-heading">{{trans('app.pim.employees.additional')}}</div>
             <div class="clearfix">
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="nav-box">
-                        <h2><a href="{{route('pim.employees.social_media.index', $employee->id)}}">{{trans('app.pim.employees.external_accounts.main')}}</a></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-                    </div>
+                    <a class="nav-box" href="{{route('pim.employees.social_media.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.employees.external_accounts.main')}}</h2>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="nav-box">
-                        <h2><a href="{{route('pim.employees.contact_details.index', $employee->id)}}">{{trans('app.pim.employees.contact_details.main')}}</a></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-                    </div>
+                    <a class="nav-box" href="{{route('pim.employees.contact_details.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.employees.contact_details.main')}}</h2>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="nav-box">
-                        <h2><a href="{{route('pim.employees.qualifications.index', $employee->id)}}">{{trans('app.pim.employees.qualifications.main')}}</a></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-                    </div>
+                    <a class="nav-box" href="{{route('pim.employees.qualifications.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.employees.qualifications.main')}}</h2>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="nav-box">
-                        <h2><a href="{{route('pim.employees.salaries.index', $employee->id)}}">{{trans('app.pim.employees.salaries.main')}}</a></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-                    </div>
+                    <a class="nav-box" href="{{route('pim.employees.salaries.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.employees.salaries.main')}}</h2>
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a class="nav-box" href="{{route('pim.employees.documents.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.employees.documents.main')}}</h2>
+                    </a>
                 </div>
             </div>
         </div>

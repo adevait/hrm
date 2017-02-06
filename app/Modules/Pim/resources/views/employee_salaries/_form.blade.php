@@ -12,6 +12,19 @@
         {!! Form::input('date','payment_date', null, ['class' => 'form-control']) !!}
     </div>
 </div>
+<div class="form-group">
+    {!! Form::label('attachment', trans('app.pim.employees.salaries.attachment').':', ['class' => 'col-sm-3']) !!}
+    <div class="col-sm-6">
+        {!! Form::input('file', 'attachment', null, ['class' => 'form-control']) !!}
+    </div>
+</div>
+@if(@$salary->attachment)
+<div class="form-group">
+    <div class="col-sm-6 col-sm-offset-3">
+        <a href="{{route('storage',$salary->attachment)}}">{{trans('app.pim.employees.salaries.attachment')}}</a>
+    </div>
+</div>
+@endif
 @include('errors._form-errors')
 <hr>
 <div class="form-group">

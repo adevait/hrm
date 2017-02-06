@@ -2,16 +2,17 @@
 @section('content')
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('pim.employees.index')}}">{{trans('app.pim.employees.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a class="nav-box" href="{{route('pim.employees.index')}}">
+            <h2>{{trans('app.pim.employees.main')}}</h2>
+        </a>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('pim.candidates.index')}}">{{trans('app.pim.candidates.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a class="nav-box" href="{{route('pim.candidates.index')}}">
+            <h2>{{trans('app.pim.candidates.main')}}</h2>
+        </a>
     </div>
 </div>
+@endsection
+@section('additionalCSS')
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endsection

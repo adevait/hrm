@@ -18,6 +18,22 @@
                     <th>{{trans('app.leave.leave_types.end_date')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.leave.leave_types.name')}}"/>
+                    </th>
+                    <th></th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.leave.leave_types.start_date')}}"/>
+                    </th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.leave.leave_types.end_date')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -30,18 +46,26 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#leaveTypesTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("leave.leave_types.datatable")}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "name" },
-                    { "aaData": "available_days" },
-                    { "aaData": "start_date" },
-                    { "aaData": "end_date" },
-                    { "aaData": "actions"}
-                ]
+        var table = $('#leaveTypesTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("leave.leave_types.datatable")}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'name'},
+                {data: 2, name: 'available_days', sortable: false, searchable: false},
+                {data: 3, name: 'start_date'},
+                {data: 4, name: 'end_date'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

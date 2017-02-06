@@ -33,7 +33,8 @@ class EmployeeContactDetailsController extends Controller
         $contactDetails = $this->employeecontactDetailsRepository->getByMany(['user_id' => $employeeId])->first();
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         if($contactDetails) {
             return view('pim::employee_contact_details.edit', compact('breadcrumb', 'contactDetails'));

@@ -17,6 +17,21 @@
                     <th>{{trans('app.pim.employees.email')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.first_name')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.last_name')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.email')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -31,16 +46,24 @@
     $(document).ready(function(){
         
         var table = $('#employeesTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("pim.candidates.datatable")}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "first_name" },
-                    { "aaData": "last_name" },
-                    { "aaData": "email" },
-                    { "aaData": "actions"}
-                ]
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("pim.candidates.datatable")}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'first_name'},
+                {data: 2, name: 'last_name'},
+                {data: 3, name: 'email'},
+                {data: 4, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

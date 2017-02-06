@@ -32,7 +32,7 @@ class EmployeeEducationController extends Controller
      */
     public function getDatatable($employeeId)
     {
-        return Datatables::of($this->employeeEducationRepository->getQry([
+        return Datatables::of($this->employeeEducationRepository->getCollection([
             [
                 'key' => 'user_id', 
                 'operator' => '=', 
@@ -43,9 +43,6 @@ class EmployeeEducationController extends Controller
                 'education_institution_id', 
                 'major',
                 'year',
-                'grade',
-                'start_date',
-                'end_date',
                 'user_id'
             ]))
             ->editColumn('type', function($education) {
@@ -76,7 +73,8 @@ class EmployeeEducationController extends Controller
         $employee = $this->employeeRepository->getById($employeeId);
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         $institutions = $educationInstitutionRepository->pluck('name','id');
         return view('pim::employee_qualifications.education.create', compact('breadcrumb', 'institutions'));
@@ -126,6 +124,7 @@ class EmployeeEducationController extends Controller
         $breadcrumb = [
             'parent_id' => $employeeId, 
             'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role),
             'id' => $id,
             'title' => $education->major.' at '.$institutions[$education->education_institution_id]
         ];

@@ -15,6 +15,15 @@
                     <th>{{trans('app.settings.languages.name')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.settings.languages.name')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -27,15 +36,23 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#languagesTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("settings.languages.datatable")}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "name" },
-                    { "aaData": "actions"}
-                ]
+        var table = $('#languagesTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("settings.languages.datatable")}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'name'},
+                {data: 2, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

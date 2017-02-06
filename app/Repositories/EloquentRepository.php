@@ -74,7 +74,7 @@ class EloquentRepository
     {
         $model = ($withTrashed ? $this->model->withTrashed() : $this->model);
 
-        return $model->find($id);
+        return $model->findOrFail($id);
     }
 
     /**
@@ -323,7 +323,7 @@ class EloquentRepository
     }
 
     /**
-     * Datatables. 
+     * Datatables query. 
      * 
      * @param  [type] $filter [description]
      * 
@@ -338,6 +338,30 @@ class EloquentRepository
         if($columns) {
             $response->select($columns);
         }
+        return $response;
+    }
+
+    /**
+     * Datatables collection. 
+     * 
+     * @param  [type] $filter [description]
+     * 
+     * @return [type]         [description]
+     */
+    public function getCollection($filter = array(), $columns = [])
+    {
+        $response = $this->model->whereNull('deleted_at');
+
+        foreach ($filter as $key => $value) {
+            $response->where($value['key'], $value['operator'], $value['value']);
+        }
+
+        if ($columns) {
+            return $response->select($columns);
+        }
+
+        $response = $response->get();
+
         return $response;
     }
 

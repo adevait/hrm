@@ -36,7 +36,8 @@ class EmployeePreferencesController extends Controller
         $contractTypes = $contractTypeRepository->getAll()->pluck('name', 'id');
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         if($preference) {
             return view('pim::employee_preferences.edit', compact('breadcrumb', 'preference', 'contractTypes'));

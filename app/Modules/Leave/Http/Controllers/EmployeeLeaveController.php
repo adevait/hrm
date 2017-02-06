@@ -21,31 +21,31 @@ class EmployeeLeaveController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * 
+     * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
+     * @param  \App\Modules\Pim\Repositories\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
-        return view('leave::employee_leaves.index');
+        $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
+        $employees = $employeeRepository->pluckName();
+        return view('leave::employee_leaves.index', compact('leaveTypes','employees'));
     }
 
     /**
      * Returns data for the resource list
      * 
-     * @param  \App\Modules\Pim\Repositories\EmployeeRepository  $employeeRepository
-     * @param  \App\Modules\Pim\Repositories\LeaveTypeRepository  $leaveTypeRepository
      * @return \Illuminate\Http\Response
      */
-    public function getDatatable(EmployeeRepository $employeeRepository, LeaveTypeRepository $leaveTypeRepository)
+    public function getDatatable()
     {
-        return Datatables::of($this->employeeLeaveRepository->getQry([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date']))
-            ->editColumn('user_id', function($leave) use ($employeeRepository) {
-                $employee = $employeeRepository->getById($leave->user_id);
-                return $employee->first_name.' '.$employee->last_name;
+        return Datatables::of($this->employeeLeaveRepository->getCollection([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date']))
+            ->editColumn('user_id', function($leave) {
+                return $leave->employee->first_name.' '.$leave->employee->last_name;
             })
-            ->editColumn('leave_type_id', function($leave) use ($leaveTypeRepository) {
-                $leaveType = $leaveTypeRepository->getById($leave->leave_type_id);
-                return $leaveType->name;
+            ->editColumn('leave_type_id', function($leave) {
+                return $leave->leave_type->name;
             })
             ->addColumn('actions', function($leave){
                 return view('includes._datatable_actions', [
@@ -60,12 +60,14 @@ class EmployeeLeaveController extends Controller
      * Show the form for creating a new resource.
      *
      * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
+     * @param  \App\Modules\Pim\Repositories\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function create(LeaveTypeRepository $leaveTypeRepository)
+    public function create(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
-        return view('leave::employee_leaves.create', compact('leaveTypes'));
+        $employees = $employeeRepository->pluckName();
+        return view('leave::employee_leaves.create', compact('leaveTypes', 'employees'));
     }
 
     /**
@@ -76,10 +78,12 @@ class EmployeeLeaveController extends Controller
      */
     public function store(EmployeeLeaveRequest $request)
     {
-        // to do: if the leave type has day limit, the end date should be required, otherwise not.
-        // to do: check if dates enter the leave type dates
-        // Adjust the request accordingly
-        $employeeLeaveData = $this->employeeLeaveRepository->create($request->all());
+        $employeeLeaveData = $request->all();
+        if($request->hasFile('attachment')) {
+            $path = $request->attachment->store('uploads/leaves');
+            $employeeLeaveData['attachment'] = $path;
+        }
+        $employeeLeaveData = $this->employeeLeaveRepository->create($employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         return redirect()->route('leave.employee_leaves.edit', $employeeLeaveData->id)->with('success', trans('app.leave.employee_leaves.store_success'));
     }
@@ -100,14 +104,16 @@ class EmployeeLeaveController extends Controller
      *
      * @param  integer  unique identifier for the resource
      * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
+     * @param  \App\Modules\Pim\Repositories\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, LeaveTypeRepository $leaveTypeRepository)
+    public function edit($id, LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
         $employeeLeave = $this->employeeLeaveRepository->getById($id);
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $breadcrumb = ['title' => '#'.$employeeLeave->id, 'id' => $employeeLeave->id];
-        return view('leave::employee_leaves.edit', compact('employeeLeave', 'leaveTypes', 'breadcrumb'));
+        $employees = $employeeRepository->pluckName();
+        return view('leave::employee_leaves.edit', compact('employeeLeave', 'leaveTypes', 'breadcrumb','employees'));
     }
 
     /**
@@ -121,7 +127,12 @@ class EmployeeLeaveController extends Controller
     {
         $employeeLeaveData = $this->employeeLeaveRepository->getById($id);
         $this->employeeLeaveRepository->deleteUsedDays($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
-        $employeeLeaveData = $this->employeeLeaveRepository->update($id, $request->all());
+        $employeeLeaveData = $request->all();
+        if($request->hasFile('attachment')) {
+            $path = $request->attachment->store('uploads/leaves');
+            $employeeLeaveData['attachment'] = $path;
+        }
+        $employeeLeaveData = $this->employeeLeaveRepository->update($id, $employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $request->session()->flash('success', trans('app.leave.employee_leaves.update_success'));
         return redirect()->route('leave.employee_leaves.edit', $employeeLeaveData->id);

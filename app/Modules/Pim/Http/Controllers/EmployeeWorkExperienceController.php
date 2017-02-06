@@ -32,7 +32,7 @@ class EmployeeWorkExperienceController extends Controller
      */
     public function getDatatable($employeeId)
     {
-        return Datatables::of($this->employeeWorkExperienceRepository->getQry([
+        return Datatables::of($this->employeeWorkExperienceRepository->getCollection([
             [
                 'key' => 'user_id', 
                 'operator' => '=', 
@@ -70,7 +70,8 @@ class EmployeeWorkExperienceController extends Controller
         $employee = $this->employeeRepository->getById($employeeId);
         $breadcrumb = [
             'parent_id' => $employeeId, 
-            'parent_title' => $employee->first_name.' '.$employee->last_name
+            'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role)
         ];
         $companies = $companyRepository->pluck('name','id');
         return view('pim::employee_qualifications.work_experience.create', compact('breadcrumb', 'companies'));
@@ -119,6 +120,7 @@ class EmployeeWorkExperienceController extends Controller
         $breadcrumb = [
             'parent_id' => $employeeId, 
             'parent_title' => $employee->first_name.' '.$employee->last_name,
+            'parent_type' => get_user_role($employee->role),
             'id' => $id,
             'title' => $experience->job_title.' at '.$companies[$experience->company_id]
         ];

@@ -21,11 +21,13 @@ class SalaryComponentsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Modules\Settings\Repositories\Interfaces\ContractTypeRepositoryInterface  $contractTypeRepository
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ContractTypeRepository $contractTypeRepository)
     {
-        return view('settings::salary_components.index');
+        $contractTypes = $contractTypeRepository->getAll()->pluck('name','id');
+        return view('settings::salary_components.index', compact('contractTypes'));
     }
 
     /**
@@ -35,7 +37,7 @@ class SalaryComponentsController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->salaryComponentsRepository->getQry([], ['id', 'name', 'contract_type_id', 'type', 'is_cost']))
+        return Datatables::of($this->salaryComponentsRepository->getCollection([], ['id', 'name', 'contract_type_id', 'type', 'is_cost']))
             ->editColumn('contract_type_id', function($record) {
                 return $record->contractType->name;
             })

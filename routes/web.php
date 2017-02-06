@@ -12,11 +12,24 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'admin']);
 
-Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+Route::get('/storage/{path}', function($path) {
+    return response()->file(storage_path().'/app/'.$path);
+})->name('storage')->where('path','(.*)')->middleware(['auth', 'admin']);
+
+Route::resource('profile', '\App\Http\Controllers\ProfileController', 
+    [
+        'middleware' => ['auth', 'admin'], 
+        'only' => ['index', 'store'],
+        'names' => [
+            'index' => 'profile.index',
+            'store' => 'profile.store',
+        ]
+    ]
+);
+
+Route::group(['prefix' => 'settings', 'as' => 'settings.', 'middleware' => ['auth', 'admin']], function () {
 
     Route::get('/', function() {
         return view('settings::index');
@@ -46,6 +59,19 @@ Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
         'store' => 'contract_types.store',
         'update' => 'contract_types.update',
         'destroy' => 'contract_types.destroy'
+    ]]);
+
+    Route::get('document-templates/datatable', '\App\Modules\Settings\Http\Controllers\DocumentTemplatesController@getDatatable')
+        ->name('document_templates.datatable');
+    
+    Route::resource('document-templates', '\App\Modules\Settings\Http\Controllers\DocumentTemplatesController', ['names' => [
+        'index' => 'document_templates.index',
+        'create' => 'document_templates.create',
+        'show' => 'document_templates.show',
+        'edit' => 'document_templates.edit',
+        'store' => 'document_templates.store',
+        'update' => 'document_templates.update',
+        'destroy' => 'document_templates.destroy'
     ]]);
 
     Route::get('education-institutions/datatable', '\App\Modules\Settings\Http\Controllers\EducationInstitutionsController@getDatatable')
@@ -101,7 +127,7 @@ Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
     ]]);
 });
 
-Route::group(['prefix' => 'pim', 'as' => 'pim.'], function() {
+Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin']], function() {
 
     Route::get('/', function() {
         return view('pim::index');
@@ -147,6 +173,25 @@ Route::group(['prefix' => 'pim', 'as' => 'pim.'], function() {
             'store' => 'social_media.store',
             'update' => 'social_media.update',
             'destroy' => 'social_media.destroy'
+        ]]);  
+
+        Route::get('documents/datatable', '\App\Modules\Pim\Http\Controllers\EmployeeDocumentsController@getDatatable')
+        ->name('documents.datatable');
+
+        Route::get('documents/generate', '\App\Modules\Pim\Http\Controllers\EmployeeDocumentsController@generate')
+        ->name('documents.generate');
+
+        Route::post('documents/template-content', '\App\Modules\Pim\Http\Controllers\EmployeeDocumentsController@generateTemplateContent')
+        ->name('documents.template_content');
+        
+        Route::resource('documents', '\App\Modules\Pim\Http\Controllers\EmployeeDocumentsController', ['names' => [
+            'index' => 'documents.index',
+            'create' => 'documents.create',
+            'show' => 'documents.show',
+            'edit' => 'documents.edit',
+            'store' => 'documents.store',
+            'update' => 'documents.update',
+            'destroy' => 'documents.destroy'
         ]]);  
 
         Route::resource('contact-details', '\App\Modules\Pim\Http\Controllers\EmployeeContactDetailsController', [
@@ -250,7 +295,7 @@ Route::group(['prefix' => 'pim', 'as' => 'pim.'], function() {
     });  
 });
 
-Route::group(['prefix' => 'leave', 'as' => 'leave.'], function() {
+Route::group(['prefix' => 'leave', 'as' => 'leave.', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/', function() {
         return view('leave::index');
     })->name('index');
@@ -298,7 +343,7 @@ Route::group(['prefix' => 'leave', 'as' => 'leave.'], function() {
     Route::get('render-calendar', '\App\Modules\Leave\Http\Controllers\CalendarController@renderCalendar')->name('calendar.render');
 });
 
-Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.'], function() {
+Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/', function() {
         return view('recruitment::index');
     })->name('index');
@@ -316,3 +361,66 @@ Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.'], function() {
         'destroy' => 'reports.destroy'
     ]]);
 });
+
+Route::group(['prefix' => 'discipline', 'as' => 'discipline.', 'middleware' => ['auth', 'admin']], function() {
+    Route::get('/', function() {
+        return view('discipline::index');
+    })->name('index');
+
+    Route::get('disciplinary-cases/datatable', '\App\Modules\Discipline\Http\Controllers\DisciplinaryCasesController@getDatatable')
+        ->name('disciplinary_cases.datatable');
+
+    Route::resource('disciplinary-cases', '\App\Modules\Discipline\Http\Controllers\DisciplinaryCasesController', ['names' => [
+        'index' => 'disciplinary_cases.index',
+        'create' => 'disciplinary_cases.create',
+        'show' => 'disciplinary_cases.show',
+        'edit' => 'disciplinary_cases.edit',
+        'store' => 'disciplinary_cases.store',
+        'update' => 'disciplinary_cases.update',
+        'destroy' => 'disciplinary_cases.destroy'
+    ]]);
+});
+
+Route::group(['prefix' => 'time', 'as' => 'time.', 'middleware' => ['auth', 'admin']], function() {
+    Route::get('/', function() {
+        return view('time::index');
+    })->name('index');
+
+    Route::get('clients/datatable', '\App\Modules\Time\Http\Controllers\ClientsController@getDatatable')
+        ->name('clients.datatable');
+    Route::resource('clients', '\App\Modules\Time\Http\Controllers\ClientsController', ['names' => [
+        'index' => 'clients.index',
+        'create' => 'clients.create',
+        'show' => 'clients.show',
+        'edit' => 'clients.edit',
+        'store' => 'clients.store',
+        'update' => 'clients.update',
+        'destroy' => 'clients.destroy'
+    ]]);
+
+    Route::get('projects/datatable', '\App\Modules\Time\Http\Controllers\ProjectsController@getDatatable')
+        ->name('projects.datatable');
+    Route::resource('projects', '\App\Modules\Time\Http\Controllers\ProjectsController', ['names' => [
+        'index' => 'projects.index',
+        'create' => 'projects.create',
+        'show' => 'projects.show',
+        'edit' => 'projects.edit',
+        'store' => 'projects.store',
+        'update' => 'projects.update',
+        'destroy' => 'projects.destroy'
+    ]]);
+
+    Route::get('time-logs/datatable', '\App\Modules\Time\Http\Controllers\TimeLogsController@getDatatable')
+        ->name('time_logs.datatable');
+    Route::resource('time-logs', '\App\Modules\Time\Http\Controllers\TimeLogsController', ['names' => [
+        'index' => 'time_logs.index',
+        'create' => 'time_logs.create',
+        'show' => 'time_logs.show',
+        'edit' => 'time_logs.edit',
+        'store' => 'time_logs.store',
+        'update' => 'time_logs.update',
+        'destroy' => 'time_logs.destroy'
+    ]]);
+});
+
+Auth::routes();

@@ -2,28 +2,27 @@
 @section('content')
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('leave.leave_types.index')}}">{{trans('app.leave.leave_types.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a href="{{route('leave.leave_types.index')}}" class="nav-box">
+            <h2>{{trans('app.leave.leave_types.main')}}</h2>
+        </a>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('leave.employee_leaves.index')}}">{{trans('app.leave.employee_leaves.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a href="{{route('leave.employee_leaves.index')}}" class="nav-box">
+            <h2>{{trans('app.leave.employee_leaves.main')}}</h2>
+        </a>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('leave.holidays.index')}}">{{trans('app.leave.holidays.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a href="{{route('leave.holidays.index')}}" class="nav-box">
+            <h2>{{trans('app.leave.holidays.main')}}</h2>
+        </a>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-6">
-        <div class="nav-box">
-            <h2><a href="{{route('leave.calendar.index')}}">{{trans('app.leave.calendar.main')}}</a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque vel temporibus sapiente enim tempora dolores excepturi maxime, repellendus, et tenetur fuga eaque nemo, mollitia adipisci veritatis praesentium nisi neque in.</p>
-        </div>
+        <a href="{{route('leave.calendar.index')}}" class="nav-box">
+            <h2>{{trans('app.leave.calendar.main')}}</h2>
+        </a>
     </div>
 </div>
+@endsection
+@section('additionalCSS')
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endsection

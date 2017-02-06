@@ -113,6 +113,19 @@ function get_location_name($location)
     return @$locations[$location];
 }
 
+function document_template_types()
+{
+    return [
+        App\Modules\Settings\Models\DocumentTemplate::TYPE_PIM => trans('app.settings.document_templates.types.pim')
+    ];
+}
+
+function get_document_template_type($type)
+{
+    $document_template_types = document_template_types();
+    return @$document_template_types[$type];
+}
+
 function gender($gender) 
 {
     $genders = [
@@ -125,4 +138,30 @@ function gender($gender)
 function format_price($price)
 {
     return 'EUR '.$price;
+}
+
+function template_toolbar()
+{
+    $toolbar = [
+        'employee.first_name' => 'first_name',
+        'employee.last_name' => 'last_name',
+        'employee.email' => 'email',
+        'employee.birth_date' => 'birth_date'
+    ];
+    return $toolbar;
+}
+
+function display_storage_path($path)
+{
+    return '/storage/'.trim($path, '/');
+}
+
+function get_user_role($role) 
+{
+    $roles = [
+        App\User::USER_ROLE_CANDIDATE => 'candidate',
+        App\User::USER_ROLE_EMPLOYEE => 'employee',
+        App\User::USER_ROLE_ADMIN => 'admin'
+    ];
+    return @$roles[$role];
 }

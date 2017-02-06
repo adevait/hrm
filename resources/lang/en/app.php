@@ -28,8 +28,20 @@ return [
     'proceed_question' => 'Are you sure you want to proceed with this action?',
     'yes' => 'Yes',
     'no' => 'No',
+    'toggle_nav' => 'Toggle navigation',
+    'current' => 'current',
+    'login' => 'Login',
+    'logout' => 'Logout',
+    'home' => 'Home',
+
+    'profile' => [
+        'main' => 'Profile',
+        'update' => 'Update profile details',
+        'update_success' => 'Profile details were successfully updated.',
+    ],
 
     'settings' => [
+        'main' => 'Settings',
         'companies' => [
             'main' => 'Companies',
             'add_new' => 'Add company',
@@ -47,6 +59,23 @@ return [
             'store_success' => 'The contract type was successfully added.',
             'update_success' => 'The contract type was successfully updated.',
             'delete_success' => 'The contract type was successfully removed.',
+        ],
+        'document_templates' => [
+            'main' => 'Document templates',
+            'add_new' => 'Add document template',
+            'edit_details' => 'Edit document template',
+            'name' => 'Name',
+            'template' => 'Template',
+            'type' => 'Type',
+            'types' => [
+                'pim' => 'PIM',
+                'leave' => 'Leave',
+                'recruitment' => 'Recruitment',
+                'discipline' => 'Discipline'
+            ],
+            'store_success' => 'The document template was successfully added.',
+            'update_success' => 'The document template was successfully updated.',
+            'delete_success' => 'The document template was successfully removed.',
         ],
         'education_institutions' => [
             'main' => 'Education Institutions',
@@ -95,6 +124,7 @@ return [
         ]
     ],
     'pim' => [
+        'main' => 'PIM',
         'employees' => [
             'main' => 'Employees',
             'add_new' => 'Add employee',
@@ -122,6 +152,22 @@ return [
                 'store_success' => 'The external account was successfully added.',
                 'update_success' => 'The external account details were successfully updated.',
                 'delete_success' => 'The external account was successfully removed.',
+            ],
+            'documents' => [
+                'main' => 'Documents',
+                'add_new' => 'Add new document',
+                'edit_details' => 'Edit document',
+                'name' => 'Name',
+                'description' => 'Description',
+                'attachment' => 'Attachment',
+                'generate' => 'Generate from template',
+                'templates' => [
+                    'document' => 'Document',
+                ],
+                'btn_generate' => 'Generate',
+                'store_success' => 'The document was successfully added.',
+                'update_success' => 'The document was successfully updated.',
+                'delete_success' => 'The document was successfully removed.',
             ],
             'contact_details' => [
                 'main' => 'Contact details',
@@ -209,6 +255,8 @@ return [
                 'gross_total' => 'Gross total',
                 'nett_total' => 'Nett total',
                 'payment_date' => 'Payment date',
+                'attachment' => 'Attachment',
+                'attachmed_file' => 'Attached file',
                 'store_success' => 'The salary record was successfully added.',
                 'update_success' => 'The salary details were successfully updated.',
                 'delete_success' => 'The salary record was successfully removed.',
@@ -241,6 +289,8 @@ return [
         ]
     ],
     'leave' => [
+        'main' => 'Leave',
+        'weekly_summary' => 'Weekly summary',
         'leave_types' => [
             'main' => 'Leave types',
             'add_new' => 'Add leave type',
@@ -264,6 +314,7 @@ return [
             'store_success' => 'Leave was successfully assigned.',
             'update_success' => 'Leave was successfully updated.',
             'delete_success' => 'Leave was successfully deleted.',
+            'attachment' => 'Attachment',
             'error_no_available_days' => 'The leave request exceeds the total available days. There are :days days left.',
         ],
         'holidays' => [
@@ -277,7 +328,7 @@ return [
             'delete_success' => 'Holiday successfully deleted.',
         ],
         'calendar' => [
-            'main' => 'Calendar',
+            'main' => 'Leave Calendar',
         ]
     ],
     'recruitment' => [
@@ -302,6 +353,58 @@ return [
             'show' => [
                 'personal_details' => 'Personal details',
             ]
+        ]
+    ],
+    'discipline' => [
+        'main' => 'Discipline',
+        'disciplinary_cases' => [
+            'main' => 'Disciplinary cases',
+            'name' => 'Name',
+            'description' => 'Description',
+            'employee' => 'Employee',
+            'add_new' => 'Add disciplinary case',
+            'edit_details' => 'Edit disciplinary case',
+            'store_success' => 'Disciplinary case was successfully added.',
+            'update_success' => 'Disciplinary case was successfully updated.',
+            'delete_success' => 'Disciplinary case was successfully deleted.',
+        ]
+    ],
+    'time' => [
+        'main' => 'Time',
+        'clients' => [
+            'main' => 'Clients',
+            'name' => 'Name',
+            'description' => 'Description',
+            'add_new' => 'Add client',
+            'edit_details' => 'Edit client',
+            'store_success' => 'Client was successfully added.',
+            'update_success' => 'Client was successfully updated.',
+            'delete_success' => 'Client was successfully deleted.',
+        ],
+        'projects' => [
+            'main' => 'Projects',
+            'name' => 'Name',
+            'description' => 'Description',
+            'client' => 'Client',
+            'add_new' => 'Add project',
+            'edit_details' => 'Edit project',
+            'store_success' => 'Project was successfully added.',
+            'update_success' => 'Project was successfully updated.',
+            'delete_success' => 'Project was successfully deleted.',
+        ],
+        'time_logs' => [
+            'main' => 'Time logs',
+            'task_name' => 'Task  name',
+            'task_description' => 'Task description',
+            'project' => 'Project',
+            'employee' => 'Employee',
+            'time' => 'Spent time',
+            'date' => 'Date',
+            'add_new' => 'Add time log',
+            'edit_details' => 'Edit time log',
+            'store_success' => 'Time log was successfully added.',
+            'update_success' => 'Time log was successfully updated.',
+            'delete_success' => 'Time log was successfully deleted.',
         ]
     ]
 ];

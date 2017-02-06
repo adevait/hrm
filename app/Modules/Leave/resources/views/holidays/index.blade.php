@@ -16,6 +16,18 @@
                     <th>{{trans('app.leave.holidays.date')}}</th>
                     <th></th>
                 </thead>
+                <tfoot>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.id')}}"/>
+                    </th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.leave.holidays.name')}}"/>
+                    </th>
+                    <th>
+                        <input type="date" placeholder="{{trans('app.leave.holidays.date')}}"/>
+                    </th>
+                    <th></th>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -28,16 +40,24 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#holidaysTable').DataTable({
-                "bServerSide": true,
-                "bProcessing": true,
-                "sAjaxSource": '{{ route("leave.holidays.datatable")}}',
-                "aoColumns": [
-                    { "aaData": "id" },
-                    { "aaData": "name" },
-                    { "aaData": "date" },
-                    { "aaData": "actions"}
-                ]
+        var table = $('#holidaysTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route("leave.holidays.datatable")}}',
+            columns: [
+                {data: 0, name: 'id'},
+                {data: 1, name: 'name'},
+                {data: 2, name: 'date'},
+                {data: 3, name: 'actions', sortable: false, searchable: false}
+            ]
+        });
+        table.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on( 'keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
         });
     });
 </script>

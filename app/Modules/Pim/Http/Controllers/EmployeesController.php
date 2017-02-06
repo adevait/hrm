@@ -34,23 +34,9 @@ class EmployeesController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->employeeRepository->getQry(
+        return Datatables::of($this->employeeRepository->getCollection(
                 [['key' => 'role', 'operator' => '=', 'value' => $this->employeeRepository->model::USER_ROLE_EMPLOYEE]], 
                 ['id', 'first_name', 'last_name', 'email']))
-            ->addColumn('job_title', function($employee) {
-                $jobs = $employee->jobs;
-                if(!$jobs) {
-                    return '';
-                }
-                return $jobs->current()->name;
-            })
-            ->addColumn('employment_status', function($employee) {
-                $jobs = $employee->jobs;
-                if(!$jobs) {
-                    return '';
-                }
-                return $jobs->current()->position->contractType->name;
-            })
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [
                     'deleteUrl' => route('pim.employees.destroy', $employee->id), 
@@ -125,6 +111,9 @@ class EmployeesController extends Controller
     public function edit($id)
     {
         $employee = $this->employeeRepository->getById($id);
+        if($employee->role == $this->employeeRepository->model::USER_ROLE_CANDIDATE) {
+            return redirect()->route('pim.candidates.edit', $id);
+        }
         return view('pim::employees.edit', ['employee' => $employee, 'breadcrumb' => ['title' => $employee->first_name.' '.$employee->last_name, 'id' => $employee->id]]);
     }
 

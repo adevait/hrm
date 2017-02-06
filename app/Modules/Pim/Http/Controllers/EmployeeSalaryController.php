@@ -97,16 +97,19 @@ class EmployeeSalaryController extends Controller
         SalaryComponentsRepository $salaryComponentsRepository)
     {
         // TODO: custom validation
-        // TODO: fix gross total == 0
         
         $salaryData = ['payment_date' => $request->input('payment_date'), 'user_id' => $employeeId];
+        if($request->hasFile('attachment')) {
+            $path = $request->attachment->store('uploads/salaries');
+            $salaryData['attachment'] = $path;
+        }
         $salaryData = $this->employeeSalaryRepository->create($salaryData);
 
         $components = $request->input('components');
         $total = $expense = 0;
         foreach ($components as $key => $value) {
             $component = $salaryComponentsRepository->getById($key);
-            if($component->type == $salaryComponentsRepository->model->TYPE_EARNING) {
+            if($component->type == $salaryComponentsRepository->model::TYPE_EARNING) {
                 $total+=$value;
             } else {
                 $expense+=$value;
@@ -193,8 +196,12 @@ class EmployeeSalaryController extends Controller
                 'salary_id' => $id 
             ]);
         }
-
-        $this->employeeSalaryRepository->update($id, ['gross_total' => $total, 'nett_total' => $total-$expense, 'payment_date' => $request->input('payment_date')]);
+        $salaryData = ['gross_total' => $total, 'nett_total' => $total-$expense, 'payment_date' => $request->input('payment_date')];
+        if($request->hasFile('attachment')) {
+            $path = $request->attachment->store('uploads/salaries');
+            $salaryData['attachment'] = $path;
+        }
+        $this->employeeSalaryRepository->update($id, $salaryData);
         $request->session()->flash('success', trans('app.pim.employees.salaries.update_success'));
         return redirect()->route('pim.employees.salaries.edit', [$employeeId, $id]);
     }

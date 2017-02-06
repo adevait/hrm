@@ -34,7 +34,7 @@ class CandidatesController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->candidateRepository->getQry(
+        return Datatables::of($this->candidateRepository->getCollection(
                 [['key' => 'role', 'operator' => '=', 'value' => $this->candidateRepository->model::USER_ROLE_CANDIDATE]], 
                 ['id', 'first_name', 'last_name', 'email']))
             ->addColumn('actions', function($employee){
@@ -91,6 +91,9 @@ class CandidatesController extends Controller
     public function edit($id)
     {
         $employee = $this->candidateRepository->getById($id);
+        if($employee->role == $this->candidateRepository->model::USER_ROLE_EMPLOYEE) {
+            return redirect()->route('pim.employees.edit', $id);
+        }
         return view('pim::candidates.edit', ['employee' => $employee, 'breadcrumb' => ['title' => $employee->first_name.' '.$employee->last_name, 'id' => $employee->id]]);
     }
 

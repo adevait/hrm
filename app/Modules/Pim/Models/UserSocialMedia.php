@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserSocialMedia extends Model
 {
     const FACEBOOK = 1;
-    const TWEETER = 2;
+    const TWITTER = 2;
     const LINKEDIN = 3;
     const GITHUB = 4;
     const BEHANCE = 5;

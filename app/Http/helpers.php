@@ -4,7 +4,7 @@ function account_types()
 {
     return [
         App\Modules\Pim\Models\UserSocialMedia::FACEBOOK => 'Facebook',
-        App\Modules\Pim\Models\UserSocialMedia::TWEETER => 'Tweeter',
+        App\Modules\Pim\Models\UserSocialMedia::TWITTER => 'Twitter',
         App\Modules\Pim\Models\UserSocialMedia::LINKEDIN => 'Linked In',
         App\Modules\Pim\Models\UserSocialMedia::GITHUB => 'Github',
         App\Modules\Pim\Models\UserSocialMedia::BEHANCE => 'Behance',
@@ -23,7 +23,7 @@ function account_icons()
 {
     return [
         App\Modules\Pim\Models\UserSocialMedia::FACEBOOK => 'facebook',
-        App\Modules\Pim\Models\UserSocialMedia::TWEETER => 'tweeter',
+        App\Modules\Pim\Models\UserSocialMedia::TWITTER => 'twitter',
         App\Modules\Pim\Models\UserSocialMedia::LINKEDIN => 'linkedin',
         App\Modules\Pim\Models\UserSocialMedia::GITHUB => 'github',
         App\Modules\Pim\Models\UserSocialMedia::BEHANCE => 'behance',

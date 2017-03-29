@@ -39,6 +39,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function setEmailAttribute($email)
+    {
+        if(!$email) {
+            $this->attributes['email'] = null;
+        }
+    }
+
+    public function setBirthDateAttribute($birthDate)
+    {
+        if(!$birthDate) {
+            $this->attributes['birth_date'] = null;
+        }
+    }
+
     public function jobs()
     {
         return $this->belongsTo(UserJobs::class);

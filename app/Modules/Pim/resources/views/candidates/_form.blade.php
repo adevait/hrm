@@ -31,6 +31,12 @@
         {!! Form::input('date', 'birth_date', null, ['class' => 'form-control']) !!}
     </div>
 </div>
+<div class="form-group">
+    {!! Form::label('notes', trans('app.pim.employees.notes').':', ['class' => 'col-sm-3']) !!}
+    <div class="col-sm-6">
+        {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
+    </div>
+</div>
 @include('errors._form-errors')
 <hr>
 <div class="form-group">

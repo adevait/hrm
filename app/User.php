@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'gender', 'birth_date', 'password', 'role'
+        'first_name', 'last_name', 'email', 'gender', 'birth_date', 'password', 'role', 'notes'
     ];
 
     /**
@@ -54,6 +54,15 @@ class User extends Authenticatable
             $this->attributes['birth_date'] = null;
         } else {
             $this->attributes['birth_date'] = $birthDate;
+        }
+    }
+
+    public function setNotesAttribute($notes)
+    {
+        if(!$notes) {
+            $this->attributes['notes'] = null;
+        } else {
+            $this->attributes['notes'] = $notes;
         }
     }
 

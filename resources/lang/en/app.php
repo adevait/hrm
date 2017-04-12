@@ -138,6 +138,7 @@ return [
             'gender_male' => 'Male',
             'gender_female' => 'Female',
             'birth_date' => 'Birth date',
+            'notes' => 'Notes',
             'store_success' => 'The employee was successfully added.',
             'update_success' => 'The employee details were successfully updated.',
             'delete_success' => 'The employee was successfully removed.',

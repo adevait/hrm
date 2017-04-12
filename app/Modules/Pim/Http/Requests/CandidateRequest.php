@@ -3,6 +3,8 @@
 namespace App\Modules\Pim\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Route;
 
 class CandidateRequest extends FormRequest
 {
@@ -26,8 +28,15 @@ class CandidateRequest extends FormRequest
         $rules = [
             'first_name' => ['required'],
             'last_name' => ['required'],
-            'gender' => ['required']
+            'gender' => ['required'],
+            'email' => ['email', 'unique:users'],
         ];
+        if(preg_match('/update/', Route::currentRouteName())) {
+            $rules['email'] = [
+                'email',
+                Rule::unique('users')->ignore(Route::input('candidate'))
+            ];
+        }
 
         return $rules;
     }

@@ -20,7 +20,7 @@ class CreateUserExperienceTable extends Migration
                 ->onDelete('cascade');
             $table->string('job_title');
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->text('comment')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')

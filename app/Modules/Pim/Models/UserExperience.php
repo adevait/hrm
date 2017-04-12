@@ -14,4 +14,13 @@ class UserExperience extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function setEndDate($endDate)
+    {
+        if(!$endDate) {
+            $this->attributes['endDate'] = null;
+        } else {
+            $this->attributes['endDate'] = $endDate;
+        }
+    }
 }

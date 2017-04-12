@@ -18,9 +18,9 @@ class UserExperience extends Model
     public function setEndDate($endDate)
     {
         if(!$endDate) {
-            $this->attributes['endDate'] = null;
+            $this->attributes['end_date'] = null;
         } else {
-            $this->attributes['endDate'] = $endDate;
+            $this->attributes['end_date'] = $endDate;
         }
     }
 }

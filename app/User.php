@@ -43,6 +43,8 @@ class User extends Authenticatable
     {
         if(!$email) {
             $this->attributes['email'] = null;
+        } else {
+            $this->attributes['email'] = $email;
         }
     }
 
@@ -50,6 +52,8 @@ class User extends Authenticatable
     {
         if(!$birthDate) {
             $this->attributes['birth_date'] = null;
+        } else {
+            $this->attributes['birth_date'] = $birthDate;
         }
     }
 

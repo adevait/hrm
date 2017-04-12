@@ -23,6 +23,8 @@ class UserEducation extends Model
     {
         if(!$grade) {
             $this->attributes['grade'] = null;
+        } else {
+            $this->attributes['grade'] = $grade;
         }
     }
 
@@ -30,6 +32,8 @@ class UserEducation extends Model
     {
         if(!$endDate) {
             $this->attributes['end_date'] = null;
+        } else {
+            $this->attributes['end_date'] = $endDate;
         }
     }
 }

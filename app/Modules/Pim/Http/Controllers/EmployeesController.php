@@ -85,7 +85,7 @@ class EmployeesController extends Controller
     public function store(EmployeeRequest $request)
     {
         $employeeData = $request->all();
-        $employeeData['role'] = $this->employeeRepository->model::USER_ROLE_CANDIDATE;
+        $employeeData['role'] = $this->employeeRepository->model::USER_ROLE_EMPLOYEE;
         $employeeData = $this->employeeRepository->create($employeeData);
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
         return redirect()->route('pim.employees.edit', $employeeData->id);

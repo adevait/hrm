@@ -26,8 +26,7 @@ class EmployeeExperienceRequest extends FormRequest
         $rules = [
             'company_id' => ['required'],
             'job_title' => ['required'],
-            'start_date' => ['required'],
-            'end_date' => ['required']
+            'start_date' => ['required']
         ];
 
         return $rules;

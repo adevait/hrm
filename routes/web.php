@@ -132,6 +132,8 @@ Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin
     Route::get('/', function() {
         return view('pim::index');
     })->name('index');
+    
+    Route::get('employees/birthdays', '\App\Modules\Pim\Http\Controllers\EmployeesController@birthdays')->name('employees.birthdays');
 
     Route::get('employees/datatable', '\App\Modules\Pim\Http\Controllers\EmployeesController@getDatatable')
         ->name('employees.datatable');

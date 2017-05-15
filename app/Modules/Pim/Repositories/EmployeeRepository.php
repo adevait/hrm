@@ -22,6 +22,29 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
         return $this->model->where('role', $this->model::USER_ROLE_EMPLOYEE)->get();
     }
 
+    public function getBirthdays($date = false)
+    {
+        if(!$date) {
+            $date = Carbon::now();
+        } else {
+            $date = Carbon::createFromFormat('Y-m-d', $date);
+        }
+        $items = $this->model
+            ->whereRaw('MONTH(birth_date) = ?', [$date->month])
+            ->get();
+
+        $events = [];
+        foreach ($items as $key => $value) {
+            $birthday = Carbon::createFromFormat('Y-m-d', $value->birth_date);
+            $events[]= [
+                'title' => $value->first_name.' '.$value->last_name,
+                'start' => Carbon::createFromDate(null, $birthday->month, $birthday->day)->format('Y-m-d')
+            ];
+        }
+
+        return $events;
+    }
+
     public function pluckName()
     {
         return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))

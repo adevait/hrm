@@ -28,6 +28,17 @@ class EmployeesController extends Controller
     }
 
     /**
+     * Display a list of the birthdays.
+     *
+     * @return array
+     */
+    public function birthdays(Request $request)
+    {
+        $items = $this->employeeRepository->getBirthdays($request->get('date'));
+        return $items;
+    }
+
+    /**
      * Return data for the resource list
      * 
      * @return \Illuminate\Http\Response

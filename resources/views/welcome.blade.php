@@ -4,6 +4,18 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="custom-panel">
+            <div class="custom-panel-heading">{{trans('app.leave.calendar.main')}}</div>
+            <div id="leave-calendar"></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="custom-panel">
+            <div class="custom-panel-heading">{{trans('app.pim.birthdays')}}</div>
+            <div id="birthday-calendar"></div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="custom-panel">
             <div class="custom-panel-heading">{{trans('app.leave.weekly_summary')}}</div>
             <table class="table table-stripped table-hover">
                 <thead>
@@ -27,12 +39,6 @@
             </table>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="custom-panel">
-            <div class="custom-panel-heading">{{trans('app.leave.calendar.main')}}</div>
-            <div id="calendar"></div>
-        </div>
-    </div>
 </div>
 @endsection
 @section('additionalCSS')
@@ -45,7 +51,7 @@
 <script>
     $(document).ready(function() {
         var sources = [];
-        $('#calendar').fullCalendar({
+        $('#leave-calendar').fullCalendar({
             header: {
                 left: 'prev,next',
                 center: 'title',
@@ -56,7 +62,7 @@
             editable: false,
             eventLimit: true, // allow "more" link when too many events
             viewRender: function(view, element) {
-                var date = $('#calendar').fullCalendar('getDate');
+                var date = $('#leave-calendar').fullCalendar('getDate');
                 date = moment(date).format('YYYY-MM-DD');
                 if(sources.indexOf(date) == -1) {
                     sources.push(date);
@@ -64,7 +70,33 @@
                         url: "{{route('leave.calendar.render')}}",
                         data: {date: date},
                         success: function(events) {
-                            $('#calendar').fullCalendar('addEventSource', events);
+                            $('#leave-calendar').fullCalendar('addEventSource', events);
+                        }
+                    });
+                }
+            }
+        });
+        var sources = [];
+        $('#birthday-calendar').fullCalendar({
+            header: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            defaultDate: '2017-01-01',
+            navLinks: true, // can click day/week names to navigate views
+            editable: false,
+            eventLimit: true, // allow "more" link when too many events
+            viewRender: function(view, element) {
+                var date = $('#birthday-calendar').fullCalendar('getDate');
+                date = moment(date).format('YYYY-MM-DD');
+                if(sources.indexOf(date) == -1) {
+                    sources.push(date);
+                    $.ajax({
+                        url: "{{route('pim.employees.birthdays')}}",
+                        data: {date: date},
+                        success: function(events) {
+                            $('#birthday-calendar').fullCalendar('addEventSource', events);
                         }
                     });
                 }

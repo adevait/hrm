@@ -125,6 +125,7 @@ return [
     ],
     'pim' => [
         'main' => 'PIM',
+        'birthdays' => 'Birthdays',
         'employees' => [
             'main' => 'Employees',
             'add_new' => 'Add employee',

@@ -165,3 +165,8 @@ function get_user_role($role)
     ];
     return @$roles[$role];
 }
+
+function get_current_date()
+{
+    return Carbon\Carbon::now()->format('Y-m-d');
+}

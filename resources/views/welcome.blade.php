@@ -57,7 +57,7 @@
                 center: 'title',
                 right: 'month,basicWeek,basicDay'
             },
-            defaultDate: '2017-01-01',
+            defaultDate: '{{get_current_date()}}',
             navLinks: true, // can click day/week names to navigate views
             editable: false,
             eventLimit: true, // allow "more" link when too many events
@@ -83,7 +83,7 @@
                 center: 'title',
                 right: 'month,basicWeek,basicDay'
             },
-            defaultDate: '2017-01-01',
+            defaultDate: '{{get_current_date()}}',
             navLinks: true, // can click day/week names to navigate views
             editable: false,
             eventLimit: true, // allow "more" link when too many events

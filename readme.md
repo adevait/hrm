@@ -29,8 +29,8 @@ The system is built on top of Laravel 5.3, so to proceed with the installation y
 
 ## License
 
-HRM is released under the GPL v3 (or later) license
+HRM is released under the GPL v3 (or later) license.
 
 ## Support
 
-Please direct any feedback to trajchevska@adevait.com
+Please direct any feedback to trajchevska@adevait.com.

@@ -790,6 +790,42 @@ Breadcrumbs::register('recruitment.index', function($breadcrumbs)
 });
 
 /**
+ * Personas breadcrumbs start here
+ */
+
+// Home > Recruitment > Personas
+Breadcrumbs::register('recruitment.personas.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('recruitment.index');
+    $breadcrumbs->push(trans('app.recruitment.personas.main'), route('recruitment.personas.index'));
+});
+
+// Home > Recruitment > Personas > Create
+Breadcrumbs::register('recruitment.personas.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('recruitment.personas.index');
+    $breadcrumbs->push(trans('app.add_record'), route('recruitment.personas.create'));
+});
+
+// Home > Recruitment > Personas > Edit
+Breadcrumbs::register('recruitment.personas.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('recruitment.personas.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('recruitment.personas.edit', $breadcrumb['id']));
+});
+
+// Home > Recruitment > Personas > Details
+Breadcrumbs::register('recruitment.personas.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('recruitment.personas.index');
+    $breadcrumbs->push($breadcrumb['title'], route('recruitment.personas.show', $breadcrumb['id']));
+});
+
+/**
+ * Report breadcrumbs end here
+ */
+
+/**
  * Report breadcrumbs start here
  */
 

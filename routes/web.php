@@ -362,6 +362,19 @@ Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.', 'middleware' =>
         'update' => 'reports.update',
         'destroy' => 'reports.destroy'
     ]]);
+
+    Route::get('personas/datatable', '\App\Modules\Recruitment\Http\Controllers\PersonasController@getDatatable')
+        ->name('personas.datatable');
+
+    Route::resource('personas', '\App\Modules\Recruitment\Http\Controllers\PersonasController', ['names' => [
+        'index' => 'personas.index',
+        'create' => 'personas.create',
+        'show' => 'personas.show',
+        'edit' => 'personas.edit',
+        'store' => 'personas.store',
+        'update' => 'personas.update',
+        'destroy' => 'personas.destroy'
+    ]]);
 });
 
 Route::group(['prefix' => 'discipline', 'as' => 'discipline.', 'middleware' => ['auth', 'admin']], function() {

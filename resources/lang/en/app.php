@@ -335,6 +335,9 @@ return [
     ],
     'recruitment' => [
         'main' => 'Recruitment',
+        'personas' => [
+            'main' => 'Personas'
+        ],
         'reports' => [
             'main' => 'Reports',
             'first_name' => 'First name',

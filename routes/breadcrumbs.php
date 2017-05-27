@@ -796,7 +796,7 @@ Breadcrumbs::register('recruitment.index', function($breadcrumbs)
 // Home > Recruitment > Reports
 Breadcrumbs::register('recruitment.reports.index', function($breadcrumbs)
 {
-    $breadcrumbs->parent('leave.index');
+    $breadcrumbs->parent('recruitment.index');
     $breadcrumbs->push(trans('app.recruitment.reports.main'), route('recruitment.reports.index'));
 });
 

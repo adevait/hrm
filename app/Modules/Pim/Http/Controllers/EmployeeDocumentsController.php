@@ -89,6 +89,7 @@ class EmployeeDocumentsController extends Controller
 
     public function generateTemplateContent($employeeId, Request $request, DocumentTemplateRepository $documentTemplateRepository)
     {
+        set_time_limit(-1);
         $bindings = template_toolbar();
         $document = $documentTemplateRepository->getById($request->get('document'));
         preg_match_all('/(%[a-z_]+\.[a-z_]+%)/', $document->template, $matches);

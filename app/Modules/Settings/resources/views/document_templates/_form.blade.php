@@ -36,6 +36,7 @@
         skin :  'lightgray',
         height: '250',
         language : "en",
+        plugins: "table",
         toolbar1: 'undo redo | styleselect | bold italic | link | image | alignleft aligncenter alignright',
         toolbar2 : '{{$toolbarStringified}}',
         setup : function(ed) {

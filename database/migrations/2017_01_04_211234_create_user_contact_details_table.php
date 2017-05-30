@@ -38,6 +38,6 @@ class CreateUserContactDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_addresses');
+        Schema::dropIfExists('user_contact_details');
     }
 }

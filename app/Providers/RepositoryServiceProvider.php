@@ -25,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
             Settings\Repositories\SalaryComponentsRepository::class => [Settings\Repositories\Interfaces\SalaryComponentsRepositoryInterface::class],
             Pim\Repositories\EmployeeRepository::class => [Pim\Repositories\Interfaces\EmployeeRepositoryInterface::class],
             Pim\Repositories\CandidateRepository::class => [Pim\Repositories\Interfaces\CandidateRepositoryInterface::class],
+            Recruitment\Repositories\JobAdvertRepository::class => [Recruitment\Repositories\Interfaces\JobAdvertRepositoryInterface::class],
             Pim\Repositories\EmployeeSocialMediaRepository::class => [Pim\Repositories\Interfaces\EmployeeSocialMediaRepositoryInterface::class],
             Pim\Repositories\EmployeeContactDetailsRepository::class => [Pim\Repositories\Interfaces\EmployeeContactDetailsRepositoryInterface::class],
             Pim\Repositories\EmployeeWorkExperienceRepository::class => [Pim\Repositories\Interfaces\EmployeeWorkExperienceRepositoryInterface::class],

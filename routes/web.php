@@ -166,6 +166,7 @@ Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin
         'destroy' => 'candidates.destroy'
     ]]);
 
+
     Route::group(['prefix' => 'profile/{employeeId}', 'as' => 'employees.'], function($employeeId) {
         Route::resource('social-media', '\App\Modules\Pim\Http\Controllers\EmployeeSocialMediaController', ['names' => [
             'index' => 'social_media.index',
@@ -353,6 +354,16 @@ Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.', 'middleware' =>
     Route::get('reports/datatable', '\App\Modules\Recruitment\Http\Controllers\ReportsController@getDatatable')
         ->name('reports.datatable');
 
+    Route::resource('job_advert', '\App\Modules\Recruitment\Http\Controllers\JobAdvertController', ['names' => [
+        'index' => 'job_advert.index',
+        'create' => 'job_advert.create',
+        'show' => 'job_advert.show',
+        'edit' => 'job_advert.edit',
+        'store' => 'job_advert.store',
+        'update' => 'job_advert.update',
+        'destroy' => 'job_advert.destroy'
+    ]]);
+        
     Route::resource('reports', '\App\Modules\Recruitment\Http\Controllers\ReportsController', ['names' => [
         'index' => 'reports.index',
         'create' => 'reports.create',

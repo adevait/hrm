@@ -35,3 +35,7 @@ HRM is released under the GPL v3 (or later) license.
 ## Support
 
 Please direct any feedback to trajchevska@adevait.com.
+
+## Our supporters
+#### BrowserStack: Hassle free web-based browser testing 
+![Testing made easy with BrowserStack](https://github.com/adevait/hrm/tree/master/public/images/browserstack-logo.svg)

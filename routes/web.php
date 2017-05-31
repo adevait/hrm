@@ -354,6 +354,8 @@ Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.', 'middleware' =>
     Route::get('reports/datatable', '\App\Modules\Recruitment\Http\Controllers\ReportsController@getDatatable')
         ->name('reports.datatable');
 
+    Route::get('job_advert/datatable', '\App\Modules\Recruitment\Http\Controllers\JobAdvertController@getDatatable')
+        ->name('job_advert.datatable');
     Route::resource('job_advert', '\App\Modules\Recruitment\Http\Controllers\JobAdvertController', ['names' => [
         'index' => 'job_advert.index',
         'create' => 'job_advert.create',

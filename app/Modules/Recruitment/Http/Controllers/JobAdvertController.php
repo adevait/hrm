@@ -23,7 +23,24 @@ class JobAdvertController extends Controller
      */
     public function index()
     {
-        //
+        return view('recruitment::job_advert.index');
+    }
+    /**
+     * Return data for the resource list
+     * 
+     * @return \Illuminate\Http\Response
+    */
+    public function getDatatable()
+    {
+        return Datatables::of($this->jobAdvertRepository->getQry(
+                [],
+                ['id', 'title', 'description']))->addColumn('actions', function($JobAdvert){
+                return view('includes._datatable_actions', [
+                    'deleteUrl' => route('recruitment.job_advert.destroy', $JobAdvert->id ), 
+                    'editUrl' => route('recruitment.job_advert.edit', $JobAdvert->id)
+                ]);
+            })
+            ->make();
     }
 
     /**
@@ -46,7 +63,7 @@ class JobAdvertController extends Controller
     {
         $jobData = $request->all();
         $jobData = $this->jobAdvertRepository->create($jobData);
-        $request->session()->flash('success', trans('app.pim.job_advert.store_success'));
+        $request->session()->flash('success', trans('app.recruitment.job_advert.store_success'));
         return redirect()->route('recruitment.job_advert.edit', $jobData->id);    }
 
     /**

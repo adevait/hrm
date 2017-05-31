@@ -27,7 +27,7 @@ class JobAdvertRequest extends FormRequest
     {
         $rules = [
             'title' => ['required'],
-            'image' => ['required']
+            'description' => ['required']
         ];
 
         return $rules;

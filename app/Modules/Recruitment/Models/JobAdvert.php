@@ -8,10 +8,7 @@ class JobAdvert extends Model
 {
     protected $table = 'job_advert';
     protected $guarded = ['id'];
-
+   
     public $timestamps = false;
 
-        protected $fillable = [
-        'title', 'description', 'skills', 'advantages', 'responsibilities', 'benefits', 'image',
-    ];
 }

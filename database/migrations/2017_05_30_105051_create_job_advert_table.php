@@ -21,7 +21,8 @@ class CreateJobAdvertTable extends Migration
             $table->text('advantages')->nullable();
             $table->text('responsibilities')->nullable();
             $table->text('benefits')->nullable();
-            $table->string('image', 255); 
+            $table->string('image', 255)->nullable(); 
+            $table->softDeletes();
         });
     }
 

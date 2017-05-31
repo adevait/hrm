@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomFieldsTable extends Migration
+class CreatePersonasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateCustomFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('custom_fields', function (Blueprint $table) {
+        Schema::create('personas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key', 100);
-            $table->string('value');
-            $table->string('tagname', 20);
-            $table->text('options')->nullable();
-            $table->tinyInteger('type');
-            $table->string('category');
+            $table->string('name', 100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateCustomFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_fields');
+        Schema::dropIfExists('personas');
     }
 }

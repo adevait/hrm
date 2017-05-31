@@ -33,6 +33,7 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'home' => 'Home',
+    'error' => 'There has been an error. Please try again.',
 
     'profile' => [
         'main' => 'Profile',
@@ -336,7 +337,13 @@ return [
     'recruitment' => [
         'main' => 'Recruitment',
         'personas' => [
-            'main' => 'Personas'
+            'main' => 'Personas',
+            'name' => 'Name',
+            'add_new' => 'Add Persona',
+            'edit_details' => 'Edit Persona',
+            'store_success' => 'Persona successfully added.',
+            'update_success' => 'Persona successfully updated.',
+            'delete_success' => 'Persona successfully deleted.'
         ],
         'reports' => [
             'main' => 'Reports',

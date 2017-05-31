@@ -16,10 +16,10 @@
         </div>
         @endif
 
-        @if(session('error'))
+        @if(session('error') || $errors->any())
         <div class="alert alert-danger" role="alert">
           <span class="sr-only">Error:</span>
-          {{session('error')}}
+          {{session('error') ?: trans('app.error')}}
         </div>
         @endif
 

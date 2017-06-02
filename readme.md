@@ -28,6 +28,10 @@ The system is built on top of Laravel 5.3, so to proceed with the installation y
     * Check `/bootstrap/cache` permissions - this folder should also be writable. Make sure the permissions are set correctly. 
 8. At this point you should have the app up and running. Hit `yourdomain/register` to open the registration screen for creating an admin user. This is a one time setup and the credentials set here will be used for authenticating before using the system.
 
+## Contributing
+
+We encourage you to contribute to HRM! Please check out the [Contributing guide](contributing.md) for guidelines about how to proceed. 
+
 ## License
 
 HRM is released under the GPL v3 (or later) license.

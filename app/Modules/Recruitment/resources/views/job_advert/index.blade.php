@@ -44,12 +44,12 @@
         var table = $('#jobAdvertTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route("recruitment.job_advert.datatable")}}',
+            ajax: '{{route("recruitment.job_advert.datatable")}}',
             columns: [
                 {data: 0, name: 'id'},
                 {data: 1, name: 'title'},
                 {data: 2, name: 'description'},
-                {data: 4, name: 'actions', sortable: false, searchable: false}
+                {data: 3, name: 'actions', sortable: false, searchable: false}
             ]
         });
         table.columns().every(function () {

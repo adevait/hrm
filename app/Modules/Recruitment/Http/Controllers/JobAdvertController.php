@@ -64,7 +64,8 @@ class JobAdvertController extends Controller
         $jobData = $request->all();
         $jobData = $this->jobAdvertRepository->create($jobData);
         $request->session()->flash('success', trans('app.recruitment.job_advert.store_success'));
-        return redirect()->route('recruitment.job_advert.edit', $jobData->id);    }
+        return redirect()->route('recruitment.job_advert.edit', $jobData->id);    
+    }
 
     /**
      * Display the specified resource.
@@ -85,7 +86,8 @@ class JobAdvertController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jadvert = $this->jobAdvertRepository->getById($id);
+        return view('recruitment::job_advert.edit', ['jadvert' => $jadvert, 'breadcrumb' => ['title' => $jadvert->title, 'id' => $jadvert->id]]);        
     }
 
     /**
@@ -97,7 +99,9 @@ class JobAdvertController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jadvert = $this->jobAdvertRepository->update($id, $request->all());
+        $request->session()->flash('success', trans('app.recruitment.job_advert.update_success'));
+        return redirect()->route('recruitment.job_advert.edit', $jadvert->id);
     }
 
     /**
@@ -106,8 +110,10 @@ class JobAdvertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $this->jobAdvertRepository->delete($id);
+        $request->session()->flash('success', trans('app.recruitment.job_advert.delete_success'));
+        return redirect()->route('recruitment.job_advert.index');
     }
 }

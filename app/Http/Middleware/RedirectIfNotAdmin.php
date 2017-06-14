@@ -18,6 +18,10 @@ class RedirectIfNotAdmin
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($request->user()->role == User::USER_ROLE_EMPLOYEE) {
+            return redirect('/employee');
+        }
+
         if ($request->user()->role != User::USER_ROLE_ADMIN) {
             return redirect('/');
         }

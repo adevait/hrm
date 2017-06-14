@@ -29,6 +29,12 @@ Route::resource('profile', '\App\Http\Controllers\ProfileController',
     ]
 );
 
+Route::group(['prefix' => 'employee', 'as' => 'employee.'], function() {
+    Route::get('/', function() {
+        return view('employee::index');
+    })->name('index');
+});
+
 Route::group(['prefix' => 'settings', 'as' => 'settings.', 'middleware' => ['auth', 'admin']], function () {
 
     Route::get('/', function() {

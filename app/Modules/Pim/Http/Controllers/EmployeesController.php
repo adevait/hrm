@@ -3,10 +3,13 @@
 namespace App\Modules\Pim\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use App\Modules\Pim\Http\Requests\EmployeeRequest;
-use Illuminate\Http\Request;
+use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use Datatables;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\Route;
 
 class EmployeesController extends Controller
 {
@@ -97,7 +100,19 @@ class EmployeesController extends Controller
     {
         $employeeData = $request->all();
         $employeeData['role'] = $this->employeeRepository->model::USER_ROLE_EMPLOYEE;
+        $password = rand();
+        $employeeData['password'] = bcrypt($password);
         $employeeData = $this->employeeRepository->create($employeeData);
+        $data = ['title' => trans('emails.employee-login.title'), 'password' => $password, 'route' => url('password/reset')];
+        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
+        {
+
+            $message->from(env('MAIL_EMAIL'), 'Vedrana Tozija');
+
+            $message->to($employeeData['email']);
+
+        });
+
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
         return redirect()->route('pim.employees.edit', $employeeData->id);
     }

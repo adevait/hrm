@@ -29,10 +29,19 @@ Route::resource('profile', '\App\Http\Controllers\ProfileController',
     ]
 );
 
-Route::group(['prefix' => 'employee', 'as' => 'employee.'], function() {
-    Route::get('/', function() {
-        return view('employee::index');
-    })->name('index');
+Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'admin']], function() {
+    Route::get('/', '\App\Http\Controllers\HomeController@indexEmployee')
+    ->name('home');
+
+    Route::resource('leave', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController', ['names' => [
+        'index' => 'leave.index',
+        'create' => 'leave.create',
+        'show' => 'leave.show',
+        'edit' => 'leave.edit',
+        'store' => 'leave.store',
+        'update' => 'leave.update',
+        'destroy' => 'leave.destroy'
+    ]]);
 });
 
 Route::group(['prefix' => 'settings', 'as' => 'settings.', 'middleware' => ['auth', 'admin']], function () {

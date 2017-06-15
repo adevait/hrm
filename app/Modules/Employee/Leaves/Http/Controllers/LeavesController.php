@@ -27,7 +27,8 @@ class LeavesController extends Controller
     {
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $employees = $employeeRepository->pluckName();
-        return view('leave::employee_leaves.index', compact('leaveTypes','employees'));
+    	// dd('asd');
+        return view('employee.leaves::index', compact('leaveTypes','employees'));
     }
 	
 }

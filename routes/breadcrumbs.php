@@ -985,13 +985,13 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
  * Time breadcrumbs end here
  */
 
-Breadcrumbs::register('employee.home', function($breadcrumbs, $breadcrumb)
+Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
-    $breadcrumbs->push($breadcrumb['title'], route('employee.home', $breadcrumb['id']));
+    $breadcrumbs->push('lalaa', route('employee.home'));
 });
 
-Breadcrumbs::register('employee.leave.index', function($breadcrumbs, $breadcrumb)
+Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
 {
-    $breadcrumbs->parent('employee');
-    $breadcrumbs->push($breadcrumb['title'], route('employee.leave.index', $breadcrumb['id']));
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push('lala', route('employee.leaves.index'));
 });

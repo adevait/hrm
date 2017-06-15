@@ -24,7 +24,7 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
 
     public function getBirthdays($date = false)
     {
-        if(!$date) {
+        if (!$date) {
             $date = Carbon::now();
         } else {
             $date = Carbon::createFromFormat('Y-m-d', $date);
@@ -49,7 +49,7 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
     {
         return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))
             ->where('role', $this->model::USER_ROLE_EMPLOYEE)
-            ->pluck('name','id');
+            ->pluck('name', 'id');
 
     }
 

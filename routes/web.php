@@ -29,7 +29,7 @@ Route::resource('profile', '\App\Http\Controllers\ProfileController',
     ]
 );
 
-Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\HomeController@indexEmployee')
     ->name('home');
 

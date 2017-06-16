@@ -995,3 +995,27 @@ Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
     $breadcrumbs->parent('employee.home');
     $breadcrumbs->push('lala', route('employee.leaves.index'));
 });
+
+Breadcrumbs::register('employee.leaves.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push('lala', route('employee.leaves.create'));
+});
+
+Breadcrumbs::register('employee.leaves.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push('lala', route('employee.leaves.edit', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.update', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push('lala', route('employee.leaves.update', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.destroy', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push('lala', route('employee.leaves.destroy'));
+});

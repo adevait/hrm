@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Pim\Repositories\EmployeeRepository;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -27,13 +30,28 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
+    private $employeeRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(EmployeeRepository $employeeRepository)
     {
+        $this->employeeRepository = $employeeRepository;
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    // public function login(Request $request)
+    // {
+    //     $user = $this->employeeRepository->model->where('email', '=', $request->get('email'))->first();
+    //     // dd($user['role']);
+    //     if($user['role'] ==  User::USER_ROLE_EMPLOYEE) {
+    //         return redirect('/employee');
+    //     } 
+    //     else if ($user['role'] ==  User::USER_ROLE_ADMIN) {
+    //         return redirect('/');
+    //     }
+    // }
 }

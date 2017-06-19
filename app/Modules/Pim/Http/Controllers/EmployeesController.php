@@ -43,17 +43,17 @@ class EmployeesController extends Controller
 
     /**
      * Return data for the resource list
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDatatable()
     {
         return Datatables::of($this->employeeRepository->getCollection(
-                [['key' => 'role', 'operator' => '=', 'value' => $this->employeeRepository->model::USER_ROLE_EMPLOYEE]], 
+                [['key' => 'role', 'operator' => '=', 'value' => $this->employeeRepository->model::USER_ROLE_EMPLOYEE]],
                 ['id', 'first_name', 'last_name', 'email']))
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [
-                    'deleteUrl' => route('pim.employees.destroy', $employee->id), 
+                    'deleteUrl' => route('pim.employees.destroy', $employee->id),
                     'editUrl' => route('pim.employees.edit', $employee->id)
                 ]);
             })
@@ -62,7 +62,7 @@ class EmployeesController extends Controller
 
     /**
      * Returns all employee details for using with select2
-     * @param  \Illuminate\Http\Request $request 
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function getSelectJson(Request $request)

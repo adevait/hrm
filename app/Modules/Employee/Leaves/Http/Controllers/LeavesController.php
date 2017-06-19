@@ -9,7 +9,7 @@ use App\Modules\Leave\Repositories\LeaveTypeRepository;
 use App\Modules\Pim\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Auth;
 class LeavesController extends Controller
 {
 	private $employeeLeaveRepository;
@@ -21,7 +21,7 @@ class LeavesController extends Controller
 
     /**
      * Display a listing of the resource.
-     * 
+     *
      * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
      * @param  \App\Modules\Pim\Repositories\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
@@ -42,8 +42,10 @@ class LeavesController extends Controller
      */
     public function create(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
+				$email = Auth::user()->email;
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->pluckName();
+        $employees = $employeeRepository->getByEmail($email)->pluck('first_name', 'id');
+				// dd($employees);
         return view('employee.leaves::create', compact('leaveTypes', 'employees'));
     }
 

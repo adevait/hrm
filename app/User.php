@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function setEmailAttribute($email)
     {
-        if(!$email) {
+        if (!$email) {
             $this->attributes['email'] = null;
         } else {
             $this->attributes['email'] = $email;
@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function setBirthDateAttribute($birthDate)
     {
-        if(!$birthDate) {
+        if (!$birthDate) {
             $this->attributes['birth_date'] = null;
         } else {
             $this->attributes['birth_date'] = $birthDate;
@@ -59,11 +59,23 @@ class User extends Authenticatable
 
     public function setNotesAttribute($notes)
     {
-        if(!$notes) {
+        if (!$notes) {
             $this->attributes['notes'] = null;
         } else {
             $this->attributes['notes'] = $notes;
         }
+    }
+
+    /**
+     * This mutator allow us to access the attribute 'name'
+     * on the instantiated objects even if we don't have a
+     * column in the database for it.
+     * 
+     * @return String The concatenation of the first_name and last_name.
+     */
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function jobs()

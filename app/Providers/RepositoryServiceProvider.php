@@ -44,6 +44,7 @@ class RepositoryServiceProvider extends ServiceProvider
             Time\Repositories\ClientRepository::class => [Time\Repositories\Interfaces\ClientRepositoryInterface::class],
             Time\Repositories\ProjectRepository::class => [Time\Repositories\Interfaces\ProjectRepositoryInterface::class],
             Time\Repositories\TimeLogRepository::class => [Time\Repositories\Interfaces\TimeLogRepositoryInterface::class],
+            \App\Repositories\EmployeeRepository::class => [\App\Repositories\Interfaces\EmployeeRepositoryInterface::class],
         ];
 
         foreach ($bindings as $concrete => $interfaces) {

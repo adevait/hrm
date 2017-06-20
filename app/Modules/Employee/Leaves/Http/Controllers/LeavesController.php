@@ -28,10 +28,10 @@ class LeavesController extends Controller
      */
     public function index(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
-				$email = Auth::user()->email;
+		$email = Auth::user()->email;
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $employees = $employeeRepository->getByEmail($email)->pluck('first_name', 'id');
-				// $employees = $employeeRepository->pluckName();
+		
         return view('employee.leaves::index', compact('leaveTypes','employees'));
     }
 
@@ -44,10 +44,10 @@ class LeavesController extends Controller
      */
     public function create(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
-				$email = Auth::user()->email;
+		$email = Auth::user()->email;
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $employees = $employeeRepository->getByEmail($email)->pluck('first_name', 'id');
-				// dd($employees);
+		
         return view('employee.leaves::create', compact('leaveTypes', 'employees'));
     }
 
@@ -83,7 +83,8 @@ class LeavesController extends Controller
         $employeeLeave = $this->employeeLeaveRepository->getById($id);
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $breadcrumb = ['title' => '#'.$employeeLeave->id, 'id' => $employeeLeave->id];
-        $employees = $employeeRepository->pluckName();
+        $email = Auth::user()->email;
+        $employees = $employeeRepository->getByEmail($email)->pluck('first_name', 'id');
         return view('employee.leaves::edit', compact('employeeLeave', 'leaveTypes', 'breadcrumb','employees'));
     }
 

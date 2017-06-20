@@ -7,6 +7,8 @@ use App\Modules\Pim\Repositories\EmployeeRepository;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class LoginController extends Controller
 {
@@ -43,15 +45,18 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
-    // public function login(Request $request)
-    // {
-    //     $user = $this->employeeRepository->model->where('email', '=', $request->get('email'))->first();
-    //     // dd($user['role']);
-    //     if($user['role'] ==  User::USER_ROLE_EMPLOYEE) {
-    //         return redirect('/employee');
-    //     } 
-    //     else if ($user['role'] ==  User::USER_ROLE_ADMIN) {
-    //         return redirect('/');
-    //     }
-    // }
+    public function login(Request $request)
+    {
+        $credentials = Input::only('email', 'password'); 
+        if (!Auth::attempt($credentials)){
+            return redirect()->back()->withMessage('Invalid credentials');
+        }
+        if (Auth::user()->role == User::USER_ROLE_EMPLOYEE) {
+            return redirect()->to('/employee');
+        }
+        if (Auth::user()->role == User::USER_ROLE_ADMIN) {
+            return redirect()->to('/admin');
+        }
+
+    }
 }

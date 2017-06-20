@@ -10,9 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function() {
-//     return redirect()->to('/login');
-// })
 Route::get('/', function () {
     return redirect()->to('/login');
 });
@@ -436,16 +433,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\HomeController@indexEmployee')
     ->name('home');
-
-    Route::resource('leaves', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController', ['names' => [
-        'index' => 'leaves.index',
-        'create' => 'leaves.create',
-        'show' => 'leaves.show',
-        'edit' => 'leaves.edit',
-        'store' => 'leaves.store',
-        'update' => 'leaves.update',
-        'destroy' => 'leaves.destroy'
-    ]]);
 });
 
 Auth::routes();

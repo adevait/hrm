@@ -7,6 +7,7 @@ use App\Modules\Leave\Models\EmployeeLeave;
 use App\Modules\Leave\Repositories\Interfaces\EmployeeLeaveRepositoryInterface;
 use App\Modules\Leave\Repositories\Interfaces\EmployeeLeaveStatusRepositoryInterface;
 use App\Modules\Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface;
+use App\Modules\Leave\Http\Requests\EmployeeLeaveRequest;
 use Carbon\Carbon;
 
 class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeaveRepositoryInterface

@@ -108,7 +108,6 @@ class EmployeesController extends Controller
         {
 
             $message->from(env('MAIL_EMAIL_FROM'));
-
             $message->to($employeeData['email']);
 
         });

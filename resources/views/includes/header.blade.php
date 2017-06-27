@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">{{ config('app.name', 'HRM') }}</a>
+      <a class="navbar-brand" href="/admin">{{ config('app.name', 'HRM') }}</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -61,7 +61,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->first_name }} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ url('profile') }}">{{trans('app.profile.main')}}</a></li>
+            <li><a href="{{ url('admin/profile') }}">{{trans('app.profile.main')}}</a></li>
             <li>
                 <a href="{{ url('/logout') }}"
                     onclick="event.preventDefault();

@@ -31,13 +31,31 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
+    private $employeeRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(EmployeeRepository $employeeRepository)
     {
+        $this->employeeRepository = $employeeRepository;
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = Input::only('email', 'password'); 
+        if (!Auth::attempt($credentials)){
+            return redirect()->back()->withMessage('Invalid credentials');
+        }
+        if (Auth::user()->role == User::USER_ROLE_EMPLOYEE) {
+            return redirect()->to('/employee');
+        }
+        if (Auth::user()->role == User::USER_ROLE_ADMIN) {
+            return redirect()->to('/admin');
+        }
+
     }
 }

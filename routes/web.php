@@ -12,8 +12,10 @@
 Route::get('/', function () {
     return redirect()->to('/login');
 });
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home');
+
     Route::get('/storage/{path}', function($path) {
         return response()->file(storage_path().'/app/'.$path);
     })->name('storage')->where('path','(.*)')->middleware(['auth', 'admin']);

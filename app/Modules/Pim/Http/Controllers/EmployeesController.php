@@ -3,13 +3,10 @@
 namespace App\Modules\Pim\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Pim\Http\Requests\EmployeeRequest;
 use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
-use Datatables;
+use App\Modules\Pim\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\Mailer;
-use Illuminate\Support\Facades\Route;
+use Datatables;
 
 class EmployeesController extends Controller
 {
@@ -43,17 +40,17 @@ class EmployeesController extends Controller
 
     /**
      * Return data for the resource list
-     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function getDatatable()
     {
         return Datatables::of($this->employeeRepository->getCollection(
-                [['key' => 'role', 'operator' => '=', 'value' => $this->employeeRepository->model::USER_ROLE_EMPLOYEE]],
+                [['key' => 'role', 'operator' => '=', 'value' => $this->employeeRepository->model::USER_ROLE_EMPLOYEE]], 
                 ['id', 'first_name', 'last_name', 'email']))
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [
-                    'deleteUrl' => route('pim.employees.destroy', $employee->id),
+                    'deleteUrl' => route('pim.employees.destroy', $employee->id), 
                     'editUrl' => route('pim.employees.edit', $employee->id)
                 ]);
             })
@@ -62,7 +59,7 @@ class EmployeesController extends Controller
 
     /**
      * Returns all employee details for using with select2
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $request 
      * @return \Illuminate\Http\Response
      */
     public function getSelectJson(Request $request)
@@ -100,16 +97,7 @@ class EmployeesController extends Controller
     {
         $employeeData = $request->all();
         $employeeData['role'] = $this->employeeRepository->model::USER_ROLE_EMPLOYEE;
-        $password = rand();
-        $employeeData['password'] = bcrypt($password);
         $employeeData = $this->employeeRepository->create($employeeData);
-        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . route('password/reset')];
-        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
-        {
-            $message->from(env('MAIL_EMAIL_FROM'));
-            $message->to($employeeData['email']);
-        });
-
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
         return redirect()->route('pim.employees.edit', $employeeData->id);
     }

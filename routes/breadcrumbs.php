@@ -984,7 +984,3 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
 /**
  * Time breadcrumbs end here
  */
-Breadcrumbs::register('employee.home', function($breadcrumbs)
-{
-    $breadcrumbs->push(trans('app.home'), route('employee.home'));
-});

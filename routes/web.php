@@ -378,5 +378,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::resource('leaves', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController', ['names' => [
+        'index' => 'leaves.index',
+        'create' => 'leaves.create',
+        'show' => 'leaves.show',
+        'edit' => 'leaves.edit',
+        'store' => 'leaves.store',
+        'update' => 'leaves.update',
+        'destroy' => 'leaves.destroy'
+    ]]);
 });
 Auth::routes();

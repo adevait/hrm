@@ -988,3 +988,33 @@ Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
 });
+
+Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.leave.leave_types.main'), route('employee.leaves.index'));
+});
+
+Breadcrumbs::register('employee.leaves.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.leaves.create'));
+});
+
+Breadcrumbs::register('employee.leaves.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.edit') . ': '.$breadcrumb['title'], route('employee.leaves.edit', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.update', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.leaves.update', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.destroy', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.leaves.destroy'));
+});

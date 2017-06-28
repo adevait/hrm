@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'app_setup' => \App\Http\Middleware\AppSetupRegister::class,
+        'employee' => \App\Http\Middleware\RedirectIfNotEmployee::class,
     ];
 }

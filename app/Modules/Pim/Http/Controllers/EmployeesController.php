@@ -103,7 +103,7 @@ class EmployeesController extends Controller
         $password = rand();
         $employeeData['password'] = bcrypt($password);
         $employeeData = $this->employeeRepository->create($employeeData);
-        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
+        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . route('password/reset')];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
         {
             $message->from(env('MAIL_EMAIL_FROM'));

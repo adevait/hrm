@@ -22,12 +22,10 @@ class HomeController extends Controller
      /**
      * Show the profile config page.
      *
-     * @param  App\Modules\Time\Repositories\Interfaces\TimeLogRepositoryInterface $timeLogRepository
      * @return \Illuminate\Http\Response
      */
-    public function indexEmployee(TimeLogRepository $timeLogRepository)
+    public function indexEmployee()
     {
-        $weekly_summary = $timeLogRepository->weeklySummary();
-        return view('welcome-employee', compact('weekly_summary'));
+        return view('welcome-employee');
     }
 }

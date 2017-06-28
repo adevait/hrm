@@ -18,14 +18,4 @@ class HomeController extends Controller
         $weekly_summary = $timeLogRepository->weeklySummary();
         return view('welcome', compact('weekly_summary'));
     }
-
-     /**
-     * Show the profile config page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexEmployee()
-    {
-        return view('welcome-employee');
-    }
 }

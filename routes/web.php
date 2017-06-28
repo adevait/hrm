@@ -14,6 +14,24 @@
 
 Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home')->middleware(['auth', 'admin']);
 
+/**
+ * Start Cron functions routes declaration
+ */
+Route::group(['prefix' => 'cron', 'as' => 'cron.'], function() {
+
+    /**
+     * @route cron/remind-birthdeys-to-admin
+     * @name  cron.remind-birthdeys-to-admin
+     * @function notifyBirthdeysToAdmin
+     * @controller  App\Http\Controllers\CronController
+     */
+    Route::get('notify-birthdeys-to-admin', '\App\Http\Controllers\CronController@notifyBirthdeysToAdmin')->name('notify-birthdeys-to-admin');
+});
+/**
+ * End Cron functions routes declaration
+ */
+
+
 Route::get('/storage/{path}', function($path) {
     return response()->file(storage_path().'/app/'.$path);
 })->name('storage')->where('path','(.*)')->middleware(['auth', 'admin']);

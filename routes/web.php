@@ -14,12 +14,12 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function() {
-    Route::get('/', '\App\Http\Controllers\HomeController@index')->name('home');
+    Route::get('/', '\App\Http\Controllers\Admin\HomeController@index')->name('home');
 
     Route::get('/storage/{path}', function($path) {
         return response()->file(storage_path().'/app/'.$path);
     })->name('storage')->where('path','(.*)')->middleware(['auth', 'admin']);
-    Route::resource('profile', '\App\Http\Controllers\ProfileController', 
+    Route::resource('profile', '\App\Http\Controllers\Admin\ProfileController', 
         [
             'middleware' => ['auth', 'admin'], 
             'only' => ['index', 'store'],
@@ -376,7 +376,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     });
 });
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
-    Route::get('/', '\App\Http\Controllers\HomeController@indexEmployee')
+    Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
 });
 Auth::routes();

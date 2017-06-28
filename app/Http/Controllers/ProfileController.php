@@ -30,6 +30,7 @@ class ProfileController extends Controller
     public function store(ProfileRequest $request, EmployeeRepository $employeeRepository)
     {
         $employeeData = $employeeRepository->update($request->user()->id, $request->all());
+        
         $request->session()->flash('success', trans('app.profile.update_success'));
         return redirect()->route('profile.index');
     }

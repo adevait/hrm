@@ -379,6 +379,9 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
 
+    Route::get('leaves/datatable', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController@getDatatable')
+            ->name('leaves.datatable');
+
     Route::resource('leaves', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController', ['names' => [
         'index' => 'leaves.index',
         'create' => 'leaves.create',

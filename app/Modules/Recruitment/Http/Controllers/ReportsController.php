@@ -34,7 +34,7 @@ class ReportsController extends Controller
 
     /**
      * Return data for the resource list
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function getDatatable(Request $request)
@@ -42,27 +42,27 @@ class ReportsController extends Controller
         $inputs = array_filter($request->only(['first_name', 'last_name', 'email', 'skills', 'salary_from', 'salary_to', 'contract_type_id', 'location']));
 
         return Datatables::of($this->reportRepository->getQry(
-                $inputs, 
+                $inputs,
                 ['id', 'first_name', 'last_name', 'email']))
-            ->addColumn('phone', function($candidate) {
+            ->addColumn('phone', function ($candidate) {
                 return @$candidate->contact->phone;
             })
-            ->addColumn('skills', function($candidate) {
+            ->addColumn('skills', function ($candidate) {
                 return @implode(', ', $candidate->skills->pluck('name')->toArray());
             })
-            ->addColumn('salary', function($candidate) {
+            ->addColumn('salary', function ($candidate) {
                 return @format_price($candidate->user_preferences->salary);
             })
-            ->addColumn('contract_type', function($candidate) {
+            ->addColumn('contract_type', function ($candidate) {
                 return @$candidate->user_preferences->contractType->name;
             })
-            ->addColumn('location', function($candidate) {
+            ->addColumn('location', function ($candidate) {
                 return @get_location_name($candidate->user_preferences->location);
             })
-            ->addColumn('comments', function($candidate) {
+            ->addColumn('comments', function ($candidate) {
                 return @$candidate->user_preferences->comments;
             })
-            ->addColumn('actions', function($employee){
+            ->addColumn('actions', function ($employee) {
                 return view('includes._datatable_actions', [
                     'showUrl' => route('recruitment.reports.show', $employee->id)
                 ]);

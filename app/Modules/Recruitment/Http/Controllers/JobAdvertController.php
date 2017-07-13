@@ -16,8 +16,8 @@ class JobAdvertController extends Controller
     {
         $this->jobAdvertRepository = $jobAdvertRepository;
     }
-    /**
-     * Display a listing of the resource.
+    /**     
+     * Show the Job Advert View.
      *
      * @return \Illuminate\Http\Response
      */
@@ -27,19 +27,19 @@ class JobAdvertController extends Controller
     }
     /**
      * Return data for the resource list
-     * 
+     *
      * @return \Illuminate\Http\Response
     */
     public function getDatatable()
     {
         return Datatables::of($this->jobAdvertRepository->getQry(
                 [],
-                ['id', 'title', 'description']))->addColumn('actions', function($JobAdvert){
-                return view('includes._datatable_actions', [
-                    'deleteUrl' => route('recruitment.job_advert.destroy', $JobAdvert->id ), 
+                ['id', 'title', 'description']))->addColumn('actions', function ($JobAdvert) {
+                    return view('includes._datatable_actions', [
+                    'deleteUrl' => route('recruitment.job_advert.destroy', $JobAdvert->id),
                     'editUrl' => route('recruitment.job_advert.edit', $JobAdvert->id)
                 ]);
-            })
+                })
             ->make();
     }
 
@@ -64,7 +64,7 @@ class JobAdvertController extends Controller
         $jobData = $request->all();
         $jobData = $this->jobAdvertRepository->create($jobData);
         $request->session()->flash('success', trans('app.recruitment.job_advert.store_success'));
-        return redirect()->route('recruitment.job_advert.edit', $jobData->id);    
+        return redirect()->route('recruitment.job_advert.edit', $jobData->id);
     }
 
     /**
@@ -87,7 +87,7 @@ class JobAdvertController extends Controller
     public function edit($id)
     {
         $jadvert = $this->jobAdvertRepository->getById($id);
-        return view('recruitment::job_advert.edit', ['jadvert' => $jadvert, 'breadcrumb' => ['title' => $jadvert->title, 'id' => $jadvert->id]]);        
+        return view('recruitment::job_advert.edit', ['jadvert' => $jadvert, 'breadcrumb' => ['title' => $jadvert->title, 'id' => $jadvert->id]]);
     }
 
     /**

@@ -24,11 +24,11 @@ class ReportRepository extends EloquentRepository implements ReportRepositoryInt
         ];
 
         foreach ($inputs as $key => $value) {
-            if(in_array($key, ['first_name', 'last_name', 'email'])) {
+            if (in_array($key, ['first_name', 'last_name', 'email'])) {
                 $operator = 'like';
-            } elseif($key == 'salary_from') {
+            } elseif ($key == 'salary_from') {
                 $operator = '>=';
-            } elseif($key == 'salary_to') {
+            } elseif ($key == 'salary_to') {
                 $operator = '<=';
             } else {
                 $operator = '=';
@@ -47,28 +47,28 @@ class ReportRepository extends EloquentRepository implements ReportRepositoryInt
                     break;
                 case 'skills':
                     foreach ($value as $skill) {
-                        $response->whereHas('skills', function($query) use ($skill) {
+                        $response->whereHas('skills', function ($query) use ($skill) {
                             $query->where('skill_id', $skill);
                         });
                     }
                     break;
                 case 'salary_from':
-                    $response->whereHas('user_preferences', function($query) use ($value) {
+                    $response->whereHas('user_preferences', function ($query) use ($value) {
                         $query->where('salary', '>=', $value);
                     });
                     break;
                 case 'salary_to':
-                    $response->whereHas('user_preferences', function($query) use ($value) {
+                    $response->whereHas('user_preferences', function ($query) use ($value) {
                         $query->where('salary', '<=', $value);
                     });
                     break;
                 case 'contract_type_id':
-                    $response->whereHas('user_preferences', function($query) use ($value) {
+                    $response->whereHas('user_preferences', function ($query) use ($value) {
                         $query->where('contract_type_id', '=', $value);
                     });
                     break;
                 case 'location':
-                    $response->whereHas('user_preferences', function($query) use ($value) {
+                    $response->whereHas('user_preferences', function ($query) use ($value) {
                         $query->where('location', '=', $value);
                     });
                     break;

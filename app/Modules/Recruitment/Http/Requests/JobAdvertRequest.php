@@ -3,8 +3,6 @@
 namespace App\Modules\Recruitment\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Route;
 
 class JobAdvertRequest extends FormRequest
 {

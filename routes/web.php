@@ -166,7 +166,6 @@ Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin
         'destroy' => 'candidates.destroy'
     ]]);
 
-
     Route::group(['prefix' => 'profile/{employeeId}', 'as' => 'employees.'], function($employeeId) {
         Route::resource('social-media', '\App\Modules\Pim\Http\Controllers\EmployeeSocialMediaController', ['names' => [
             'index' => 'social_media.index',

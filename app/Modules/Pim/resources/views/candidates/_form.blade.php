@@ -37,6 +37,12 @@
         {!! Form::textarea('notes', null, ['class' => 'form-control']) !!}
     </div>
 </div>
+<div class="form-group">
+    {!! Form::label('how_did_they_hear', trans('app.pim.employees.how_did_they_hear').':', ['class' => 'col-sm-3']) !!}
+    <div class="col-sm-6">
+        {!! Form::text('how_did_they_hear', null, ['class' => 'form-control']) !!}
+    </div>
+</div>
 @include('errors._form-errors')
 <hr>
 <div class="form-group">

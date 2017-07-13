@@ -50,7 +50,8 @@ class EmployeeLeaveController extends Controller
             ->addColumn('actions', function($leave){
                 return view('includes._datatable_actions', [
                     'deleteUrl' => route('leave.employee_leaves.destroy', $leave->id), 
-                    'editUrl' => route('leave.employee_leaves.edit', $leave->id)
+                    'editUrl' => route('leave.employee_leaves.edit', $leave->id),
+                    'approveUrl' => route('leave.employee_leaves.approve', $leave->id)
                 ]);
             })
             ->make();
@@ -79,6 +80,7 @@ class EmployeeLeaveController extends Controller
     public function store(EmployeeLeaveRequest $request)
     {
         $employeeLeaveData = $request->all();
+        $employeeLeaveData['approved'] = 'approved';
         if($request->hasFile('attachment')) {
             $path = $request->attachment->store('uploads/leaves');
             $employeeLeaveData['attachment'] = $path;
@@ -132,6 +134,7 @@ class EmployeeLeaveController extends Controller
             $path = $request->attachment->store('uploads/leaves');
             $employeeLeaveData['attachment'] = $path;
         }
+        dd($employeeLeaveData);
         $employeeLeaveData = $this->employeeLeaveRepository->update($id, $employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $request->session()->flash('success', trans('app.leave.employee_leaves.update_success'));
@@ -151,6 +154,26 @@ class EmployeeLeaveController extends Controller
         $this->employeeLeaveRepository->deleteUsedDays($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $this->employeeLeaveRepository->delete($id);
         $request->session()->flash('success', trans('app.leave.employee_leaves.delete_success'));
+        return redirect()->route('leave.employee_leaves.index');
+    }
+
+    /**
+     * Approves an employee request for leave
+     * 
+     * @param  integer  unique identifier for the resource
+     * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
+     * @return \Illuminate\Http\Response
+     */
+    public function approve($employee_eeaf, LeaveTypeRepository $leaveTypeRepository, Request $request)
+    {
+        // dd($request->all());
+        $employeeLeaveData = $this->employeeLeaveRepository->getById($employee_eeaf);
+        $employeeLeaveData['approved'] = 'approved';
+        $this->employeeLeaveRepository->update($employee_eeaf, array($employeeLeaveData));
+        dd($this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date));
+        dd(array($employeeLeaveData));
+
+        $request->session()->flash('success', trans('app.leave.employee_leaves.update_success'));
         return redirect()->route('leave.employee_leaves.index');
     }
 }

@@ -301,6 +301,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'employee_leaves.update',
             'destroy' => 'employee_leaves.destroy'
         ]]);
+        Route::post('employee-leaves/{employee_eeaf}/approve', '\App\Modules\Leave\Http\Controllers\EmployeeLeaveController@approve')
+            ->name('employee_leaves.approve');
+
         Route::get('calendar', '\App\Modules\Leave\Http\Controllers\CalendarController@index')->name('calendar.index');
         Route::get('render-calendar', '\App\Modules\Leave\Http\Controllers\CalendarController@renderCalendar')->name('calendar.render');
     });

@@ -44,7 +44,7 @@ class LeavesController extends Controller
     public function getDatatable(EmployeeRepository $employeeRepository)
     {
         $id = $employeeRepository->findBy('email', Auth::user()->email)->first()->id;
-        return Datatables::of($this->employeeLeaveRepository->findBy('user_id', $id, ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date']))
+        return Datatables::of($this->employeeLeaveRepository->findBy('user_id', $id, ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date', 'approved']))
             ->editColumn('user_id', function($leave) {
                 return $leave->employee->first_name.' '.$leave->employee->last_name;
             })

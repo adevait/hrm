@@ -378,5 +378,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::resource('time', '\App\Modules\Employee\Time\Http\Controllers\TimeController', ['names' => [
+            'index' => 'time.index',
+            'create' => 'time.create',
+            'show' => 'time.show',
+            'edit' => 'time.edit',
+            'store' => 'time.store',
+            'update' => 'time.update',
+            'destroy' => 'time.destroy'
+        ]]);
 });
 Auth::routes();

@@ -40,7 +40,7 @@ class EmployeeLeaveController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->employeeLeaveRepository->getCollection([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date']))
+        return Datatables::of($this->employeeLeaveRepository->getCollection([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date', 'approved']))
             ->editColumn('user_id', function($leave) {
                 return $leave->employee->first_name.' '.$leave->employee->last_name;
             })
@@ -51,7 +51,7 @@ class EmployeeLeaveController extends Controller
                 return view('includes._datatable_actions', [
                     'deleteUrl' => route('leave.employee_leaves.destroy', $leave->id), 
                     'editUrl' => route('leave.employee_leaves.edit', $leave->id),
-                    'approveUrl' => route('leave.employee_leaves.approve', $leave->id)
+                    'approveUrl' => $leave->approved == 'pending' ? route('leave.employee_leaves.approve', $leave->id) : null
                 ]);
             })
             ->make();
@@ -134,7 +134,6 @@ class EmployeeLeaveController extends Controller
             $path = $request->attachment->store('uploads/leaves');
             $employeeLeaveData['attachment'] = $path;
         }
-        dd($employeeLeaveData);
         $employeeLeaveData = $this->employeeLeaveRepository->update($id, $employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $request->session()->flash('success', trans('app.leave.employee_leaves.update_success'));
@@ -164,16 +163,13 @@ class EmployeeLeaveController extends Controller
      * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
      * @return \Illuminate\Http\Response
      */
-    public function approve($employee_eeaf, LeaveTypeRepository $leaveTypeRepository, Request $request)
+    public function approve($id, Request $request)
     {
-        // dd($request->all());
-        $employeeLeaveData = $this->employeeLeaveRepository->getById($employee_eeaf);
+        $employeeLeaveData = $this->employeeLeaveRepository->getById($id);
         $employeeLeaveData['approved'] = 'approved';
-        $this->employeeLeaveRepository->update($employee_eeaf, array($employeeLeaveData));
-        dd($this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date));
-        dd(array($employeeLeaveData));
+        $this->employeeLeaveRepository->update($id, json_decode(json_encode($employeeLeaveData), TRUE));
 
-        $request->session()->flash('success', trans('app.leave.employee_leaves.update_success'));
+        $request->session()->flash('success', trans('app.leave.employee_leaves.approve_success'));
         return redirect()->route('leave.employee_leaves.index');
     }
 }

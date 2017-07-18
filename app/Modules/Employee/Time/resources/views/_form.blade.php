@@ -38,7 +38,7 @@
 <hr>
 <div class="form-group">
     <div class="col-sm-6 col-sm-offset-3">
-        <a href="{{route('time.time_logs.index')}}" class="btn btn-default">{{trans('app.cancel')}}</a>
+        <a href="{{route('employee.time.index')}}" class="btn btn-default">{{trans('app.cancel')}}</a>
         {!! Form::submit($submitName, ['class' => 'btn btn-primary']) !!}
     </div>
 </div>
@@ -48,7 +48,7 @@
 @section('additionalJS')
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-    $(".employees").select2();
+    // $(".employees").select2();
     $(".projects").select2();
 </script>
 @endsection

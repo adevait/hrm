@@ -22,6 +22,11 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
         return $this->model->where('role', $this->model->USER_ROLE_EMPLOYEE)->get();
     }
 
+    public function findBy($attribute, $value) {
+        return $this->model->where($attribute, '=', $value)->get();
+    }
+ 
+
     public function getBirthdays($date = false)
     {
         if (!$date) {

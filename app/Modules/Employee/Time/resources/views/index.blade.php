@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <a href="{{route('time.time_logs.create')}}" class="btn btn-primary pull-right">{{trans('app.time.time_logs.add_new')}}</a>
+        <a href="{{route('employee.time.create')}}" class="btn btn-primary pull-right">{{trans('app.time.time_logs.add_new')}}</a>
     </div>
 </div>
 <div class="row">
@@ -53,7 +53,7 @@
         var table = $('#timeLogTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route("time.time_logs.datatable")}}',
+            ajax: '{{ route("employee.time.datatable")}}',
             columns: [
                 {data: 0, name: 'id'},
                 {data: 1, name: 'task_name'},

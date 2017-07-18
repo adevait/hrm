@@ -29,9 +29,8 @@ class TimeController extends Controller {
         ProjectRepository $projectRepository, 
         EmployeeRepository $employeeRepository)
     {
-        $email = Auth::user()['email'];
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->pluckName();
+        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
         return view('employee.time::index', compact('projects', 'employees'));
     }
 
@@ -43,16 +42,16 @@ class TimeController extends Controller {
     public function getDatatable()
     {
         return Datatables::of($this->timeLogRepository->getCollection([], ['id', 'task_name', 'project_id', 'user_id', 'time', 'date']))
-            ->editColumn('project_id', function($time_log) {
-                return $time_log->project->name;
+            ->editColumn('project_id', function($time) {
+                return $time->project->name;
             })
-            ->editColumn('user_id', function($time_log) {
-                return $time_log->employee->first_name.' '.$time_log->employee->last_name;
+            ->editColumn('user_id', function($time) {
+                return $time->employee->first_name.' '.$time->employee->last_name;
             })
-            ->addColumn('actions', function($time_log){
+            ->addColumn('actions', function($time){
                 return view('includes._datatable_actions', [
-                    'deleteUrl' => route('time.time_logs.destroy', $time_log->id), 
-                    'editUrl' => route('time.time_logs.edit', $time_log->id)
+                    'deleteUrl' => route('employee.time.destroy', $time->id), 
+                    'editUrl' => route('employee.time.edit', $time->id)
                 ]);
             })
             ->make();
@@ -68,7 +67,7 @@ class TimeController extends Controller {
     public function create(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->pluckName();
+        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name' , 'id');
         return view('employee.time::create', compact('projects','employees'));
     }
 
@@ -97,7 +96,7 @@ class TimeController extends Controller {
     {
         $timeLog = $this->timeLogRepository->getById($id);
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->pluckName();
+        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
         $breadcrumb = ['title' => $timeLog->task_name, 'id' => $timeLog->id];
         return view('employee.time::edit', compact('timeLog', 'projects', 'employees', 'breadcrumb'));
     }

@@ -77,6 +77,7 @@ class SalaryController extends Controller
 
     public function downloadReport(Request $request)
     {
-        dd($request->all());
+        $salary = $this->employeeSalaryRepository->getById($request->salary_id);
+        return response()->download(base_path('storage/app/' . $salary->attachment));
     }
 }

@@ -378,5 +378,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::get('salary/datatable', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController@getDatatable')
+            ->name('salary.datatable');
+    Route::post('salary/download/{user_id}/{salary_id}', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController@downloadReport')
+            ->name('salary.download');
+    Route::resource('salary', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController', ['names' => [
+        'index' => 'salary.index',
+        'create' => 'salary.create',
+        'show' => 'salary.show'
+    ]]);
 });
 Auth::routes();

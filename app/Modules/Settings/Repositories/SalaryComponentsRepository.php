@@ -14,4 +14,8 @@ class SalaryComponentsRepository extends EloquentRepository implements SalaryCom
     {
         $this->model = $model;
     }
+
+    public function findBy($attribute, $value) {
+        return $this->model->where($attribute, '=', $value)->get();
+    }
 }

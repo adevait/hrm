@@ -14,4 +14,8 @@ class EmployeeSalaryRepository extends EloquentRepository implements EmployeeSal
     {
         $this->model = $model;
     }
+
+    public function findBy($attribute, $value) {
+        return $this->model->where($attribute, '=', $value)->get();
+    }
 }

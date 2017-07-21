@@ -988,3 +988,26 @@ Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
 });
+
+Breadcrumbs::register('employee.salary.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employees.salaries.main'), route('employee.salary.index'));
+});
+
+Breadcrumbs::register('employee.salary.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.salary.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.salary.show', $breadcrumb['id']));
+});
+// Breadcrumbs::register('employee.salary.create', function($breadcrumbs)
+// {
+//     $breadcrumbs->parent('time.time_logs.index');
+//     $breadcrumbs->push(trans('app.add_record'), route('employee.salary.create'));
+// });
+
+// Breadcrumbs::register('employee.salary.edit', function($breadcrumbs, $breadcrumb)
+// {
+//     $breadcrumbs->parent('time.time_logs.index');
+//     $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('employee.salary.edit', $breadcrumb['id']));
+// });

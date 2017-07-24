@@ -988,3 +988,9 @@ Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
 });
+
+Breadcrumbs::register('employee.documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.pim.employees.documents.main'), route('employee.documents.index'));
+});

@@ -378,5 +378,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::get('documents/datatable', '\App\Modules\Employee\Documents\Http\Controllers\DocumentsController@getDatatable')
+            ->name('documents.datatable');
+    Route::post('documents/download/{user_id}/{document_id}', '\App\Modules\Employee\Documents\Http\Controllers\DocumentsController@downloadDocument')
+            ->name('documents.download');
+    Route::resource('documents', '\App\Modules\Employee\Documents\Http\Controllers\DocumentsController', ['names' => [
+            'index' => 'documents.index',
+            'create' => 'documents.create',
+            'show' => 'documents.show',
+            'edit' => 'documents.edit',
+            'store' => 'documents.store',
+            'update' => 'documents.update',
+            'destroy' => 'documents.destroy'
+        ]]);
 });
 Auth::routes();

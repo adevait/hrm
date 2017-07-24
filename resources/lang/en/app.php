@@ -410,5 +410,10 @@ return [
             'update_success' => 'Time log was successfully updated.',
             'delete_success' => 'Time log was successfully deleted.',
         ]
+    ],
+    'employee' => [
+        'salary' => [
+            'main' => 'Salary'
+        ]
     ]
 ];

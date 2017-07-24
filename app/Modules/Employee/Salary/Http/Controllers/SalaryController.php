@@ -67,16 +67,21 @@ class SalaryController extends Controller
     public function show($id, SalaryComponentsRepository $salaryComponentsRepository, SalariesSalaryComponentsRepository $salariesSalaryComponentsRepository)
     {
         $employee = Auth::user();
-        $salaryList = $this->employeeSalaryRepository->getById($id);
-        // $salaryId = $salaryList->first()->id;
-        // dd($salaryId);
-        // $salaryComponentList = $this->salariesSalaryComponentsRepository->findBy('salary_component_id', )
-        $breadcrumb = ['title' => $employee->first_name.' '.$employee->last_name, 'id' => $employee->id];
-        return view('employee.salary::show', compact('salaryList', 'breadcrumb'));
+        $salaryComponents = $salaryComponentsRepository->getAllOrdered('type', 'asc');
+        $salary = $this->employeeSalaryRepository->getById($id);
+        $salary->components = $salary->components->pluck('value', 'salary_component_id');
+        $breadcrumb = [
+            'parent_id' => $employee->id,
+            'parent_title' => $employee->first_name.' '.$employee->last_name, 
+            'id' => $salary->id,
+            'title' => '#'.$salary->id
+        ];
+        return view('employee.salary::show', compact('salary', 'breadcrumb', 'salaryComponents'));
     }
 
     public function downloadReport(Request $request)
     {
-        dd($request->all());
+        $salary = $this->employeeSalaryRepository->getById($request->salary_id);
+        return response()->download(base_path('storage/app/' . $salary->attachment));
     }
 }

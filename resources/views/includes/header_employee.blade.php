@@ -16,7 +16,7 @@
       <!-- MENU ITEMS GO HERE -->
       <ul class="nav navbar-nav">
         <li class="{{ $current == 'employee.salary' ? 'active' : ''}}">
-          <a href="{{route('employee.salary.index')}}"> {{trans('app.salary.main')}}
+          <a href="{{route('employee.salary.index')}}"> {{trans('app.employee.salary.main')}}
               @if($current == 'employee.salary') 
                 <span class="sr-only">({{trans('app.current')}})</span>
               @endif

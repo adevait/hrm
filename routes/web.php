@@ -385,12 +385,7 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
             ->name('documents.download');
     Route::resource('documents', '\App\Modules\Employee\Documents\Http\Controllers\DocumentsController', ['names' => [
             'index' => 'documents.index',
-            'create' => 'documents.create',
-            'show' => 'documents.show',
-            'edit' => 'documents.edit',
-            'store' => 'documents.store',
-            'update' => 'documents.update',
-            'destroy' => 'documents.destroy'
+            'show' => 'documents.show'
         ]]);
 });
 Auth::routes();

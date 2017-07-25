@@ -57,31 +57,17 @@ class DocumentsController extends Controller
                 'key' => 'user_id', 
                 'operator' => '=', 
                 'value' =>  $employeeId
-            ]], ['id', 'name', 'attachment', 'user_id']))
+            ]], ['id', 'name', 'attachment', 'user_id', 'description']))
             ->editColumn('attachment', function($record) {
                 return '<a href="'.route('storage',$record->attachment).'">'.route('storage',$record->attachment).'</a>';
             })
             ->addColumn('actions', function($record){
                 return view('includes._datatable_actions', [
-                    // 'deleteUrl' => route('employee.documents.destroy', [$record->user_id, $record->id]), 
-                    // 'editUrl' => route('employee.documents.edit', [$record->user_id, $record->id]),
                     'downloadUrl' => route('employee.documents.download', [$record->user_id, $record->id])
                 ]);
             })
             ->removeColumn('user_id')
             ->make();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  integer  unique identifier for the related employee resource
-     * @param  integer  unique identifier for the resource
-     * @return \Illuminate\Http\Response
-     */
-    public function show($employeeId, $id)
-    {
-        //
     }
 
     public function downloadDocument(Request $request) 

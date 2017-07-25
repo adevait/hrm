@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main_employee')
 @section('content')
 <div class="row">
     <div class="col-sm-12">
@@ -6,19 +6,19 @@
             <div class="custom-panel-heading">{{trans('app.pim.employees.documents.main')}}</div>
             <table class="table table-bordered table-hover" id="documentsTable">
                 <thead>
-                    <!-- <th>{{trans('app.id')}}</th> -->
                     <th>{{trans('app.pim.employees.documents.name')}}</th>
                     <th>{{trans('app.pim.employees.documents.attachment')}}</th>
+                    <th>{{trans('app.pim.employees.documents.description')}}</th>
                     <th></th>
                 </thead>
                 <tfoot>
-                    <!-- <th>
-                        <input type="text" placeholder="{{trans('app.id')}}"/>
-                    </th> -->
                     <th>
                         <input type="text" placeholder="{{trans('app.pim.employees.documents.name')}}"/>
                     </th>
                     <th></th>
+                    <th>
+                        <input type="text" placeholder="{{trans('app.pim.employees.documents.description')}}"/>
+                    </th>
                     <th></th>
                 </tfoot>
             </table>
@@ -38,10 +38,10 @@
             serverSide: true,
             ajax: '{{ route("employee.documents.datatable", Route::input("employeeId"))}}',
             columns: [
-                // {data: 0, name: 'id'},
                 {data: 1, name: 'name'},
                 {data: 2, name: 'attachment', sortable: false, searchable: false},
-                {data: 3, name: 'actions', sortable: false, searchable: false}
+                {data: 3, name: 'description', sortable: false},
+                {data: 4, name: 'actions', sortable: false, searchable: false}
             ]
         });
         table.columns().every(function () {

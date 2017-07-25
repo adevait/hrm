@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main_employee')
 @section('content')
 <form class="form-horizontal">
 @foreach($salaryComponents as $key => $component)

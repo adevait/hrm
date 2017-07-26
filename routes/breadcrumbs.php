@@ -984,6 +984,30 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
 /**
  * Time breadcrumbs end here
  */
+
+Breadcrumbs::register('dashboard.index', function($breadcrumbs)
+{
+    $breadcrumbs->push(trans('app.home'), route('dashboard.index'));
+});
+// Home > Dashboard > Documents
+Breadcrumbs::register('dashboard.documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard.index');
+    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('dashboard.documents.index'));
+});
+
+Breadcrumbs::register('dashboard.documents.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard.documents.index');
+    $breadcrumbs->push(trans('app.dashboard.documents.add_new'), route('dashboard.documents.create'));
+});
+
+Breadcrumbs::register('dashboard.documents.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('dashboard.documents.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('dashboard.documents.edit', $breadcrumb['id']));
+});
+
 Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));

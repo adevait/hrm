@@ -27,5 +27,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('includes.header', function($view) {
             $view->with('current', preg_replace('/\..*/', '', Route::currentRouteName()));
         });
+        view()->composer('includes.header_employee', function($view) {
+            $view->with('current', preg_replace('/\..*/', '', Route::currentRouteName()));
+        });
     }
 }

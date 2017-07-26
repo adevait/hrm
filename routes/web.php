@@ -374,6 +374,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'destroy' => 'time_logs.destroy'
         ]]);
     });
+
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'admin']], function() {
+         Route::get('/', function() {
+            return view('dashboard::index');
+        })->name('index');
+        Route::get('documents/datatable', '\App\Modules\Dashboard\Http\Controllers\DashboardDocumentsController@getDatatable')
+            ->name('documents.datatable');
+        Route::resource('documents', '\App\Modules\Dashboard\Http\Controllers\DashboardDocumentsController', ['names' => [
+            'index' => 'documents.index',
+            'create' => 'documents.create',
+            'show' => 'documents.show',
+            'edit' => 'documents.edit',
+            'store' => 'documents.store',
+            'update' => 'documents.update',
+            'destroy' => 'documents.destroy'
+        ]]);      
+    });
 });
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')

@@ -78,9 +78,8 @@ class DashboardDocumentsController extends Controller
         return redirect()->route('dashboard.documents.edit', [$documentData->id]);
     }
 
-    public function destroy($id, DashboardDocumentRequest $request) {
+    public function destroy($id) {
 		$this->dashboardDocumentsRepository->delete($id);
-        $request->session()->flash('success', trans('app.dashboard.documents.delete_success'));
         
         return redirect()->route('dashboard.documents.index');
     }

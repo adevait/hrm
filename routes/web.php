@@ -395,5 +395,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::get('dashboard-documents/datatable', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController@getDatatable')->name('dashboard_documents.datatable');
+    Route::resource('dashboard-documents', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController', ['names' => [
+            'index' => 'dashboard_documents.index',
+            'create' => 'dashboard_documents.create',
+            'show' => 'dashboard_documents.show',
+            'edit' => 'dashboard_documents.edit',
+            'store' => 'dashboard_documents.store',
+            'update' => 'dashboard_documents.update',
+            'destroy' => 'dashboard_documents.destroy'
+    ]]); 
 });
 Auth::routes();

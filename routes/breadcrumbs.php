@@ -985,10 +985,17 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
  * Time breadcrumbs end here
  */
 
+/**
+ * Dashboard breadcrumbs start here
+ */
 Breadcrumbs::register('dashboard.index', function($breadcrumbs)
 {
-    $breadcrumbs->push(trans('app.home'), route('dashboard.index'));
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('app.dashboard.main'), route('dashboard.index'));
 });
+/**
+ * Document breadcrumbs start here
+ */
 // Home > Dashboard > Documents
 Breadcrumbs::register('dashboard.documents.index', function($breadcrumbs)
 {
@@ -998,7 +1005,7 @@ Breadcrumbs::register('dashboard.documents.index', function($breadcrumbs)
 
 Breadcrumbs::register('dashboard.documents.create', function($breadcrumbs)
 {
-    $breadcrumbs->parent('dashboard.documents.index');
+    $breadcrumbs->parent('dashboard.z.index');
     $breadcrumbs->push(trans('app.dashboard.documents.add_new'), route('dashboard.documents.create'));
 });
 
@@ -1008,7 +1015,22 @@ Breadcrumbs::register('dashboard.documents.edit', function($breadcrumbs, $breadc
     $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('dashboard.documents.edit', $breadcrumb['id']));
 });
 
+/**
+ * Document breadcrumbs end here
+ */
+
+/**
+ * Dashboard breadcrumbs end here
+ */
+
+
 Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
+});
+
+Breadcrumbs::register('employee.dashboard_documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('employee.dashboard_documents.index'));
 });

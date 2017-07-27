@@ -381,7 +381,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         })->name('index');
         Route::get('documents/datatable', '\App\Modules\Dashboard\Http\Controllers\DashboardDocumentsController@getDatatable')
             ->name('documents.datatable');
-        Route::post('documents/download/{document_id}', '\App\Modules\Employee\Dashboard\Http\Controllers\DashboardDocumentsController@download')->name('documents.download');
+        Route::post('documents/download/{document_id}', '\App\Modules\Dashboard\Http\Controllers\DashboardDocumentsController@download')->name('documents.download');
         Route::resource('documents', '\App\Modules\Dashboard\Http\Controllers\DashboardDocumentsController', ['names' => [
             'index' => 'documents.index',
             'create' => 'documents.create',

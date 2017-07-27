@@ -1005,7 +1005,7 @@ Breadcrumbs::register('dashboard.documents.index', function($breadcrumbs)
 
 Breadcrumbs::register('dashboard.documents.create', function($breadcrumbs)
 {
-    $breadcrumbs->parent('dashboard.z.index');
+    $breadcrumbs->parent('dashboard.documents.index');
     $breadcrumbs->push(trans('app.dashboard.documents.add_new'), route('dashboard.documents.create'));
 });
 

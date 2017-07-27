@@ -14,7 +14,7 @@ class UpdateUserLeavesAddApproved extends Migration
     public function up()
     {
         Schema::table('user_leaves', function (Blueprint $table) {
-            $table->string('approved', 100)->nullable()->after('attachment');
+            $table->boolean('approved')->nullable()->after('attachment');
         });
     }
 

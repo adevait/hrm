@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <a href="{{route('employee.leaves.create')}}" class="btn btn-primary pull-right">{{trans('app.leave.employee_leaves.add_new')}}</a>
+        <a href="{{route('employee.leaves.create')}}" class="btn btn-primary pull-right">{{trans('app.employee.leaves.request')}}</a>
     </div>
 </div>
 <div class="row">
@@ -12,7 +12,6 @@
             <table class="table table-bordered table-hover" id="employeeLeavesTable">
                 <thead>
                     <th>{{trans('app.id')}}</th>
-                    <th>{{trans('app.leave.employee_leaves.employee')}}</th>
                     <th>{{trans('app.leave.employee_leaves.leave')}}</th>
                     <th>{{trans('app.leave.employee_leaves.start_date')}}</th>
                     <th>{{trans('app.leave.employee_leaves.end_date')}}</th>
@@ -23,7 +22,6 @@
                     <th>
                         <input type="text" placeholder="{{trans('app.id')}}"/>
                     </th>
-                    <th></th>
                     <th>
                         {!! Form::select('leave_type_id', $leaveTypes, null, ['placeholder' => trans('app.leave.employee_leaves.leave')]) !!}
                     </th>
@@ -54,12 +52,11 @@
             ajax: '{{ route("employee.leaves.datatable")}}',
             columns: [
                 {data: 0, name: 'id'},
-                {data: 1, name: 'user_id'},
-                {data: 2, name: 'leave_type_id'},
-                {data: 3, name: 'start_date'},
-                {data: 4, name: 'end_date'},
-                {data: 5, name: 'approved'},
-                {data: 6, name: 'actions', sortable: false, searchable: false}
+                {data: 1, name: 'leave_type_id'},
+                {data: 2, name: 'start_date'},
+                {data: 3, name: 'end_date'},
+                {data: 4, name: 'approved'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
             ]
         });
         table.columns().every(function () {

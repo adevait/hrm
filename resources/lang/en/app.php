@@ -412,5 +412,17 @@ return [
             'update_success' => 'Time log was successfully updated.',
             'delete_success' => 'Time log was successfully deleted.',
         ]
+    ],
+    'employee' => [
+        'leaves' => [
+            'main' => 'Leaves',
+            'details' => 'Leave Details',
+            'approved' => 'Approved',
+            'pending' => 'Pending',
+            'request' => 'Request a leave',
+            'store_success' => 'Leave request is successfully sent.',
+            'update_success' => 'Leave request is successfully updated.',
+            'delete_success' => 'Leave request is successfully deleted.',
+        ]
     ]
 ];

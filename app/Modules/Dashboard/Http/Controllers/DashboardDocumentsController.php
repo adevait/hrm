@@ -34,7 +34,8 @@ class DashboardDocumentsController extends Controller
            ->addColumn('actions', function($document){
                 return view('includes._datatable_actions', [
                     'editUrl' => route('dashboard.documents.edit', $document->id),
-                    'deleteUrl' => route('dashboard.documents.destroy', $document->id)
+                    'deleteUrl' => route('dashboard.documents.destroy', $document->id),
+                    'downloadUrl' => route('dashboard.documents.download', $document->id)
                 ]);
             })
             ->make();
@@ -83,6 +84,12 @@ class DashboardDocumentsController extends Controller
         $request->session()->flash('success', trans('app.dashboard.documents.delete_success'));
 
         return redirect()->route('dashboard.documents.index');
+    }
+
+    public function download($id)
+    {
+        $document = $this->dashboardDocumentsRepository->getById($id);
+        return response()->download(base_path('storage/app/' . $document->attachment));
     }
 
 }

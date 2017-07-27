@@ -69,6 +69,8 @@
                 }
             });
         });
+
+        $('#dashboardDocumentsTable').removeClass('dataTable');
     });
 </script>
 @endsection

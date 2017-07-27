@@ -40,9 +40,9 @@ class EmployeeDashboardDocumentsController extends Controller
             ->make();
     }
 
-    public function download($documentId) 
+    public function download($id) 
     {
-        $document = $this->dashboardDocumentsRepository->getById($documentId);
+        $document = $this->dashboardDocumentsRepository->getById($id);
         return response()->download(base_path('storage/app/' . $document->attachment));
     }
 }

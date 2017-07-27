@@ -33,6 +33,7 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'home' => 'Home',
+    'download' => 'Download',
 
     'profile' => [
         'main' => 'Profile',

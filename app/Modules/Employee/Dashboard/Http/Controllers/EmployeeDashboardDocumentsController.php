@@ -7,6 +7,7 @@ use App\Modules\Dashboard\Repositories\Interfaces\DashboardDocumentsRepositoryIn
 use App\Modules\Dashboard\Http\Requests\DashboardDocumentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Datatables;
 
 class EmployeeDashboardDocumentsController extends Controller 
@@ -33,14 +34,15 @@ class EmployeeDashboardDocumentsController extends Controller
         return Datatables::of($this->dashboardDocumentsRepository->getCollection([], ['id', 'name', 'description', 'attachment']))
            ->addColumn('actions', function($document){
                 return view('includes._datatable_actions', [
-                    'showUrl' => route('employee.dashboard_documents.show', $document->id)
+                    'downloadUrl' => route('employee.dashboard_documents.download', $document->id)
                 ]);
             })
             ->make();
     }
 
-    public function show($id) 
+    public function download($documentId) 
     {
-
+        $document = $this->dashboardDocumentsRepository->getById($documentId);
+        return response()->download(base_path('storage/app/' . $document->attachment));
     }
 }

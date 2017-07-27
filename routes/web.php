@@ -397,14 +397,10 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
     ->name('home');
 
     Route::get('dashboard-documents/datatable', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController@getDatatable')->name('dashboard_documents.datatable');
+    Route::post('dashboard-documents/download/{document_id}', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController@download')->name('dashboard_documents.download');
     Route::resource('dashboard-documents', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController', ['names' => [
             'index' => 'dashboard_documents.index',
-            'create' => 'dashboard_documents.create',
-            'show' => 'dashboard_documents.show',
-            'edit' => 'dashboard_documents.edit',
-            'store' => 'dashboard_documents.store',
-            'update' => 'dashboard_documents.update',
-            'destroy' => 'dashboard_documents.destroy'
+            'show' => 'dashboard_documents.show'
     ]]); 
 });
 Auth::routes();

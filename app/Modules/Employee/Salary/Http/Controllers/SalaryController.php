@@ -31,10 +31,9 @@ class SalaryController extends Controller
      */
     public function index()
     {
-        $employeeId = Auth::user()->id;
-        $employee = $this->employeeRepository->getById($employeeId);
+        $employee = Auth::user();
         $breadcrumb = [
-            'parent_id' => $employeeId, 
+            'parent_id' => $employee->id, 
             'parent_title' => $employee->first_name.' '.$employee->last_name
         ];
         return view('employee.salary::index', compact('breadcrumb'));
@@ -48,19 +47,13 @@ class SalaryController extends Controller
      */
     public function getDatatable()
     {
-        $employeeId = Auth::user()->id;
-        return Datatables::of($this->employeeSalaryRepository->getQry([[
-                'key' => 'user_id', 
-                'operator' => '=', 
-                'value' =>  $employeeId
-            ]], ['id', 'gross_total', 'nett_total', 'payment_date', 'user_id']))
+        return Datatables::of($this->employeeSalaryRepository->findBy('user_id', Auth::user()->id, ['id', 'gross_total', 'nett_total', 'payment_date']))
             ->addColumn('actions', function($record){
                 return view('includes._datatable_actions', [
                     'showUrl' => route('employee.salary.show', $record->id),
                     'downloadUrl' => route('employee.salary.download', [$record->user_id, $record->id])
                 ]);
             })
-            ->removeColumn('user_id')
             ->make();
     }
 
@@ -69,7 +62,11 @@ class SalaryController extends Controller
         $employee = Auth::user();
         $salaryComponents = $salaryComponentsRepository->getAllOrdered('type', 'asc');
         $salary = $this->employeeSalaryRepository->getById($id);
-        $salary->components = $salary->components->pluck('value', 'salary_component_id');
+        $components = [];
+        for($i = 0; $i < count($salary->components); $i++) {
+            $components[$i] = $salary->components[$i]->value;
+        }
+        $salary->components = $components;
         $breadcrumb = [
             'parent_id' => $employee->id,
             'parent_title' => $employee->first_name.' '.$employee->last_name, 
@@ -82,6 +79,7 @@ class SalaryController extends Controller
     public function downloadReport(Request $request)
     {
         $salary = $this->employeeSalaryRepository->getById($request->salary_id);
+        checkValidity($salary->user_id);
         return response()->download(base_path('storage/app/' . $salary->attachment));
     }
 }

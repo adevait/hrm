@@ -10,6 +10,6 @@
 @if(@$downloadUrl)
 <form  action="{{$downloadUrl}}" method="POST">
 	{{ Form::token() }} 
-	<button type="submit" class="btn btn-sm btn-default">{{trans('app.download')}}</button>
+	<button type="submit" class="btn btn-sm btn-primary">{{trans('app.download')}}</button>
 </form>
 @endif

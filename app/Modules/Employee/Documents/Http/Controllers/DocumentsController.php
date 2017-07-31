@@ -17,10 +17,7 @@ class DocumentsController extends Controller
     private $employeeRepository;
     private $employeeDocumentRepository;
 
-    public function __construct(
-            EmployeeRepository $employeeRepository,
-            EmployeeDocumentRepository $employeeDocumentRepository
-        )
+    public function __construct(EmployeeRepository $employeeRepository,EmployeeDocumentRepository $employeeDocumentRepository)
     {
         $this->employeeRepository = $employeeRepository;
         $this->employeeDocumentRepository = $employeeDocumentRepository;
@@ -52,12 +49,7 @@ class DocumentsController extends Controller
      */
     public function getDatatable()
     {
-        $employeeId = Auth::user()->id;
-        return Datatables::of($this->employeeDocumentRepository->getQry([[
-                'key' => 'user_id', 
-                'operator' => '=', 
-                'value' =>  $employeeId
-            ]], ['id', 'name', 'attachment', 'user_id', 'description']))
+        return Datatables::of($this->employeeDocumentRepository->findBy('user_id', Auth::user()->id, ['id', 'name', 'attachment', 'user_id', 'description']))
             ->editColumn('attachment', function($record) {
                 return '<a href="'.route('storage',$record->attachment).'">'.route('storage',$record->attachment).'</a>';
             })
@@ -73,6 +65,7 @@ class DocumentsController extends Controller
     public function downloadDocument(Request $request) 
     {
         $document = $this->employeeDocumentRepository->getById($request->document_id);
+        checkValidity($document->user_id);
         return response()->download(base_path('storage/app/' . $document->attachment));
     }
 

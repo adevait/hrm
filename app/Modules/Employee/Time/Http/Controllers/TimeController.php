@@ -4,6 +4,7 @@ namespace App\Modules\Employee\Time\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use App\Modules\Time\Http\Requests\TimeLogRequest;
+use App\Modules\Employee\Time\Http\Requests\EmployeeTimeLogRequest;
 use App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface as ProjectRepository;
 use App\Modules\Time\Repositories\Interfaces\TimeLogRepositoryInterface as TimeLogRepository;
 use Datatables;
@@ -25,9 +26,7 @@ class TimeController extends Controller {
      * @param  App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function index(
-        ProjectRepository $projectRepository, 
-        EmployeeRepository $employeeRepository)
+    public function index(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
         $projects = $projectRepository->getAll()->pluck('name', 'id');
         $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
@@ -41,12 +40,9 @@ class TimeController extends Controller {
      */
     public function getDatatable()
     {
-        return Datatables::of($this->timeLogRepository->getCollection([], ['id', 'task_name', 'project_id', 'user_id', 'time', 'date']))
+        return Datatables::of($this->timeLogRepository->findBy('user_id', Auth::user()->id, ['id', 'task_name', 'project_id', 'time', 'date']))
             ->editColumn('project_id', function($time) {
                 return $time->project->name;
-            })
-            ->editColumn('user_id', function($time) {
-                return $time->employee->first_name.' '.$time->employee->last_name;
             })
             ->addColumn('actions', function($time){
                 return view('includes._datatable_actions', [
@@ -67,19 +63,19 @@ class TimeController extends Controller {
     public function create(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name' , 'id');
-        return view('employee.time::create', compact('projects','employees'));
+        return view('employee.time::create', compact('projects'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Modules\Settings\Http\Requests\TimeLogRequest  $request
+     * @param  \App\Modules\Employee\Time\Http\Requests\EmployeeTimeLogRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TimeLogRequest $request)
+    public function store(EmployeeTimeLogRequest $request)
     {
-        $companyData = $this->timeLogRepository->create($request->all());
+        $companyData = $request->all()+['user_id' => Auth::user()->id];
+        $companyData = $this->timeLogRepository->create($companyData);
         $request->session()->flash('success', trans('app.time.time_logs.store_success'));
         return redirect()->route('employee.time.edit', $companyData->id);
     }
@@ -95,22 +91,25 @@ class TimeController extends Controller {
     public function edit($id, ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
         $timeLog = $this->timeLogRepository->getById($id);
+        checkValidity($timeLog->user_id);
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
         $breadcrumb = ['title' => $timeLog->task_name, 'id' => $timeLog->id];
-        return view('employee.time::edit', compact('timeLog', 'projects', 'employees', 'breadcrumb'));
+        return view('employee.time::edit', compact('timeLog', 'projects', 'breadcrumb'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  integer  unique identifier for the resource
-     * @param  \App\Modules\Settings\Http\Requests\TimeLogRequest  $request
+     * @param  \App\Modules\Employee\Time\Http\Requests\TimeLogRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update($id, TimeLogRequest $request)
+    public function update($id, EmployeeTimeLogRequest $request)
     {
-        $timeLogData = $this->timeLogRepository->update($id, $request->all());
+        $timeLogData = $this->timeLogRepository->getById($id);
+        checkValidity($timeLogData->user_id);
+        $timeLogData = $request->all()+['user_id' => Auth::user()->id];
+        $timeLogData = $this->timeLogRepository->update($id, $timeLogData);
         $request->session()->flash('success', trans('app.time.time_logs.update_success'));
         return redirect()->route('employee.time.edit', $timeLogData->id);
     }
@@ -124,6 +123,8 @@ class TimeController extends Controller {
      */
     public function destroy($id, Request $request)
     {
+        $timeLogData = $this->timeLogRepository->getById($id);
+        checkValidity($timeLogData->user_id);
         $this->timeLogRepository->delete($id);
         $request->session()->flash('success', trans('app.time.time_logs.delete_success'));
         return redirect()->route('employee.time.index');

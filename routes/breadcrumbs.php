@@ -1008,9 +1008,3 @@ Breadcrumbs::register('employee.time.edit', function($breadcrumbs, $breadcrumb)
     $breadcrumbs->parent('employee.time.index');
     $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('employee.time.edit', $breadcrumb['id']));
 });
-
-Breadcrumbs::register('employee.time.show', function($breadcrumbs, $breadcrumb)
-{
-    $breadcrumbs->parent('employee.time.index');
-    $breadcrumbs->push($breadcrumb['title'], route('employee.time.show', $breadcrumb['id']));
-});

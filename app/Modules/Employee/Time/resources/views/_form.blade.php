@@ -17,12 +17,6 @@
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('user_id', trans('app.time.time_logs.employee'), ['class' => 'col-sm-3']) !!}
-    <div class="col-sm-6">
-        {!! Form::select('user_id', $employees, null, ['class' => 'form-control employees']) !!}
-    </div>
-</div>
-<div class="form-group">
     {!! Form::label('time', trans('app.time.time_logs.time').':', ['class' => 'col-sm-3']) !!}
     <div class="col-sm-6">
         {!! Form::text('time', null, ['class' => 'form-control']) !!}
@@ -48,7 +42,6 @@
 @section('additionalJS')
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-    // $(".employees").select2();
     $(".projects").select2();
 </script>
 @endsection

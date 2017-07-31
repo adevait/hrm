@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main_employee')
 @section('content')
 <div class="row">
     <div class="col-sm-12">
@@ -14,7 +14,6 @@
                     <th>{{trans('app.id')}}</th>
                     <th>{{trans('app.time.time_logs.task_name')}}</th>
                     <th>{{trans('app.time.time_logs.project')}}</th>
-                    <th>{{trans('app.time.time_logs.employee')}}</th>
                     <th>{{trans('app.time.time_logs.time')}}</th>
                     <th>{{trans('app.time.time_logs.date')}}</th>
                     <th></th>
@@ -28,9 +27,6 @@
                     </th>
                     <th>
                         {!! Form::select('projects_id', $projects, null, ['placeholder' => trans('app.time.time_logs.project')]) !!}
-                    </th>
-                    <th>
-                        {!! Form::select('user_id', $employees, null, ['placeholder' => trans('app.time.time_logs.employee')]) !!}
                     </th>
                     <th></th>
                     <th>
@@ -58,10 +54,9 @@
                 {data: 0, name: 'id'},
                 {data: 1, name: 'task_name'},
                 {data: 2, name: 'project_id'},
-                {data: 3, name: 'user_id'},
-                {data: 4, name: 'time', sortable: true, searchable: false},
-                {data: 5, name: 'date'},
-                {data: 6, name: 'actions', sortable: false, searchable: false}
+                {data: 3, name: 'time', sortable: true, searchable: false},
+                {data: 4, name: 'date'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
             ]
         });
         table.columns().every(function () {

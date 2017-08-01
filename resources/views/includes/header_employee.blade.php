@@ -22,6 +22,13 @@
               @endif
           </a>
         </li>
+        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
+          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
+            @if($current == 'employee.dashboard_documents') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+            @endif
+            </a>
+        </li>
         <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
           <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
               @if($current == 'employee.time') 

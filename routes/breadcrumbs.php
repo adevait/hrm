@@ -1029,12 +1029,6 @@ Breadcrumbs::register('employee.home', function($breadcrumbs)
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
 });
 
-Breadcrumbs::register('employee.dashboard_documents.index', function($breadcrumbs)
-{
-    $breadcrumbs->parent('employee.home');
-    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('employee.dashboard_documents.index'));
-});
-
 Breadcrumbs::register('employee.time.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('employee.home');

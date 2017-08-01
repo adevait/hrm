@@ -426,7 +426,7 @@ return [
             'store_success' => 'Dashboard document was successfully added.',
             'update_success' => 'Dashboard document was successfully updated.',
             'delete_success' => 'Dashboard document was successfully deleted.',
-        ]
+        ],
     ],
     'employee' => [
         'leaves' => [

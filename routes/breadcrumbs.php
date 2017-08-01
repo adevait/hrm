@@ -1076,3 +1076,9 @@ Breadcrumbs::register('employee.leaves.edit', function($breadcrumbs, $breadcrumb
     $breadcrumbs->parent('employee.leaves.index');
     $breadcrumbs->push(trans('app.edit') . ': '.$breadcrumb['title'], route('employee.leaves.edit', $breadcrumb['id']));
 });
+
+Breadcrumbs::register('employee.dashboard_documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('employee.dashboard_documents.index'));
+});

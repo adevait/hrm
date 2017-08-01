@@ -19,7 +19,11 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
 
     public function getAll()
     {
-        return $this->model->where('role', $this->model::USER_ROLE_EMPLOYEE)->get();
+        return $this->model->where('role', $this->model->USER_ROLE_EMPLOYEE)->get();
+    }
+
+    public function findBy($attribute, $value, $columns = array('*')) {
+        return $this->model->where($attribute, '=', $value)->get($columns);
     }
 
     public function getBirthdays($date = false)
@@ -50,7 +54,6 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
         return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))
             ->where('role', $this->model::USER_ROLE_EMPLOYEE)
             ->pluck('name', 'id');
-
     }
 
     public function getSelect2Data($filter = '', $offset = 0, $limit = 10)

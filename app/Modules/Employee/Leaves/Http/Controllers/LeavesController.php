@@ -31,7 +31,7 @@ class LeavesController extends Controller
     public function index(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
+        $employees = $employeeRepository->getById(Auth::user()->id)->pluck('first_name', 'id');
         
         return view('employee.leaves::index', compact('leaveTypes','employees'));
     }
@@ -43,7 +43,11 @@ class LeavesController extends Controller
      */
     public function getDatatable(EmployeeRepository $employeeRepository)
     {
-        return Datatables::of($this->employeeLeaveRepository->findBy('user_id', Auth::user()->id, ['id', 'leave_type_id', 'start_date', 'end_date', 'approved']))
+        return Datatables::of($this->employeeLeaveRepository->getCollection([[
+                'key' => 'user_id',
+                'operator' => '=',
+                'value' => Auth::user()->id
+            ]], ['id', 'leave_type_id', 'start_date', 'end_date', 'approved']))
             ->editColumn('leave_type_id', function($leave) {
                 return $leave->leave_type->name;
             })
@@ -75,7 +79,7 @@ class LeavesController extends Controller
     public function create(LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
+        $employees = $employeeRepository->getById(Auth::user()->id)->pluck('first_name', 'id');
         
         return view('employee.leaves::create', compact('leaveTypes', 'employees'));
     }
@@ -121,7 +125,7 @@ class LeavesController extends Controller
         checkValidity($employeeLeave->user_id);
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $breadcrumb = ['title' => '#'.$employeeLeave->id, 'id' => $employeeLeave->id];
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
+        $employees = $employeeRepository->getById(Auth::user()->id)->pluck('first_name', 'id');
         return view('employee.leaves::edit', compact('employeeLeave', 'leaveTypes', 'breadcrumb','employees'));
     }
 

@@ -409,6 +409,16 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
             'show' => 'documents.show'
         ]]);
 
+    Route::get('salary/datatable', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController@getDatatable')
+            ->name('salary.datatable');
+    Route::post('salary/download/{user_id}/{salary_id}', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController@downloadReport')
+            ->name('salary.download');
+    Route::resource('salary', '\App\Modules\Employee\Salary\Http\Controllers\SalaryController', ['names' => [
+        'index' => 'salary.index',
+        'create' => 'salary.create',
+        'show' => 'salary.show'
+    ]]);
+
     Route::get('dashboard-documents/datatable', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController@getDatatable')->name('dashboard_documents.datatable');
     Route::post('dashboard-documents/download/{document_id}', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController@download')->name('dashboard_documents.download');
     Route::resource('dashboard-documents', '\App\Modules\Employee\Dashboard\Http\Controllers\EmployeeDashboardDocumentsController', ['names' => [

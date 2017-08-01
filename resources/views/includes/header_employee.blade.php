@@ -22,18 +22,18 @@
               @endif
           </a>
         </li>
-        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
-          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
-            @if($current == 'employee.dashboard_documents') 
-              <span class="sr-only">({{trans('app.current')}})</span>
-            @endif
-            </a>
-        </li>
         <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
           <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
               @if($current == 'employee.time') 
-                <span class="sr-only">({{trans('app.current')}})</span>
+              <span class="sr-only">({{trans('app.current')}})</span>
               @endif
+          </a>
+        </li>
+        <li class="{{ $current == 'employee.salary' ? 'active' : ''}}">
+          <a href="{{route('employee.salary.index')}}"> {{trans('app.employee.salary.main')}}
+              @if($current == 'employee.salary')
+                <span class="sr-only">({{trans('app.current')}})</span>
+              @endif 
           </a>
         </li>
         <li class="{{ $current == 'employee.documents' ? 'active' : ''}}">
@@ -43,6 +43,13 @@
               @endif
           </a>
         </li> 
+        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
+          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
+            @if($current == 'employee.dashboard_documents') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+            @endif
+            </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

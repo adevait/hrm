@@ -1035,6 +1035,19 @@ Breadcrumbs::register('employee.documents.index', function($breadcrumbs)
     $breadcrumbs->push(trans('app.pim.employees.documents.main'), route('employee.documents.index'));
 });
 
+Breadcrumbs::register('employee.salary.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employee.salary.main'), route('employee.salary.index'));
+});
+
+Breadcrumbs::register('employee.salary.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.salary.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.salary.show', $breadcrumb['id']));
+
+});
+
 Breadcrumbs::register('employee.time.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('employee.home');

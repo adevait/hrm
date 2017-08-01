@@ -14,8 +14,4 @@ class EmployeeDocumentRepository extends EloquentRepository implements EmployeeD
     {
         $this->model = $model;
     }
-
-    public function findBy($attribute, $value, $columns = array('*')) {
-        return $this->model->where($attribute, '=', $value)->get($columns);
-    }
 }

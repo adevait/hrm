@@ -13,3 +13,9 @@
 	<button type="submit" class="btn btn-sm btn-primary">{{trans('app.download')}}</button>
 </form>
 @endif
+@if(@$approveUrl)
+<form  action="{{$approveUrl}}" method="POST">
+	{{ Form::token() }} 
+	<button type="submit" class="btn btn-sm btn-default">{{trans('app.approve')}}</button>
+</form>
+@endif

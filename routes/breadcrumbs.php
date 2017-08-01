@@ -984,6 +984,8 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
 /**
  * Time breadcrumbs end here
  */
+
+
 Breadcrumbs::register('employee.home', function($breadcrumbs)
 {
     $breadcrumbs->push(trans('app.home'), route('employee.home'));
@@ -999,4 +1001,46 @@ Breadcrumbs::register('employee.salary.show', function($breadcrumbs, $breadcrumb
 {
     $breadcrumbs->parent('employee.salary.index');
     $breadcrumbs->push($breadcrumb['title'], route('employee.salary.show', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.time.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.time.main'), route('employee.time.index'));
+});
+
+Breadcrumbs::register('employee.time.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.time.index');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.time.create'));
+});
+
+Breadcrumbs::register('employee.time.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.time.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('employee.time.edit', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employee.leaves.main'), route('employee.leaves.index'));
+});
+
+Breadcrumbs::register('employee.leaves.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.leaves.create'));
+});
+
+Breadcrumbs::register('employee.leaves.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.leaves.show', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push(trans('app.edit') . ': '.$breadcrumb['title'], route('employee.leaves.edit', $breadcrumb['id']));
 });

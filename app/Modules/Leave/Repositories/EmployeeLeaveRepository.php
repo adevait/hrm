@@ -20,6 +20,10 @@ class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeav
         $this->leaveTypeRepository = $leaveTypeRepository;
     }
 
+    public function findBy($attribute, $value, $columns = array('*')) {
+        return $this->model->where($attribute, '=', $value)->get($columns);
+    }
+
     public function getCalendarItems($date = false)
     {
         if(!$date) {

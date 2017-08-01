@@ -1,21 +1,21 @@
-@extends('layouts.main')
+@extends('layouts.main_employee')
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <a href="{{route('leave.employee_leaves.create')}}" class="btn btn-primary pull-right">{{trans('app.leave.employee_leaves.add_new')}}</a>
+        <a href="{{route('employee.time.create')}}" class="btn btn-primary pull-right">{{trans('app.time.time_logs.add_new')}}</a>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12">
         <div class="custom-panel">
-            <div class="custom-panel-heading">{{trans('app.leave.employee_leaves.main')}}</div>
-            <table class="table table-bordered table-hover" id="employeeLeavesTable">
+            <div class="custom-panel-heading">{{trans('app.time.time_logs.main')}}</div>
+            <table class="table table-bordered table-hover" id="timeLogTable">
                 <thead>
                     <th>{{trans('app.id')}}</th>
-                    <th>{{trans('app.leave.employee_leaves.employee')}}</th>
-                    <th>{{trans('app.leave.employee_leaves.leave')}}</th>
-                    <th>{{trans('app.leave.employee_leaves.start_date')}}</th>
-                    <th>{{trans('app.leave.employee_leaves.end_date')}}</th>
+                    <th>{{trans('app.time.time_logs.task_name')}}</th>
+                    <th>{{trans('app.time.time_logs.project')}}</th>
+                    <th>{{trans('app.time.time_logs.time')}}</th>
+                    <th>{{trans('app.time.time_logs.date')}}</th>
                     <th></th>
                 </thead>
                 <tfoot>
@@ -23,16 +23,14 @@
                         <input type="text" placeholder="{{trans('app.id')}}"/>
                     </th>
                     <th>
-                        {!! Form::select('user_id', $employees, null, ['placeholder' => trans('app.leave.employee_leaves.employee')]) !!}
+                        <input type="text" placeholder="{{trans('app.time.time_logs.task_name')}}"/>
                     </th>
                     <th>
-                        {!! Form::select('leave_type_id', $leaveTypes, null, ['placeholder' => trans('app.leave.employee_leaves.leave')]) !!}
+                        {!! Form::select('projects_id', $projects, null, ['placeholder' => trans('app.time.time_logs.project')]) !!}
                     </th>
+                    <th></th>
                     <th>
-                        <input type="date" placeholder="{{trans('app.leave.employee_leaves.start_date')}}"/>
-                    </th>
-                    <th>
-                        <input type="date" placeholder="{{trans('app.leave.employee_leaves.end_date')}}"/>
+                        <input type="date" placeholder="{{trans('app.time.time_logs.date')}}"/>
                     </th>
                     <th></th>
                 </tfoot>
@@ -48,17 +46,17 @@
 <script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        var table = $('#employeeLeavesTable').DataTable({
+        var table = $('#timeLogTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route("leave.employee_leaves.datatable")}}',
+            ajax: '{{ route("employee.time.datatable")}}',
             columns: [
                 {data: 0, name: 'id'},
-                {data: 1, name: 'user_id'},
-                {data: 2, name: 'leave_type_id'},
-                {data: 3, name: 'start_date'},
-                {data: 4, name: 'end_date'},
-                {data: 6, name: 'actions', sortable: false, searchable: false}
+                {data: 1, name: 'task_name'},
+                {data: 2, name: 'project_id'},
+                {data: 3, name: 'time', sortable: true, searchable: false},
+                {data: 4, name: 'date'},
+                {data: 5, name: 'actions', sortable: false, searchable: false}
             ]
         });
         table.columns().every(function () {

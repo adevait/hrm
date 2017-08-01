@@ -49,7 +49,11 @@ class DocumentsController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->employeeDocumentRepository->findBy('user_id', Auth::user()->id, ['id', 'name', 'attachment', 'user_id', 'description']))
+        return Datatables::of($this->employeeDocumentRepository->getCollection([[
+                'key' => 'user_id',
+                'operator' => '=',
+                'value' => Auth::user()->id
+            ]], ['id', 'name', 'attachment', 'user_id', 'description']))
             ->editColumn('attachment', function($record) {
                 return '<a href="'.route('storage',$record->attachment).'">'.route('storage',$record->attachment).'</a>';
             })

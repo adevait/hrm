@@ -51,13 +51,15 @@ class SalaryController extends Controller
                 'key' => 'user_id',
                 'operator' => '=',
                 'value' => Auth::user()->id
-            ]], ['id', 'gross_total', 'nett_total', 'payment_date']))
+            ]], ['id', 'gross_total', 'nett_total', 'payment_date', 'attachment', 'user_id']))
             ->addColumn('actions', function($record){
                 return view('includes._datatable_actions', [
                     'showUrl' => route('employee.salary.show', $record->id),
-                    'downloadUrl' => route('employee.salary.download', [$record->user_id, $record->id])
+                    'downloadUrl' => ($record->attachment ? route('employee.salary.download', [$record->user_id, $record->id]) : '')
                 ]);
             })
+            ->removeColumn('attachment')
+            ->removeColumn('user_id')
             ->make();
     }
 

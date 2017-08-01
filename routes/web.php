@@ -301,6 +301,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'employee_leaves.update',
             'destroy' => 'employee_leaves.destroy'
         ]]);
+        Route::post('employee-leaves/{id}/approve', '\App\Modules\Leave\Http\Controllers\EmployeeLeaveController@approve')
+            ->name('employee_leaves.approve');
+
         Route::get('calendar', '\App\Modules\Leave\Http\Controllers\CalendarController@index')->name('calendar.index');
         Route::get('render-calendar', '\App\Modules\Leave\Http\Controllers\CalendarController@renderCalendar')->name('calendar.render');
     });
@@ -378,5 +381,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
+
+    Route::get('leaves/datatable', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController@getDatatable')
+            ->name('leaves.datatable');
+
+    Route::resource('leaves', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController', ['names' => [
+        'index' => 'leaves.index',
+        'create' => 'leaves.create',
+        'show' => 'leaves.show',
+        'edit' => 'leaves.edit',
+        'store' => 'leaves.store',
+        'update' => 'leaves.update',
+        'destroy' => 'leaves.destroy'
+    ]]);
 });
 Auth::routes();

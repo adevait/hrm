@@ -30,7 +30,7 @@ class DashboardDocumentsController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->dashboardDocumentsRepository->getCollection([], ['id', 'name', 'description', 'attachment']))
+        return Datatables::of($this->dashboardDocumentsRepository->getCollection([], ['id', 'name']))
            ->addColumn('actions', function($document){
                 return view('includes._datatable_actions', [
                     'editUrl' => route('dashboard.documents.edit', $document->id),

@@ -31,7 +31,7 @@ class EmployeeDashboardDocumentsController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->dashboardDocumentsRepository->getCollection([], ['id', 'name', 'description', 'attachment']))
+        return Datatables::of($this->dashboardDocumentsRepository->getCollection([], ['id', 'name']))
            ->addColumn('actions', function($document){
                 return view('includes._datatable_actions', [
                     'downloadUrl' => route('employee.dashboard_documents.download', $document->id)

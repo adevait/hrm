@@ -13,8 +13,6 @@
                 <thead>
                     <th>{{trans('app.id')}}</th>
                     <th>{{trans('app.dashboard.documents.name')}}</th>
-                    <th>{{trans('app.dashboard.documents.description')}}</th>
-                    <th>{{trans('app.dashboard.documents.attachment')}}</th>
                     <th></th>
                 </thead>
                 <tfoot>
@@ -24,10 +22,6 @@
                     <th>
                         <input type="text" placeholder="{{trans('app.dashboard.documents.name')}}"/>
                     </th>
-                    <th>
-                        <input type="text" placeholder="{{trans('app.dashboard.documents.description')}}"/>
-                    </th>
-                    <th></th>
                     <th></th>
                 </tfoot>
             </table>
@@ -50,9 +44,7 @@
             columns: [
                 {data: 0, name: 'id'},
                 {data: 1, name: 'name'},
-                {data: 2, name: 'description'},
-                {data: 3, name: 'attachment'},
-                {data: 4, name: 'actions', sortable: false, searchable: false}
+                {data: 2, name: 'actions', sortable: false, searchable: false}
             ]
         });
 

@@ -2,19 +2,12 @@
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <a href="{{route('dashboard.documents.create')}}" class="btn btn-primary pull-right">{{trans('app.dashboard.documents.add_new')}}</a>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
         <div class="custom-panel">
             <div class="custom-panel-heading">{{trans('app.dashboard.documents.main')}}</div>
             <table class="table table-bordered table-hover" id="dashboardDocumentsTable">
                 <thead>
                     <th>{{trans('app.id')}}</th>
                     <th>{{trans('app.dashboard.documents.name')}}</th>
-                    <th>{{trans('app.dashboard.documents.description')}}</th>
-                    <th>{{trans('app.dashboard.documents.attachment')}}</th>
                     <th></th>
                 </thead>
                 <tfoot>
@@ -24,10 +17,6 @@
                     <th>
                         <input type="text" placeholder="{{trans('app.dashboard.documents.name')}}"/>
                     </th>
-                    <th>
-                        <input type="text" placeholder="{{trans('app.dashboard.documents.description')}}"/>
-                    </th>
-                    <th></th>
                     <th></th>
                 </tfoot>
             </table>
@@ -50,9 +39,7 @@
             columns: [
                 {data: 0, name: 'id'},
                 {data: 1, name: 'name'},
-                {data: 2, name: 'description'},
-                {data: 3, name: 'attachment'},
-                {data: 4, name: 'actions', sortable: false, searchable: false}
+                {data: 2, name: 'actions', sortable: false, searchable: false}
             ]
         });
 

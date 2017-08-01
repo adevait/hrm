@@ -16,6 +16,13 @@
         {!! Form::input('file', 'attachment', null, ['class' => 'form-control']) !!}
     </div>
 </div>
+@if(@$document->attachment)
+<div class="form-group">
+    <div class="col-sm-6 col-sm-offset-3">
+        <a href="{{route('storage',$document->attachment)}}">{{trans('app.dashboard.documents.attachment')}}</a>
+    </div>
+</div>
+@endif
 @include('errors._form-errors')
 <hr>
 <div class="form-group">

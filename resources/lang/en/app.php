@@ -33,6 +33,7 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'home' => 'Home',
+    'download' => 'Download',
     'status' => 'Status',
     'approve' => 'Approve',
 
@@ -412,6 +413,20 @@ return [
             'update_success' => 'Time log was successfully updated.',
             'delete_success' => 'Time log was successfully deleted.',
         ]
+    ],
+    'dashboard' => [
+        'main' => 'Dashboard',
+        'documents' => [
+            'main' => 'Documents',
+            'name' => 'Name',
+            'description' => 'Description',
+            'attachment' => 'Attachment',
+            'add_new' => 'Add new document',
+            'edit_details' => 'Edit document details',
+            'store_success' => 'Dashboard document was successfully added.',
+            'update_success' => 'Dashboard document was successfully updated.',
+            'delete_success' => 'Dashboard document was successfully deleted.',
+        ],
     ],
     'employee' => [
         'leaves' => [

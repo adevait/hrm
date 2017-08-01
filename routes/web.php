@@ -382,6 +382,18 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');
 
+    Route::get('time/datatable', '\App\Modules\Employee\Time\Http\Controllers\TimeController@getDatatable')
+            ->name('time.datatable');
+    Route::resource('time', '\App\Modules\Employee\Time\Http\Controllers\TimeController', ['names' => [
+            'index' => 'time.index',
+            'create' => 'time.create',
+            'show' => 'time.show',
+            'edit' => 'time.edit',
+            'store' => 'time.store',
+            'update' => 'time.update',
+            'destroy' => 'time.destroy'
+        ]]);
+
     Route::get('leaves/datatable', '\App\Modules\Employee\Leaves\Http\Controllers\LeavesController@getDatatable')
             ->name('leaves.datatable');
 

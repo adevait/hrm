@@ -13,7 +13,15 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- MENU ITEMS GO HERE -->
       <ul class="nav navbar-nav">
+        <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
+          <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
+              @if($current == 'employee.time') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+              @endif
+          </a>
+        </li>
         <li class="{{ $current == 'employee.leaves' ? 'active' : ''}}">
           <a href="{{route('employee.leaves.index')}}"> {{trans('app.leave.main')}}
               @if($current == 'employee.leaves') 

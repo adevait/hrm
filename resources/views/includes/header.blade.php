@@ -56,6 +56,13 @@
             @endif
           </a>
         </li>
+        <li class="{{ $current == 'dashboard' ? 'active' : ''}}">
+          <a href="{{route('dashboard.index')}}">{{trans('app.dashboard.main')}}
+            @if($current == 'dashboard') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+            @endif
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

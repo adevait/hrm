@@ -15,17 +15,17 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <!-- MENU ITEMS GO HERE -->
       <ul class="nav navbar-nav">
-        <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
-          <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
-              @if($current == 'employee.time') 
-              <span class="sr-only">({{trans('app.current')}})</span>
-              @endif
-          </a>
-        </li>
         <li class="{{ $current == 'employee.leaves' ? 'active' : ''}}">
           <a href="{{route('employee.leaves.index')}}"> {{trans('app.leave.main')}}
               @if($current == 'employee.leaves') 
                 <span class="sr-only">({{trans('app.current')}})</span>
+              @endif
+          </a>
+        </li>
+        <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
+          <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
+              @if($current == 'employee.time') 
+              <span class="sr-only">({{trans('app.current')}})</span>
               @endif
           </a>
         </li>
@@ -34,6 +34,13 @@
               @if($current == 'employee.salary')
                 <span class="sr-only">({{trans('app.current')}})</span>
               @endif 
+          </a>
+        </li>
+        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
+          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
+              @if($current == 'employee.dashboard_documents') 
+                <span class="sr-only">({{trans('app.current')}})</span>
+              @endif
           </a>
         </li>
       </ul>

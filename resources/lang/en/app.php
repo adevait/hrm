@@ -438,6 +438,9 @@ return [
             'store_success' => 'Leave request is successfully sent.',
             'update_success' => 'Leave request is successfully updated.',
             'delete_success' => 'Leave request is successfully deleted.',
+        ],
+        'salary' => [
+            'main' => 'Salary'
         ]
     ]
 ];

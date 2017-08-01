@@ -47,7 +47,11 @@ class SalaryController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->employeeSalaryRepository->findBy('user_id', Auth::user()->id, ['id', 'gross_total', 'nett_total', 'payment_date']))
+        return Datatables::of($this->employeeSalaryRepository->getCollection([[
+                'key' => 'user_id',
+                'operator' => '=',
+                'value' => Auth::user()->id
+            ]], ['id', 'gross_total', 'nett_total', 'payment_date']))
             ->addColumn('actions', function($record){
                 return view('includes._datatable_actions', [
                     'showUrl' => route('employee.salary.show', $record->id),

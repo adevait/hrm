@@ -59,9 +59,10 @@ class SalaryController extends Controller
 
     public function show($id, SalaryComponentsRepository $salaryComponentsRepository, SalariesSalaryComponentsRepository $salariesSalaryComponentsRepository)
     {
+        $salary = $this->employeeSalaryRepository->getById($id);
+        checkValidity($salary->user_id);
         $employee = Auth::user();
         $salaryComponents = $salaryComponentsRepository->getAllOrdered('type', 'asc');
-        $salary = $this->employeeSalaryRepository->getById($id);
         $components = [];
         for($i = 0; $i < count($salary->components); $i++) {
             $components[$i] = $salary->components[$i]->value;

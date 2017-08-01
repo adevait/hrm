@@ -51,7 +51,6 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
         return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))
             ->where('role', $this->model->USER_ROLE_EMPLOYEE)
             ->pluck('name', 'id');
-
     }
 
     public function getSelect2Data($filter = '', $offset = 0, $limit = 10)

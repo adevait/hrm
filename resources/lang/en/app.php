@@ -33,6 +33,8 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'home' => 'Home',
+    'status' => 'Status',
+    'approve' => 'Approve',
 
     'profile' => [
         'main' => 'Profile',
@@ -317,6 +319,7 @@ return [
             'store_success' => 'Leave was successfully assigned.',
             'update_success' => 'Leave was successfully updated.',
             'delete_success' => 'Leave was successfully deleted.',
+            'approve_success' => 'Leave was successfully approved.',
             'attachment' => 'Attachment',
             'error_no_available_days' => 'The leave request exceeds the total available days. There are :days days left.',
         ],
@@ -408,6 +411,18 @@ return [
             'store_success' => 'Time log was successfully added.',
             'update_success' => 'Time log was successfully updated.',
             'delete_success' => 'Time log was successfully deleted.',
+        ]
+    ],
+    'employee' => [
+        'leaves' => [
+            'main' => 'Leaves',
+            'details' => 'Leave Details',
+            'approved' => 'Approved',
+            'pending' => 'Pending',
+            'request' => 'Request a leave',
+            'store_success' => 'Leave request is successfully sent.',
+            'update_success' => 'Leave request is successfully updated.',
+            'delete_success' => 'Leave request is successfully deleted.',
         ]
     ]
 ];

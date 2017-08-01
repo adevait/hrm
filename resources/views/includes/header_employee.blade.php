@@ -18,6 +18,13 @@
         <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
           <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
               @if($current == 'employee.time') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+              @endif
+          </a>
+        </li>
+        <li class="{{ $current == 'employee.leaves' ? 'active' : ''}}">
+          <a href="{{route('employee.leaves.index')}}"> {{trans('app.leave.main')}}
+              @if($current == 'employee.leaves') 
                 <span class="sr-only">({{trans('app.current')}})</span>
               @endif
           </a>

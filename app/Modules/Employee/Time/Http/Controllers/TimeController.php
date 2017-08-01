@@ -29,7 +29,7 @@ class TimeController extends Controller {
     public function index(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
         $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->findBy('email', Auth::user()->email)->pluck('first_name', 'id');
+        $employees = $employeeRepository->getById(Auth::user()->id)->pluck('first_name', 'id');
         return view('employee.time::index', compact('projects', 'employees'));
     }
 
@@ -40,7 +40,11 @@ class TimeController extends Controller {
      */
     public function getDatatable()
     {
-        return Datatables::of($this->timeLogRepository->findBy('user_id', Auth::user()->id, ['id', 'task_name', 'project_id', 'time', 'date']))
+        return Datatables::of($this->timeLogRepository->getCollection([[
+                'key' => 'user_id',
+                'operator' => '=',
+                'value' => Auth::user()->id
+            ]], ['id', 'task_name', 'project_id', 'time', 'date']))
             ->editColumn('project_id', function($time) {
                 return $time->project->name;
             })
@@ -108,7 +112,7 @@ class TimeController extends Controller {
     {
         $timeLogData = $this->timeLogRepository->getById($id);
         checkValidity($timeLogData->user_id);
-        $timeLogData = $request->all()+['user_id' => Auth::user()->id];
+        $timeLogData = $request->all();
         $timeLogData = $this->timeLogRepository->update($id, $timeLogData);
         $request->session()->flash('success', trans('app.time.time_logs.update_success'));
         return redirect()->route('employee.time.edit', $timeLogData->id);

@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{route('employee.home')}}">{{ config('app.name', 'HRM') }}</a>
+      <a class="navbar-brand" href="{{route('home')}}">{{ config('app.name', 'HRM') }}</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

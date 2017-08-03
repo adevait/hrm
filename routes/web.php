@@ -441,5 +441,18 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
         'update' => 'leaves.update',
         'destroy' => 'leaves.destroy'
     ]]);
+
+    Route::get('discipline/datatable', '\App\Modules\Employee\Discipline\Http\Controllers\DisciplineController@getDatatable')
+            ->name('discipline.datatable');
+
+    Route::resource('discipline', '\App\Modules\Employee\Discipline\Http\Controllers\DisciplineController', ['names' => [
+        'index' => 'discipline.index',
+        'create' => 'discipline.create',
+        'show' => 'discipline.show',
+        'edit' => 'discipline.edit',
+        'store' => 'discipline.store',
+        'update' => 'discipline.update',
+        'destroy' => 'discipline.destroy'
+    ]]);
 });
 Auth::routes();

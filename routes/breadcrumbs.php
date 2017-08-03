@@ -1088,3 +1088,26 @@ Breadcrumbs::register('employee.dashboard_documents.index', function($breadcrumb
     $breadcrumbs->parent('employee.home');
     $breadcrumbs->push(trans('app.dashboard.documents.main'), route('employee.dashboard_documents.index'));
 });
+
+Breadcrumbs::register('employee.discipline.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employee.discipline.main'), route('employee.discipline.index'));
+});
+
+Breadcrumbs::register('employee.discipline.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.discipline.index');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.discipline.create'));
+});
+
+Breadcrumbs::register('employee.discipline.show', function($breadcrumbs, $breadcrumb)
+{    $breadcrumbs->parent('employee.discipline.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.discipline.show', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.discipline.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.discipline.index');
+    $breadcrumbs->push(trans('app.edit') . ': '.$breadcrumb['title'], route('employee.discipline.edit', $breadcrumb['id']));
+});

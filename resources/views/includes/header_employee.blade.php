@@ -43,6 +43,13 @@
               @endif
           </a>
         </li>
+        <li class="{{ $current == 'employee.discipline' ? 'active' : ''}}">
+          <a href="{{route('employee.discipline.index')}}">{{trans('app.dashboard.main')}}
+              @if($current == 'employee.discipline') 
+                <span class="sr-only">({{trans('app.current')}})</span>
+              @endif
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

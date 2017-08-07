@@ -44,7 +44,7 @@
           </a>
         </li>
         <li class="{{ $current == 'employee.discipline' ? 'active' : ''}}">
-          <a href="{{route('employee.discipline.index')}}">{{trans('app.dashboard.main')}}
+          <a href="{{route('employee.discipline.index')}}">{{trans('app.discipline.main')}}
               @if($current == 'employee.discipline') 
                 <span class="sr-only">({{trans('app.current')}})</span>
               @endif

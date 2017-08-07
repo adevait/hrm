@@ -8,6 +8,8 @@ use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as Emplo
 use App\Modules\Discipline\Http\Requests\DisciplinaryCaseRequest;
 use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailer;
 
 class DisciplinaryCasesController extends Controller
 {
@@ -66,11 +68,18 @@ class DisciplinaryCasesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Modules\Discipline\Http\Requests\DisciplinaryCaseRequest  $request
+     @param  \App\Modules\Pim\Http\Repositories\Interfaces\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function store(DisciplinaryCaseRequest $request)
+    public function store(DisciplinaryCaseRequest $request, EmployeeRepository $employeeRepository)
     {
         $disciplinaryCaseData = $this->disciplinaryCaseRepository->create($request->all());
+        $employee = $employeeRepository->getById($disciplinaryCaseData->user_id);
+        Mail::send('emails.employee-disciplinary-case', json_decode(json_encode($disciplinaryCaseData), true), function($message) use ($employee)
+        {
+            $message->from(env('MAIL_EMAIL_FROM'));
+            $message->to($employee['email']);
+        });
         $request->session()->flash('success', trans('app.discipline.disciplinary_cases.store_success'));
         return redirect()->route('discipline.disciplinary_cases.edit', $disciplinaryCaseData->id);
     }

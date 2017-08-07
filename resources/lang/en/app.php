@@ -441,6 +441,9 @@ return [
         ],
         'salary' => [
             'main' => 'Salary'
+        ],
+        'discipline' => [
+            'main' => 'Discipline'
         ]
     ]
 ];

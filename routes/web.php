@@ -447,12 +447,7 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
 
     Route::resource('discipline', '\App\Modules\Employee\Discipline\Http\Controllers\DisciplineController', ['names' => [
         'index' => 'discipline.index',
-        'create' => 'discipline.create',
-        'show' => 'discipline.show',
-        'edit' => 'discipline.edit',
-        'store' => 'discipline.store',
-        'update' => 'discipline.update',
-        'destroy' => 'discipline.destroy'
+        'show' => 'discipline.show'
     ]]);
 });
 Auth::routes();

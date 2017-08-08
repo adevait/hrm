@@ -366,6 +366,7 @@ return [
         'main' => 'Discipline',
         'disciplinary_cases' => [
             'main' => 'Disciplinary cases',
+            'actions' => 'Disciplinary cases actions',
             'name' => 'Name',
             'description' => 'Description',
             'employee' => 'Employee',
@@ -374,6 +375,17 @@ return [
             'store_success' => 'Disciplinary case was successfully added.',
             'update_success' => 'Disciplinary case was successfully updated.',
             'delete_success' => 'Disciplinary case was successfully deleted.',
+        ],
+        'disciplinary_cases_actions' => [
+            'main' => 'Disciplinary cases actions',
+            'name' => 'Name',
+            'description' => 'Description',
+            'attachment' => 'Attachment',
+            'add_new' => 'Add disciplinary case action',
+            'edit_details' => 'Edit disciplinary case action',
+            'store_success' => 'Disciplinary case action was successfully added.',
+            'update_success' => 'Disciplinary case action was successfully updated.',
+            'delete_success' => 'Disciplinary case action was successfully deleted.',
         ]
     ],
     'time' => [

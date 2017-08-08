@@ -858,6 +858,26 @@ Breadcrumbs::register('discipline.disciplinary_cases.show', function($breadcrumb
     $breadcrumbs->push($breadcrumb['title'], route('discipline.disciplinary_cases.show', $breadcrumb['id']));
 });
 
+// Home > Discipline > Disciplinary cases actions 
+Breadcrumbs::register('discipline.disciplinary_cases_actions.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('discipline.index');
+    $breadcrumbs->push(trans('app.discipline.disciplinary_cases_actions.main'), route('discipline.disciplinary_cases_actions.index'));
+});
+
+// Home > Discipline > Disciplinary cases actions > Create
+Breadcrumbs::register('discipline.disciplinary_cases_actions.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('discipline.disciplinary_cases_actions.index');
+    $breadcrumbs->push(trans('app.add_record'), route('discipline.disciplinary_cases_actions.create'));
+});
+
+// Home > Discipline > Disciplinary cases actions > Edit
+Breadcrumbs::register('discipline.disciplinary_cases_actions.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('discipline.disciplinary_cases_actions.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('discipline.disciplinary_cases_actions.edit', $breadcrumb['id']));
+});
 /**
  * Disciplinary cases breadcrumbs end here
  */

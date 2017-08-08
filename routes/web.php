@@ -338,6 +338,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'disciplinary_cases.update',
             'destroy' => 'disciplinary_cases.destroy'
         ]]);
+
+        Route::get('disciplinary-cases-actions/datatable', '\App\Modules\Discipline\Http\Controllers\DisciplinaryCasesActionsController@getDatatable')
+            ->name('disciplinary_cases_actions.datatable');
+        Route::resource('disciplinary-cases-actions', '\App\Modules\Discipline\Http\Controllers\DisciplinaryCasesActionsController', ['names' => [
+            'index' => 'disciplinary_cases_actions.index',
+            'create' => 'disciplinary_cases_actions.create',
+            'show' => 'disciplinary_cases_actions.show',
+            'edit' => 'disciplinary_cases_actions.edit',
+            'store' => 'disciplinary_cases_actions.store',
+            'update' => 'disciplinary_cases_actions.update',
+            'destroy' => 'disciplinary_cases_actions.destroy'
+        ]]);
     });
     Route::group(['prefix' => 'time', 'as' => 'time.', 'middleware' => ['auth', 'admin']], function() {
         Route::get('/', function() {

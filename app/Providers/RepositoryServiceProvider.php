@@ -42,6 +42,7 @@ class RepositoryServiceProvider extends ServiceProvider
             Leave\Repositories\EmployeeLeaveStatusRepository::class => [Leave\Repositories\Interfaces\EmployeeLeaveStatusRepositoryInterface::class],
             Recruitment\Repositories\ReportRepository::class => [Recruitment\Repositories\Interfaces\ReportRepositoryInterface::class],
             Discipline\Repositories\DisciplinaryCaseRepository::class => [Discipline\Repositories\Interfaces\DisciplinaryCaseRepositoryInterface::class],
+            Discipline\Repositories\DisciplinaryCaseActionRepository::class => [Discipline\Repositories\Interfaces\DisciplinaryCaseActionRepositoryInterface::class],
             Time\Repositories\ClientRepository::class => [Time\Repositories\Interfaces\ClientRepositoryInterface::class],
             Time\Repositories\ProjectRepository::class => [Time\Repositories\Interfaces\ProjectRepositoryInterface::class],
             Time\Repositories\TimeLogRepository::class => [Time\Repositories\Interfaces\TimeLogRepositoryInterface::class],

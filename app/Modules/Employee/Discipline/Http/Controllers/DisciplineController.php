@@ -59,6 +59,7 @@ class DisciplineController extends Controller
     public function show($id)
     {
         $disciplinaryCase = $this->disciplinaryCaseRepository->getById($id);
+        checkValidity($disciplinaryCase->user_id);
         $breadcrumb = ['title' => $disciplinaryCase->employee->first_name.' '.$disciplinaryCase->employee->last_name, 'id' => $disciplinaryCase->id];
         return view('employee.discipline::show', compact('disciplinaryCase', 'breadcrumb'));
     }

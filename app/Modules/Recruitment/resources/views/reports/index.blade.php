@@ -55,6 +55,10 @@
     <div class="col-sm-12">
         <div class="custom-panel">
             <div class="custom-panel-heading">{{trans('app.recruitment.reports.main')}}</div>
+            <form  action="{{route('recruitment.reports.download')}}" method="POST">
+                {{ Form::token() }} 
+                <button type="submit" class="btn btn-sm btn-default">Download report</button>
+            </form>
             <table class="table table-bordered table-hover" id="recruitmentTable">
                 <thead>
                     <th>{{trans('app.recruitment.reports.first_name')}}</th>

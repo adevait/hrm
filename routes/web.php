@@ -313,6 +313,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         })->name('index');
         Route::get('reports/datatable', '\App\Modules\Recruitment\Http\Controllers\ReportsController@getDatatable')
             ->name('reports.datatable');
+        Route::post('reports/download', '\App\Modules\Recruitment\Http\Controllers\ReportsController@download')
+            ->name('reports.download');
         Route::resource('reports', '\App\Modules\Recruitment\Http\Controllers\ReportsController', ['names' => [
             'index' => 'reports.index',
             'create' => 'reports.create',

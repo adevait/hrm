@@ -1,0 +1,52 @@
+@extends('layouts.main')
+@section('content')
+<div class="row">
+    <div class="col-sm-12">
+        <div class="custom-panel">
+            <div class="custom-panel-heading">{{trans('app.profile.update')}}</div>
+            {!! Form::model($user, ['route' => ['profile.store'], 'class' => 'form-horizontal']) !!}
+                <div class="form-group">
+                    {!! Form::label('first_name', trans('app.pim.employees.first_name').':', ['class' => 'col-sm-3']) !!}
+                    <div class="col-sm-6">
+                        {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('last_name', trans('app.pim.employees.last_name').':', ['class' => 'col-sm-3']) !!}
+                    <div class="col-sm-6">
+                        {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('email', trans('app.pim.employees.email').':', ['class' => 'col-sm-3']) !!}
+                    <div class="col-sm-6">
+                        {!! Form::input('email', 'email', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('gender', trans('app.pim.employees.gender').':', ['class' => 'col-sm-3']) !!}
+                    <div class="col-sm-6">
+                        {!! Form::label('male', trans('app.pim.employees.gender_male')) !!}
+                        {!! Form::radio('gender', 'm', @$employee->gender == 'm', ['id' => 'male']) !!}
+                        {!! Form::label('female', trans('app.pim.employees.gender_female')) !!}
+                        {!! Form::radio('gender', 'f', @$employee->gender == 'f', ['id' => 'female']) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('birth_date', trans('app.pim.employees.birth_date').':', ['class' => 'col-sm-3']) !!}
+                    <div class="col-sm-6">
+                        {!! Form::input('date', 'birth_date', null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+                @include('errors._form-errors')
+                <hr>
+                <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        {!! Form::submit(trans('app.submit'), ['class' => 'btn btn-primary']) !!}
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+</div>
+@endsection

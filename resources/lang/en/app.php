@@ -375,6 +375,7 @@ return [
             'store_success' => 'Disciplinary case was successfully added.',
             'update_success' => 'Disciplinary case was successfully updated.',
             'delete_success' => 'Disciplinary case was successfully deleted.',
+            'reported_by' => 'Reported by'
         ],
         'disciplinary_cases_actions' => [
             'main' => 'Disciplinary cases actions',

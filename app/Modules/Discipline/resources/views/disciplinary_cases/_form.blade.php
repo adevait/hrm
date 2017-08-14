@@ -16,6 +16,12 @@
         {!! Form::select('user_id', $employees, null, ['class' => 'form-control employees']) !!}
     </div>
 </div>
+<div class="form-group">
+    {!! Form::label('reported_by', trans('app.discipline.disciplinary_cases.reported_by'), ['class' => 'col-sm-3']) !!}
+    <div class="col-sm-6">
+        {!! Form::select('reported_by', $users, null, ['class' => 'form-control users']) !!}
+    </div>
+</div>
 @include('errors._form-errors')
 <hr>
 <div class="form-group">
@@ -31,5 +37,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     $(".employees").select2();
+    $(".users").select2();
 </script>
 @endsection

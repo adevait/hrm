@@ -73,7 +73,7 @@ class DisciplinaryCasesActionsController extends Controller
     public function store(DisciplinaryCaseActionRequest $request, EmployeeRepository $employeeRepository)
     {
         $disciplinaryCaseData = $this->disciplinaryCaseActionRepository->create($request->all());
-        $employee = $employeeRepository->getById($disciplinaryCaseData->user_id);
+        
         $request->session()->flash('success', trans('app.discipline.disciplinary_cases.store_success'));
         return redirect()->route('discipline.disciplinary_cases_actions.edit', $disciplinaryCaseData->id);
     }

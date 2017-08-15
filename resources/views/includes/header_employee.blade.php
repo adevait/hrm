@@ -36,12 +36,19 @@
               @endif 
           </a>
         </li>
-        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
-          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
-              @if($current == 'employee.dashboard_documents') 
+        <li class="{{ $current == 'employee.documents' ? 'active' : ''}}">
+          <a href="{{route('employee.documents.index')}}"> {{trans('app.pim.employees.documents.main')}}
+              @if($current == 'employee.documents')
                 <span class="sr-only">({{trans('app.current')}})</span>
               @endif
           </a>
+        </li> 
+        <li class="{{ $current == 'employee.dashboard_documents' ? 'active' : ''}}">
+          <a href="{{route('employee.dashboard_documents.index')}}">{{trans('app.dashboard.main')}}
+            @if($current == 'employee.dashboard_documents') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+            @endif
+            </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

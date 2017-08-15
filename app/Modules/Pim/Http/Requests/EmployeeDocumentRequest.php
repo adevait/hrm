@@ -26,7 +26,7 @@ class EmployeeDocumentRequest extends FormRequest
     {
         $rules = [
             'name' => ['required'],
-            'attachment' => ['mimes:png,jpg,pdf,xls,xlsx,csv,txt,doc,docx']
+            'attachment' => ['mimes:png,jpg,pdf,xls,xlsx,csv,txt,doc,docx,zip']
         ];
 
         if(!preg_match('/update/', Route::currentRouteName())) {

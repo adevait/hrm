@@ -27,9 +27,10 @@ class ProfileRequest extends FormRequest
         $rules = [
             'first_name' => ['required'],
             'last_name' => ['required'],
-            'gender' => ['required'],
-            'birth_date' => ['required']
+            'gender' => ['in:m,f'],
+            'birth_date' => ['date']
         ];
+
         $rules['email'] = [
             'required',
             'email',

@@ -40,7 +40,7 @@ class EmployeeLeaveController extends Controller
      */
     public function getDatatable()
     {
-        return Datatables::of($this->employeeLeaveRepository->getCollection([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date']))
+        return Datatables::of($this->employeeLeaveRepository->getCollection([], ['id', 'user_id', 'leave_type_id', 'start_date', 'end_date', 'approved']))
             ->editColumn('user_id', function($leave) {
                 return $leave->employee->first_name.' '.$leave->employee->last_name;
             })
@@ -50,7 +50,8 @@ class EmployeeLeaveController extends Controller
             ->addColumn('actions', function($leave){
                 return view('includes._datatable_actions', [
                     'deleteUrl' => route('leave.employee_leaves.destroy', $leave->id), 
-                    'editUrl' => route('leave.employee_leaves.edit', $leave->id)
+                    'editUrl' => route('leave.employee_leaves.edit', $leave->id),
+                    'approveUrl' => $leave->approved == 'pending' ? route('leave.employee_leaves.approve', $leave->id) : null
                 ]);
             })
             ->make();
@@ -79,6 +80,7 @@ class EmployeeLeaveController extends Controller
     public function store(EmployeeLeaveRequest $request)
     {
         $employeeLeaveData = $request->all();
+        $employeeLeaveData['approved'] = 'approved';
         if($request->hasFile('attachment')) {
             $path = $request->attachment->store('uploads/leaves');
             $employeeLeaveData['attachment'] = $path;
@@ -151,6 +153,23 @@ class EmployeeLeaveController extends Controller
         $this->employeeLeaveRepository->deleteUsedDays($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $this->employeeLeaveRepository->delete($id);
         $request->session()->flash('success', trans('app.leave.employee_leaves.delete_success'));
+        return redirect()->route('leave.employee_leaves.index');
+    }
+
+    /**
+     * Approves an employee request for leave
+     * 
+     * @param  integer  unique identifier for the resource
+     * @param  \App\Modules\Leave\Repositories\LeaveTypeRepository  $leaveTypeRepository
+     * @return \Illuminate\Http\Response
+     */
+    public function approve($id, Request $request)
+    {
+        $employeeLeaveData = $this->employeeLeaveRepository->getById($id);
+        $employeeLeaveData['approved'] = 'approved';
+        $this->employeeLeaveRepository->update($id, json_decode(json_encode($employeeLeaveData), TRUE));
+
+        $request->session()->flash('success', trans('app.leave.employee_leaves.approve_success'));
         return redirect()->route('leave.employee_leaves.index');
     }
 }

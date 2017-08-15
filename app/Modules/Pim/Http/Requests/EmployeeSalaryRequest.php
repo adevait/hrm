@@ -7,6 +7,14 @@ use App\Modules\Settings\Repositories\Interfaces\SalaryComponentsRepositoryInter
 
 class EmployeeSalaryRequest extends FormRequest
 {
+    private $salaryComponentRepository;
+
+    public function __construct(SalaryComponentsRepository $salaryComponentRepository)
+    {
+        parent::__construct();
+        $this->salaryComponentRepository = $salaryComponentRepository;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,15 +30,34 @@ class EmployeeSalaryRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(SalaryComponentsRepository $salaryComponentRepository)
+    public function rules()
     {
-        // $fields = $salaryComponentRepository->getAll();
         $rules = [
-            'components' => ['required'],
             'payment_date' => ['required'],
             'attachment' => ['mimes:png,jpg,pdf,xls,xlsx,csv,txt']
         ];
 
+        $fields = $this->salaryComponentRepository->getAll();
+        foreach ($fields as $key => $value) {
+            $rules['components.'.$value->id] = 'required';
+        }
+
         return $rules;
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        $fields = $this->salaryComponentRepository->getAll();
+
+        foreach ($fields as $key => $value) {
+            $messages['components.'.$value->id.'.required'] = $value->name.' is required.';
+        }
+        
+        return $messages;
     }
 }

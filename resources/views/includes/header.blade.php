@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">{{ config('app.name', 'HRM') }}</a>
+      <a class="navbar-brand" href="{{route('home')}}">{{ config('app.name', 'HRM') }}</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,19 +56,26 @@
             @endif
           </a>
         </li>
+        <li class="{{ $current == 'dashboard' ? 'active' : ''}}">
+          <a href="{{route('dashboard.index')}}">{{trans('app.dashboard.main')}}
+            @if($current == 'dashboard') 
+              <span class="sr-only">({{trans('app.current')}})</span>
+            @endif
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->first_name }} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ url('profile') }}">{{trans('app.profile.main')}}</a></li>
+            <li><a href="{{ route('profile.index') }}">{{trans('app.profile.main')}}</a></li>
             <li>
-                <a href="{{ url('/logout') }}"
+                <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
                     {{trans('app.logout')}}
                 </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
             </li>

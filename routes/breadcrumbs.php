@@ -1011,3 +1011,107 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
 /**
  * Time breadcrumbs end here
  */
+
+/**
+ * Dashboard breadcrumbs start here
+ */
+Breadcrumbs::register('dashboard.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push(trans('app.dashboard.main'), route('dashboard.index'));
+});
+
+/**
+ * Document breadcrumbs start here
+ */
+// Home > Dashboard > Documents
+Breadcrumbs::register('dashboard.documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard.index');
+    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('dashboard.documents.index'));
+});
+
+Breadcrumbs::register('dashboard.documents.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard.documents.index');
+    $breadcrumbs->push(trans('app.dashboard.documents.add_new'), route('dashboard.documents.create'));
+});
+
+Breadcrumbs::register('dashboard.documents.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('dashboard.documents.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('dashboard.documents.edit', $breadcrumb['id']));
+});
+
+/**
+ * Document breadcrumbs end here
+ */
+
+/**
+ * Dashboard breadcrumbs end here
+ */
+
+Breadcrumbs::register('employee.home', function($breadcrumbs)
+{
+    $breadcrumbs->push(trans('app.home'), route('employee.home'));
+});
+
+Breadcrumbs::register('employee.salary.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employee.salary.main'), route('employee.salary.index'));
+});
+
+Breadcrumbs::register('employee.salary.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.salary.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.salary.show', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.time.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.time.main'), route('employee.time.index'));
+});
+
+Breadcrumbs::register('employee.time.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.time.index');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.time.create'));
+});
+
+Breadcrumbs::register('employee.time.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.time.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('employee.time.edit', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.employee.leaves.main'), route('employee.leaves.index'));
+});
+
+Breadcrumbs::register('employee.leaves.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push(trans('app.add_record'), route('employee.leaves.create'));
+});
+
+Breadcrumbs::register('employee.leaves.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push($breadcrumb['title'], route('employee.leaves.show', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.leaves.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.leaves.index');
+    $breadcrumbs->push(trans('app.edit') . ': '.$breadcrumb['title'], route('employee.leaves.edit', $breadcrumb['id']));
+});
+
+Breadcrumbs::register('employee.dashboard_documents.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('employee.home');
+    $breadcrumbs->push(trans('app.dashboard.documents.main'), route('employee.dashboard_documents.index'));
+});

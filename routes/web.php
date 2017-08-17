@@ -116,6 +116,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'salary_components.update',
             'destroy' => 'salary_components.destroy'
         ]]);
+
+        Route::get('email-templates/datatable', '\App\Modules\Settings\Http\Controllers\EmailTemplatesController@getDatatable')
+            ->name('email_templates.datatable');
+        
+        Route::resource('email-templates', '\App\Modules\Settings\Http\Controllers\EmailTemplatesController', ['names' => [
+            'index' => 'email_templates.index',
+            'create' => 'email_templates.create',
+            'show' => 'email_templates.show',
+            'edit' => 'email_templates.edit',
+            'store' => 'email_templates.store',
+            'update' => 'email_templates.update',
+            'destroy' => 'email_templates.destroy'
+        ]]);
     });
     Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin']], function() {
         Route::get('/', function() {

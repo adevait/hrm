@@ -280,8 +280,45 @@ Breadcrumbs::register('settings.salary_components.show', function($breadcrumbs, 
 });
 
 /**
- * Job positions breadcrumbs end here
+ * Salary positions breadcrumbs end here
  */
+
+/**
+ * Email templates breadcrumbs start here
+ */
+
+// Home > Settings > Email templates
+Breadcrumbs::register('settings.email_templates.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('settings.index');
+    $breadcrumbs->push(trans('app.settings.email_templates.main'), route('settings.email_templates.index'));
+});
+
+// Home > Settings > Email templates > Create
+Breadcrumbs::register('settings.email_templates.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('settings.email_templates.index');
+    $breadcrumbs->push(trans('app.add_record'), route('settings.email_templates.create'));
+});
+
+// Home > Settings > Email templates > Edit
+Breadcrumbs::register('settings.email_templates.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('settings.email_templates.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('settings.email_templates.edit', $breadcrumb['id']));
+});
+
+// Home > Settings > Email templates > Details
+Breadcrumbs::register('settings.email_templates.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('settings.email_templates.index');
+    $breadcrumbs->push($breadcrumb['title'], route('settings.email_templates.show', $breadcrumb['id']));
+});
+
+/**
+ * Email templates breadcrumbs end here
+ */
+
 
 /**
  * Settings breadcrumbs end here

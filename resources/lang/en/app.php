@@ -124,6 +124,15 @@ return [
                 'earning' => 'Earning',
                 'deduction' => 'Deduction'
             ]
+        ],
+        'email_templates' => [
+            'main' => 'Email templates',
+            'add_new' => 'Add email template',
+            'name' => 'Name',
+            'template' => 'Template',
+            'store_success' => 'The email template was successfully added.',
+            'update_success' => 'The email template was successfully updated.',
+            'delete_success' => 'The email template was successfully removed.',
         ]
     ],
     'pim' => [

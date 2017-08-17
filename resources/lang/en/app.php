@@ -291,6 +291,18 @@ return [
                 'store_success' => 'The candidate preferences were successfully added.',
                 'update_success' => 'The candidate preferences were successfully updated.',
                 'delete_success' => 'The candidate preferences were successfully removed.',
+            ],
+            'tasks' => [
+                'main' => 'Tasks',
+                'add_new' => 'Add new task',
+                'name' => 'Task name',
+                'description' => 'Task description',
+                'assigned_to' => 'Assigned to',
+                'creator' => 'Creator',
+                'due_date' => 'Due date',
+                'store_success' => 'The task was successfully added.',
+                'update_success' => 'The task was successfully updated.',
+                'delete_success' => 'The task was successfully removed.',
             ]
         ]
     ],

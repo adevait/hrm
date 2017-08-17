@@ -116,6 +116,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'salary_components.update',
             'destroy' => 'salary_components.destroy'
         ]]);
+
     });
     Route::group(['prefix' => 'pim', 'as' => 'pim.', 'middleware' => ['auth', 'admin']], function() {
         Route::get('/', function() {
@@ -261,7 +262,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
                 'store' => 'preferences.store',
                 'update' => 'preferences.update',
                 'destroy' => 'preferences.destroy'
-            ]]);  
+            ]]);
+
+            Route::get('tasks/datatable', '\App\Modules\Pim\Http\Controllers\EmployeeTasksController@getDatatable')
+            ->name('tasks.datatable');
+            Route::resource('tasks', '\App\Modules\Pim\Http\Controllers\EmployeeTasksController', ['names' => [
+                'index' => 'tasks.index',
+                'create' => 'tasks.create',
+                'show' => 'tasks.show',
+                'edit' => 'tasks.edit',
+                'store' => 'tasks.store',
+                'update' => 'tasks.update',
+                'destroy' => 'tasks.destroy'
+            ]]);
         });  
     });
     Route::group(['prefix' => 'leave', 'as' => 'leave.', 'middleware' => ['auth', 'admin']], function() {

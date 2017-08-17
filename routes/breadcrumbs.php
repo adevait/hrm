@@ -525,6 +525,34 @@ Breadcrumbs::register('pim.employees.preferences.index', function($breadcrumbs, 
  */
 
 /**
+ * Employee tasks breadcrumbs start here
+ */
+
+// Home > PIM > Candidates > Candidate > Tasks
+Breadcrumbs::register('pim.employees.tasks.index', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('pim.candidates.edit', ['id' => $breadcrumb['parent_id'], 'title' => $breadcrumb['parent_title']]);
+    $breadcrumbs->push(trans('app.pim.candidates.tasks.main'), route('pim.employees.tasks.index', $breadcrumb['parent_id']));
+});
+
+// Home > PIM > Candidates > Candidate > Tasks > Create
+Breadcrumbs::register('pim.employees.tasks.create', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('pim.employees.tasks.index', $breadcrumb);
+    $breadcrumbs->push(trans('app.add_record'), route('pim.employees.tasks.create', $breadcrumb['parent_id']));
+});
+
+// Home > PIM > Candidates > Candidate > Tasks > Edit
+Breadcrumbs::register('pim.employees.tasks.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('pim.employees.tasks.index', $breadcrumb);
+    $breadcrumbs->push(trans('app.edit').': #'.$breadcrumb['task_id'], route('pim.employees.tasks.edit', ['employeeId' => $breadcrumb['parent_id'], 'task' => $breadcrumb['task_id']]));
+});
+/**
+ * Employee tasks breadcrumbs end here
+ */
+
+/**
  * Employee qualifications breadcrumbs start here
  */
 

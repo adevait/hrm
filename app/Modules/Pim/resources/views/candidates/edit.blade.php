@@ -40,6 +40,11 @@
                         <h2>{{trans('app.pim.candidates.preferences.main')}}</h2>
                     </a>
                 </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a class="nav-box" href="{{route('pim.employees.tasks.index', $employee->id)}}">
+                        <h2>{{trans('app.pim.candidates.tasks.main')}}</h2>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

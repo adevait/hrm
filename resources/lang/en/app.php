@@ -130,6 +130,7 @@ return [
             'add_new' => 'Add email template',
             'name' => 'Name',
             'template' => 'Template',
+            'edit_details' => 'Edit email template',
             'store_success' => 'The email template was successfully added.',
             'update_success' => 'The email template was successfully updated.',
             'delete_success' => 'The email template was successfully removed.',

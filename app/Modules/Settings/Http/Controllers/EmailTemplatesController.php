@@ -41,6 +41,9 @@ class EmailTemplatesController extends Controller
                     'editUrl' => route('settings.email_templates.edit', $document->id)
                 ]);
             })
+            ->addColumn('send_email', function($document) {
+                return '<input type="checkbox" value="'. $document->id .'" name="select_action">';
+            })
             ->make();
     }
 
@@ -60,7 +63,7 @@ class EmailTemplatesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Modules\Settings\Http\Requests\DocumentTemplateRequest  $request
+     * @param  \App\Modules\Settings\Http\Requests\EmailTemplateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(EmailTemplateRequest $request)
@@ -94,7 +97,7 @@ class EmailTemplatesController extends Controller
         $toolbar = json_encode($toolbar);
         $emailTemplate = $this->emailTemplateRepository->getById($id);
         $breadcrumb = ['title' => $emailTemplate->name, 'id' => $emailTemplate->id];
-        return view('settings::email_templates.edit', compact('toolbar', 'toolbarStringified', 'documentTemplate', 'breadcrumb'));
+        return view('settings::email_templates.edit', compact('toolbar', 'toolbarStringified', 'emailTemplate', 'breadcrumb'));
     }
 
     /**

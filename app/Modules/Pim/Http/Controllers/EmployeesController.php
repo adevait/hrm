@@ -106,7 +106,6 @@ class EmployeesController extends Controller
         $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
         {
-            $message->from(env('MAIL_EMAIL_FROM'));
             $message->to($employeeData['email']);
         });
 
@@ -121,7 +120,6 @@ class EmployeesController extends Controller
         $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
         {
-            $message->from(env('MAIL_EMAIL_FROM'));
             $message->to($employeeData['email']);
         });
         $request->session()->flash('success', trans('app.pim.employees.pass_success'));

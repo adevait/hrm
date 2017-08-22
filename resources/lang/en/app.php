@@ -147,7 +147,9 @@ return [
             'store_success' => 'The employee was successfully added.',
             'update_success' => 'The employee details were successfully updated.',
             'delete_success' => 'The employee was successfully removed.',
+            'pass_success' => 'The password was successfully sent.',
             'additional' => 'Additional details',
+            'resend_password' => 'Resend Password',
             'external_accounts' => [
                 'main' => 'External accounts',
                 'add_new' => 'Add external account',

@@ -138,6 +138,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'employees.update',
             'destroy' => 'employees.destroy'
         ]]);
+        Route::get('employees/resendPassword/{id}', '\App\Modules\Pim\Http\Controllers\EmployeesController@resendPassword')->name('employees.resend_password');
         Route::get('candidates/datatable', '\App\Modules\Pim\Http\Controllers\CandidatesController@getDatatable')
             ->name('candidates.datatable');
         Route::resource('candidates', '\App\Modules\Pim\Http\Controllers\CandidatesController', ['names' => [

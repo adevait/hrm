@@ -103,7 +103,7 @@ class EmployeesController extends Controller
         $password = rand();
         $employeeData['password'] = bcrypt($password);
         $employeeData = $this->employeeRepository->create($employeeData);
-        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . route('password/reset')];
+        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
         {
             $message->from(env('MAIL_EMAIL_FROM'));
@@ -112,6 +112,20 @@ class EmployeesController extends Controller
 
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
         return redirect()->route('pim.employees.edit', $employeeData->id);
+    }
+
+    public function resendPassword($id, Request $request)
+    {
+        $password = rand();
+        $employeeData = $this->employeeRepository->update($id, ['password' => bcrypt($password)]);
+        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
+        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
+        {
+            $message->from(env('MAIL_EMAIL_FROM'));
+            $message->to($employeeData['email']);
+        });
+        $request->session()->flash('success', trans('app.pim.employees.pass_success'));
+        return redirect()->back();
     }
 
     /**

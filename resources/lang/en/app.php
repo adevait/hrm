@@ -150,9 +150,6 @@ return [
             'pass_success' => 'The password was successfully sent.',
             'additional' => 'Additional details',
             'resend_password' => 'Resend Password',
-            'welcome_email' => [
-                'subject' => 'Sign up details for our HR system'
-            ],
             'external_accounts' => [
                 'main' => 'External accounts',
                 'add_new' => 'Add external account',

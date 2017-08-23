@@ -49,7 +49,7 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
     public function pluckName()
     {
         return $this->model->select(DB::raw('CONCAT(first_name, " ", last_name) as name, id'))
-            ->where('role', $this->model->USER_ROLE_EMPLOYEE)
+            ->where('role', $this->model::USER_ROLE_EMPLOYEE)
             ->pluck('name', 'id');
     }
 

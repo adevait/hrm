@@ -100,15 +100,8 @@ class EmployeesController extends Controller
     {
         $employeeData = $request->all();
         $employeeData['role'] = $this->employeeRepository->model::USER_ROLE_EMPLOYEE;
-        $password = rand();
-        $employeeData['password'] = bcrypt($password);
         $employeeData = $this->employeeRepository->create($employeeData);
-        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
-        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
-        {
-            $message->subject(trans('app.pim.employees.welcome_email.subject'));
-            $message->to($employeeData['email']);
-        });
+        $this->sendPassword($id);
 
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
         return redirect()->route('pim.employees.edit', $employeeData->id);
@@ -116,16 +109,29 @@ class EmployeesController extends Controller
 
     public function resendPassword($id, Request $request)
     {
-        $password = rand();
-        $employeeData = $this->employeeRepository->update($id, ['password' => bcrypt($password)]);
-        $data = ['title' => trans('emails.employee-login.title'), 'password' => trans('emails.employee-login.password') . $password, 'route' => trans('emails.employee-login.change_password_url') . url('password/reset')];
-        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
-        {
-            $message->subject(trans('app.pim.employees.welcome_email.subject'));
-            $message->to($employeeData['email']);
-        });
+        $this->sendPassword($id);
         $request->session()->flash('success', trans('app.pim.employees.pass_success'));
         return redirect()->back();
+    }
+
+    private function sendPassword($id)
+    {
+        $password = rand();
+        $employeeData = $this->employeeRepository->update($id, ['password' => bcrypt($password)]);
+        $data['email'] = [
+            'name' => $employeeData->first_name,
+            'system' => env('APP_NAME', 'HRM'),
+            'url' => url('/'),
+            'email' =>  $employeeData->email,
+            'password' => $password, 
+            'change_pass_route' => url('password/reset'),
+            'signature' => env('APP_NAME', 'HRM')
+            ];
+        Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
+        {
+            $message->subject(trans('emails.employee_login.subject', ['name' => env('APP_NAME', 'HRM')]));
+            $message->to($employeeData['email']);
+        });
     }
 
     /**

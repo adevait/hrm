@@ -120,7 +120,7 @@ class EmployeesController extends Controller
         $employeeData = $this->employeeRepository->update($id, ['password' => bcrypt($password)]);
         $data['email'] = [
             'name' => $employeeData->first_name,
-            'system' => env('APP_NAME', 'HRM'),
+            'system' => config('app.name'),
             'url' => url('/'),
             'email' =>  $employeeData->email,
             'password' => $password, 
@@ -129,7 +129,7 @@ class EmployeesController extends Controller
             ];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)
         {
-            $message->subject(trans('emails.employee_login.subject', ['name' => env('APP_NAME', 'HRM')]));
+            $message->subject(trans('emails.employee_login.subject', ['name' => config('app.name')]));
             $message->to($employeeData['email']);
         });
     }

@@ -80,7 +80,7 @@ class EmployeeLeaveController extends Controller
     public function store(EmployeeLeaveRequest $request)
     {
         $employeeLeaveData = $request->all();
-        $employeeLeaveData['approved'] = 'approved';
+        $employeeLeaveData['approved'] = 1;
         if($request->hasFile('attachment')) {
             $path = $request->attachment->store('uploads/leaves');
             $employeeLeaveData['attachment'] = $path;

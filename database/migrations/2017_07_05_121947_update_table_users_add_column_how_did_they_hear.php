@@ -14,7 +14,7 @@ class UpdateTableUsersAddColumnHowDidTheyHear extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('how_did_they_hear')->after('notes');
+            $table->string('how_did_they_hear')->nullable()->after('notes');
         });
     }
 

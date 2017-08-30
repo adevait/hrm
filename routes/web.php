@@ -396,7 +396,39 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'destroy' => 'documents.destroy'
         ]]);      
     });
+    Route::group(['prefix' => 'recruitment', 'as' => 'recruitment.', 'middleware' => ['auth', 'admin']], function() {
+        Route::get('/', function() {
+            return view('recruitment::index');
+        })->name('index');
+
+        Route::get('reports/datatable', '\App\Modules\Recruitment\Http\Controllers\ReportsController@getDatatable')
+            ->name('reports.datatable');
+
+        Route::get('job_advert/datatable', '\App\Modules\Recruitment\Http\Controllers\JobAdvertController@getDatatable')
+            ->name('job_advert.datatable');
+            
+        Route::resource('job_advert', '\App\Modules\Recruitment\Http\Controllers\JobAdvertController', ['names' => [
+            'index' => 'job_advert.index',
+            'create' => 'job_advert.create',
+            'show' => 'job_advert.show',
+            'edit' => 'job_advert.edit',
+            'store' => 'job_advert.store',
+            'update' => 'job_advert.update',
+            'destroy' => 'job_advert.destroy'
+        ]]);
+            
+        Route::resource('reports', '\App\Modules\Recruitment\Http\Controllers\ReportsController', ['names' => [
+            'index' => 'reports.index',
+            'create' => 'reports.create',
+            'show' => 'reports.show',
+            'edit' => 'reports.edit',
+            'store' => 'reports.store',
+            'update' => 'reports.update',
+            'destroy' => 'reports.destroy'
+        ]]);
+    });    
 });
+
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'employee']], function() {
     Route::get('/', '\App\Http\Controllers\Employee\HomeController@index')
     ->name('home');

@@ -331,8 +331,35 @@ Breadcrumbs::register('pim.candidates.show', function($breadcrumbs, $breadcrumb)
 });
 
 /**
- * Candidates breadcrumbs start here
+ * JobAdvert breadcrumbs start here
  */
+
+Breadcrumbs::register('recruitment.job_advert.index', function($breadcrumbs)
+{
+    $breadcrumbs->parent('recruitment.index');
+    $breadcrumbs->push(trans('app.recruitment.job_advert.main'), route('recruitment.job_advert.index'));
+});
+
+// Home > PIM > JobAdvert > Create
+Breadcrumbs::register('recruitment.job_advert.create', function($breadcrumbs)
+{
+    $breadcrumbs->parent('recruitment.job_advert.index');
+    $breadcrumbs->push(trans('app.add_record'), route('recruitment.job_advert.create'));
+});
+
+// Home > PIM > JobAdvert > Edit
+Breadcrumbs::register('recruitment.job_advert.edit', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('recruitment.job_advert.index');
+    $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('recruitment.job_advert.edit', $breadcrumb['id']));
+});
+
+// Home > PIM > JobAdvert > Details
+Breadcrumbs::register('recruitment.job_advert.show', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('recruitment.job_advert.index');
+    $breadcrumbs->push($breadcrumb['title'], route('recruitment.job_advert.show', $breadcrumb['id']));
+});
 
 /**
  * Employees breadcrumbs start here

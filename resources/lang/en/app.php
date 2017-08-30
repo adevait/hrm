@@ -342,6 +342,21 @@ return [
     ],
     'recruitment' => [
         'main' => 'Recruitment',
+        'job_advert' => [
+            'main' => 'Job Advertisement',
+            'add_new' => 'Add job advertisement',
+            'title' => 'Job title',
+            'description' => 'Job description',
+            'skills' => 'Required skills',
+            'advantages' => 'Advantages',
+            'responsibilities' => 'Responsibilities',
+            'benefits' => 'Benefits',
+            'image' => 'Image',
+            'edit_details' => 'Edit job advertisement details',
+            'store_success' => 'The job advertisement was successfully added.',
+            'update_success' => 'The job advertisement details were successfully updated.',
+            'delete_success' => 'The job advertisement was successfully removed.',
+        ],
         'reports' => [
             'main' => 'Reports',
             'first_name' => 'First name',

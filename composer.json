@@ -11,7 +11,8 @@
         "laravel/framework": "5.3.*",
         "laravelcollective/html": "^5.3",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "doctrine/dbal": "v2.4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

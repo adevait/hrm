@@ -60,13 +60,13 @@
                     <th>{{trans('app.recruitment.reports.first_name')}}</th>
                     <th>{{trans('app.recruitment.reports.last_name')}}</th>
                     <th>{{trans('app.recruitment.reports.email')}}</th>
+                    <th>{{trans('app.recruitment.reports.how_did_they_hear')}}</th>
                     <th>{{trans('app.recruitment.reports.phone')}}</th>
                     <th>{{trans('app.recruitment.reports.skills')}}</th>
                     <th>{{trans('app.recruitment.reports.salary')}}</th>
                     <th>{{trans('app.recruitment.reports.contract_type')}}</th>
                     <th>{{trans('app.recruitment.reports.location')}}</th>
                     <th>{{trans('app.recruitment.reports.comments')}}</th>
-                    <th>{{trans('app.recruitment.reports.how_did_they_hear')}}</th>
                     <th></th>
                 </thead>
             </table>

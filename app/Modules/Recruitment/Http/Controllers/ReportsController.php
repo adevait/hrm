@@ -43,7 +43,7 @@ class ReportsController extends Controller
 
         return Datatables::of($this->reportRepository->getQry(
                 $inputs, 
-                ['id', 'first_name', 'last_name', 'email']))
+                ['id', 'first_name', 'last_name', 'email', 'how_did_they_hear']))
             ->addColumn('phone', function($candidate) {
                 return @$candidate->contact->phone;
             })
@@ -61,9 +61,6 @@ class ReportsController extends Controller
             })
             ->addColumn('comments', function($candidate) {
                 return @$candidate->notes;
-            })
-            ->addColumn('how_did_they_hear', function($candidate) {
-                return $candidate->how_did_they_hear;
             })
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [

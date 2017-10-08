@@ -12,6 +12,7 @@ use App\Modules\Pim\Models\UserSocialMedia;
 use App\Modules\Pim\Models\UserExperience;
 use App\Modules\Pim\Models\UserEducation;
 use App\Modules\Pim\Models\UserLanguage;
+use App\Modules\Pim\Models\UserDocument;
 
 class User extends Authenticatable
 {
@@ -104,5 +105,10 @@ class User extends Authenticatable
     public function languages()
     {
         return $this->hasMany(UserLanguage::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(UserDocument::class);
     }
 }

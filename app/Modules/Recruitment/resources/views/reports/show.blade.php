@@ -68,6 +68,14 @@
                     <p>{{$candidate->birth_date}}</p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>{{trans('app.pim.employees.notes')}}:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>{{$candidate->notes}}</p>
+                </div>
+            </div>
         </div>
     </div>
     @if($candidate->contact_details)
@@ -332,6 +340,23 @@
                     <p>{{$candidate->user_preferences->comments}}</p>
                 </div>
             </div>
+        </div>
+    </div>
+    @endif
+    @if($candidate->documents)
+    <div class="col-md-6">
+        <div class="custom-panel">
+            <div class="custom-panel-heading">{{trans('app.pim.employees.documents.main')}}</div>
+            @foreach($candidate->documents as $document)
+            <div class="row">
+                <div class="col-md-4">
+                    <label>{{$document->name}}:</label>
+                </div>
+                <div class="col-md-8">
+                    <a href="{{route('storage',$document->attachment)}}">{{route('storage',$document->attachment)}}</a>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
     @endif

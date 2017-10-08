@@ -359,6 +359,7 @@ return [
             'min_salary' => 'Min Salary',
             'max_salary' => 'Max Salary',
             'salary_range' => 'Salary Range',
+            'how_did_they_hear' => 'Source',
             'show' => [
                 'personal_details' => 'Personal details',
             ]

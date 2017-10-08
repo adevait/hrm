@@ -60,7 +60,10 @@ class ReportsController extends Controller
                 return @get_location_name($candidate->user_preferences->location);
             })
             ->addColumn('comments', function($candidate) {
-                return @$candidate->user_preferences->comments;
+                return @$candidate->notes;
+            })
+            ->addColumn('how_did_they_hear', function($candidate) {
+                return $candidate->how_did_they_hear;
             })
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [

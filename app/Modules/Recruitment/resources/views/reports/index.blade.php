@@ -66,6 +66,7 @@
                     <th>{{trans('app.recruitment.reports.contract_type')}}</th>
                     <th>{{trans('app.recruitment.reports.location')}}</th>
                     <th>{{trans('app.recruitment.reports.comments')}}</th>
+                    <th>{{trans('app.recruitment.reports.how_did_they_hear')}}</th>
                     <th></th>
                 </thead>
             </table>
@@ -101,7 +102,8 @@
                 {data: 6, name: 'contract_type', sortable: false, searchable: false},
                 {data: 7, name: 'location', sortable: false, searchable: false},
                 {data: 8, name: 'comments', sortable: false, searchable: false},
-                {data: 9, name: 'actions', sortable: false, searchable: false}
+                {data: 9, name: 'how_did_they_hear', sortable: false, searchable: false},
+                {data: 10, name: 'actions', sortable: false, searchable: false}
             ]
         });
     });

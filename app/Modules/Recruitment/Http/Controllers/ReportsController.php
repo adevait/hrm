@@ -43,10 +43,7 @@ class ReportsController extends Controller
 
         return Datatables::of($this->reportRepository->getQry(
                 $inputs, 
-                ['id', 'first_name', 'last_name', 'email', 'how_did_they_hear']))
-            ->addColumn('phone', function($candidate) {
-                return @$candidate->contact->phone;
-            })
+                ['id', 'first_name', 'last_name', 'email', 'how_did_they_hear', 'notes']))
             ->addColumn('skills', function($candidate) {
                 return @implode(', ', $candidate->skills->pluck('name')->toArray());
             })
@@ -58,9 +55,6 @@ class ReportsController extends Controller
             })
             ->addColumn('location', function($candidate) {
                 return @get_location_name($candidate->user_preferences->location);
-            })
-            ->addColumn('comments', function($candidate) {
-                return @$candidate->notes;
             })
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [

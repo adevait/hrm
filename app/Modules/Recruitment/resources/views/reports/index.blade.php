@@ -96,13 +96,13 @@
                 {data: 0, name: 'first_name'},
                 {data: 1, name: 'last_name'},
                 {data: 2, name: 'email'},
-                {data: 3, name: 'phone', sortable: false, searchable: false},
-                {data: 4, name: 'skills', sortable: false, searchable: false},
-                {data: 5, name: 'salary', sortable: false, searchable: false},
-                {data: 6, name: 'contract_type', sortable: false, searchable: false},
-                {data: 7, name: 'location', sortable: false, searchable: false},
-                {data: 8, name: 'comments', sortable: false, searchable: false},
-                {data: 9, name: 'how_did_they_hear', sortable: false, searchable: false},
+                {data: 3, name: 'how_did_they_hear', sortable: true, searchable: true},
+                {data: 4, name: 'phone', sortable: false, searchable: false},
+                {data: 5, name: 'skills', sortable: false, searchable: false},
+                {data: 6, name: 'salary', sortable: false, searchable: false},
+                {data: 7, name: 'contract_type', sortable: false, searchable: false},
+                {data: 8, name: 'location', sortable: false, searchable: false},
+                {data: 9, name: 'comments', sortable: false, searchable: false},
                 {data: 10, name: 'actions', sortable: false, searchable: false}
             ]
         });

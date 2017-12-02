@@ -368,6 +368,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         ]]);
         Route::get('time-logs/datatable', '\App\Modules\Time\Http\Controllers\TimeLogsController@getDatatable')
             ->name('time_logs.datatable');
+        Route::get('time-logs/monthly_datatable', '\App\Modules\Time\Http\Controllers\TimeLogsController@getMonthlyDatatable')
+            ->name('time_logs.monthly_datatable');
         Route::resource('time-logs', '\App\Modules\Time\Http\Controllers\TimeLogsController', ['names' => [
             'index' => 'time_logs.index',
             'create' => 'time_logs.create',

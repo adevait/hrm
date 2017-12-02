@@ -8,6 +8,7 @@ use App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface as Proje
 use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use App\Modules\Time\Http\Requests\TimeLogRequest;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Datatables;
 
 class TimeLogsController extends Controller
@@ -40,9 +41,27 @@ class TimeLogsController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function getDatatable()
+    public function getDatatable(Request $request)
     {
-        return Datatables::of($this->timeLogRepository->getCollection([], ['id', 'task_name', 'project_id', 'user_id', 'time', 'date']))
+        $filter = [];
+        $order = [];
+        if($request->date_from && $request->date_to) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_from.' 00:00:00');
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_to.' 23:59:59');
+        } else {
+            $start = Carbon::now()->subMonth();
+            $end = Carbon::now();
+        }  
+        $filter[] = [
+            'key' => 'date', 
+            'operator' => 'between', 
+            'value' => [$start, $end]
+        ];
+        return Datatables::of($this->timeLogRepository->getCollection(
+                $filter, 
+                ['id', 'task_name', 'project_id', 'user_id', 'time', 'date'],
+                ['order' => ['date', 'desc']]
+            ))
             ->editColumn('project_id', function($time_log) {
                 return $time_log->project->name;
             })
@@ -54,6 +73,35 @@ class TimeLogsController extends Controller
                     'deleteUrl' => route('time.time_logs.destroy', $time_log->id), 
                     'editUrl' => route('time.time_logs.edit', $time_log->id)
                 ]);
+            })
+            ->make();
+    }
+
+    public function getMonthlyDatatable(Request $request)
+    {
+        $filter = [];
+        $order = [];
+        if($request->date_from && $request->date_to) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_from.' 00:00:00');
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_to.' 23:59:59');
+        } else {
+            $start = Carbon::now()->subMonth();
+            $end = Carbon::now();
+        }  
+        $filter[] = [
+            'key' => 'date', 
+            'operator' => 'between', 
+            'value' => [$start, $end]
+        ];
+        return Datatables::of($this->timeLogRepository->getMonthlySummary(
+                $filter, 
+                ['project_id', 'user_id', 'time']
+            ))
+            ->editColumn('project_id', function($time_log) {
+                return $time_log->project->name;
+            })
+            ->editColumn('user_id', function($time_log) {
+                return $time_log->employee->first_name.' '.$time_log->employee->last_name;
             })
             ->make();
     }

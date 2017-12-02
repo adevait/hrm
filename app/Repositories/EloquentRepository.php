@@ -348,12 +348,22 @@ class EloquentRepository
      * 
      * @return [type]         [description]
      */
-    public function getCollection($filter = array(), $columns = [])
+    public function getCollection($filter = array(), $columns = [], $other = false)
     {
         $response = $this->model->whereNull('deleted_at');
 
         foreach ($filter as $key => $value) {
-            $response->where($value['key'], $value['operator'], $value['value']);
+            if($value['operator'] == 'between') {
+                $response->whereBetween($value['key'], $value['value']);
+            } else {
+                $response->where($value['key'], $value['operator'], $value['value']);
+            }
+        }
+
+        if($other) {
+            if(isset($other['order'])) {
+                $response->orderBy($other['order'][0], $other['order'][1]);
+            }
         }
 
         if ($columns) {

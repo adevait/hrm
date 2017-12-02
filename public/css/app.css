@@ -69,7 +69,7 @@
     background-color: #337ab7;
     color: #fff;
 }
-tfoot input, tfoot select {
+tfoot input, tfoot select, thead input, thead select {
     height: 32px;
     max-width: 150px;
     padding: 6px 12px;
@@ -80,7 +80,7 @@ tfoot input, tfoot select {
     -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
 }
-tfoot input[type="date"] {
+tfoot input[type="date"], thead input[type="date"] {
     max-width: 175px;
 }
 

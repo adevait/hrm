@@ -130,7 +130,7 @@ class TimeLogsController extends Controller
     {
         $companyData = $this->timeLogRepository->create($request->all());
         $request->session()->flash('success', trans('app.time.time_logs.store_success'));
-        return redirect()->route('time.time_logs.edit', $companyData->id);
+        return redirect()->route('time.time_logs.index');
     }
 
     /**

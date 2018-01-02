@@ -3,7 +3,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="custom-panel">
-            <div class="custom-panel-heading">{{trans('app.pim.candidates.edit_details')}}</div>
+            <div class="custom-panel-heading">{{trans('app.pim.candidates.edit_details')}}
+                <a href="{{route('pim.candidates.feature', $employee->id)}}" title="{{trans('app.pim.candidates.mark_featured_title')}}" class="btn btn-default pull-right"><i style="{{$employee->featured ? 'color: orange' : ''}}" class="glyphicon glyphicon-star" aria-hidden="true"></i></a>
+            </div>
             {!! Form::model($employee, ['method' => 'PUT', 'route' => ['pim.candidates.update', $employee->id], 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                 @include('pim::candidates._form', ['submitName' => trans('app.submit')])
             {!! Form::close() !!}

@@ -278,6 +278,7 @@ return [
             'update_success' => 'The candidate details were successfully updated.',
             'delete_success' => 'The candidate was successfully removed.',
             'additional' => 'Additional details',
+            'mark_featured_title' => 'Mark as important to have the candidate featured on the dashboard',
             'preferences' => [
                 'main' => 'Preferences and expectations',
                 'add_new' => 'Add preferences',
@@ -360,6 +361,7 @@ return [
             'max_salary' => 'Max Salary',
             'salary_range' => 'Salary Range',
             'how_did_they_hear' => 'Source',
+            'featured_candidates' => 'Featured Candidates',
             'show' => [
                 'personal_details' => 'Personal details',
             ]

@@ -141,6 +141,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         Route::get('employees/resendPassword/{id}', '\App\Modules\Pim\Http\Controllers\EmployeesController@resendPassword')->name('employees.resend_password');
         Route::get('candidates/datatable', '\App\Modules\Pim\Http\Controllers\CandidatesController@getDatatable')
             ->name('candidates.datatable');
+        Route::get('candidates/feature/{id}', '\App\Modules\Pim\Http\Controllers\CandidatesController@makeFeatured')
+            ->name('candidates.feature');
         Route::resource('candidates', '\App\Modules\Pim\Http\Controllers\CandidatesController', ['names' => [
             'index' => 'candidates.index',
             'create' => 'candidates.create',

@@ -4,6 +4,7 @@ namespace App\Modules\Recruitment\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Recruitment\Repositories\Interfaces\ReportRepositoryInterface as ReportRepository;
+use App\Modules\Pim\Repositories\Interfaces\CandidateRepositoryInterface as CandidateRepository;
 use App\Modules\Settings\Repositories\Interfaces\ContractTypeRepositoryInterface as ContractTypeRepository;
 use App\Modules\Settings\Repositories\Interfaces\SkillRepositoryInterface as SkillRepository;
 use Illuminate\Http\Request;
@@ -23,13 +24,14 @@ class ReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ContractTypeRepository $contractTypeRepository, SkillRepository $skillRepository, Request $request)
+    public function index(ContractTypeRepository $contractTypeRepository, SkillRepository $skillRepository, CandidateRepository $candidateRepository, Request $request)
     {
+        $featuredCandidates = $candidateRepository->getByMany(['featured' => 1])->get();
         $allSkills = $skillRepository->getAll()->pluck('name', 'id');
         $contractTypes = $contractTypeRepository->getAll()->pluck('name', 'id');
         $inputs = $request->only(['first_name', 'last_name', 'email', 'skills', 'salary_from', 'salary_to', 'contract_type_id', 'location']);
         $filter = http_build_query($inputs);
-        return view('recruitment::reports.index', compact('contractTypes', 'allSkills', 'inputs', 'filter'));
+        return view('recruitment::reports.index', compact('contractTypes', 'allSkills', 'inputs', 'filter', 'featuredCandidates'));
     }
 
     /**

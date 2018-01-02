@@ -47,6 +47,21 @@ class CandidatesController extends Controller
     }
 
     /**
+     * Marks a candidate as featured for easier access
+     * 
+     * @param  integer $id
+     * @return \Illuminate\Http\Response
+     */
+    public function makeFeatured($id)
+    {
+        $candidate = $this->candidateRepository->getById($id);
+        $featured = !$candidate->featured;
+        $candidate->featured = $featured;
+        $candidate->save();
+        return redirect()->back();
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

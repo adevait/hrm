@@ -3,6 +3,43 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="custom-panel">
+            <div class="custom-panel-heading"><i class="glyphicon glyphicon-star"></i>{{trans('app.recruitment.reports.featured_candidates')}}</div>
+            <table class="table table-bordered table-hover" id="featuredCandidates">
+                <thead>
+                    <th>{{trans('app.recruitment.reports.first_name')}}</th>
+                    <th>{{trans('app.recruitment.reports.last_name')}}</th>
+                    <th>{{trans('app.recruitment.reports.email')}}</th>
+                    <th>{{trans('app.recruitment.reports.how_did_they_hear')}}</th>
+                    <th>{{trans('app.recruitment.reports.comments')}}</th>
+                    <th>{{trans('app.recruitment.reports.skills')}}</th>
+                    <th>{{trans('app.recruitment.reports.salary')}}</th>
+                    <th>{{trans('app.recruitment.reports.contract_type')}}</th>
+                    <th>{{trans('app.recruitment.reports.location')}}</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    @foreach($featuredCandidates as $candidate)
+                    <td>{{$candidate->first_name}}</td>
+                    <td>{{$candidate->last_name}}</td>
+                    <td>{{$candidate->email}}</td>
+                    <td>{{$candidate->how_did_they_hear}}</td>
+                    <td>{{$candidate->notes}}</td>
+                    <td>{{@implode(', ', $candidate->skills->pluck('name')->toArray())}}</td>
+                    <td>{{@format_price($candidate->user_preferences->salary)}}</td>
+                    <td>{{@$candidate->user_preferences->contractType->name}}</td>
+                    <td>{{@get_location_name($candidate->user_preferences->location)}}</td>
+                    <td>
+                        <a href="{{route('recruitment.reports.show', $candidate->id)}}" class="btn btn-sm btn-default">{{trans('app.show')}}</a>
+                    </td>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="custom-panel">
             <div class="custom-panel-heading">{{trans('app.filter')}}</div>
             {{Form::model($inputs, ['method' => 'get'])}}
             <div class="row">
@@ -86,6 +123,8 @@
         $('#skills').select2({
             tags: true
         });
+
+        $('#featuredCandidates').DataTable();
 
         var table = $('#recruitmentTable').DataTable({
             processing: true,

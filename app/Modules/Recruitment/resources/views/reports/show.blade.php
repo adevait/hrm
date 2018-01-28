@@ -5,7 +5,7 @@
         <div class="custom-panel">
             <div class="custom-panel-heading">
                 {{$candidate->first_name.' '.$candidate->last_name}}
-                <a href="{{route('pim.candidates.feature', $employee->id)}}" title="{{trans('app.pim.candidates.mark_featured_title')}}" class="btn btn-default"><i style="{{$employee->featured ? 'color: orange' : ''}}" class="glyphicon glyphicon-star" aria-hidden="true"></i></a>
+                <a href="{{route('pim.candidates.feature', $candidate->id)}}" title="{{trans('app.pim.candidates.mark_featured_title')}}" class="btn btn-default"><i style="{{$candidate->featured ? 'color: orange' : ''}}" class="glyphicon glyphicon-star" aria-hidden="true"></i></a>
                 <div class="pull-right">
                     @foreach($candidate->social_accounts as $account)
                     <a href="{{$account->url}}"><i class="fa fa-{{get_account_icon($account->type)}}"></i></a>

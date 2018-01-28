@@ -19,18 +19,20 @@
                 </thead>
                 <tbody>
                     @foreach($featuredCandidates as $candidate)
-                    <td>{{$candidate->first_name}}</td>
-                    <td>{{$candidate->last_name}}</td>
-                    <td>{{$candidate->email}}</td>
-                    <td>{{$candidate->how_did_they_hear}}</td>
-                    <td>{{$candidate->notes}}</td>
-                    <td>{{@implode(', ', $candidate->skills->pluck('name')->toArray())}}</td>
-                    <td>{{@format_price($candidate->user_preferences->salary)}}</td>
-                    <td>{{@$candidate->user_preferences->contractType->name}}</td>
-                    <td>{{@get_location_name($candidate->user_preferences->location)}}</td>
-                    <td>
-                        <a href="{{route('recruitment.reports.show', $candidate->id)}}" class="btn btn-sm btn-default">{{trans('app.show')}}</a>
-                    </td>
+                    <tr>
+                        <td>{{$candidate->first_name}}</td>
+                        <td>{{$candidate->last_name}}</td>
+                        <td>{{$candidate->email}}</td>
+                        <td>{{$candidate->how_did_they_hear}}</td>
+                        <td>{{$candidate->notes}}</td>
+                        <td>{{@implode(', ', $candidate->skills->pluck('name')->toArray())}}</td>
+                        <td>{{@format_price($candidate->user_preferences->salary)}}</td>
+                        <td>{{@$candidate->user_preferences->contractType->name}}</td>
+                        <td>{{@get_location_name($candidate->user_preferences->location)}}</td>
+                        <td>
+                            <a href="{{route('recruitment.reports.show', $candidate->id)}}" class="btn btn-sm btn-default">{{trans('app.show')}}</a>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

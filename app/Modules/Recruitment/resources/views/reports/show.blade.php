@@ -77,6 +77,14 @@
                     <p>{{$candidate->notes}}</p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>{{trans('app.recruitment.reports.how_did_they_hear')}}:</label>
+                </div>
+                <div class="col-md-8">
+                    <p>{{$candidate->how_did_they_hear}}</p>
+                </div>
+            </div>
         </div>
     </div>
     @if($candidate->contact_details)

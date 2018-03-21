@@ -21,17 +21,17 @@
             <ul class="list-group nested-accordion">
                 @foreach($clientLogs as $clientLog)
                 <li class="list-group-item">
-                    <a href="#">{{$clientLog->client}}: <b>{{format_hours($clientLog->time)}}</b></a>
+                    <a class="accordion-title" href="#">{{$clientLog->client}}: <b>{{format_hours($clientLog->time)}}</b></a>
                     <ul>
                         @foreach($clientLog->projectLogs as $projectLog)
                         <li>
-                            <a href="#">{{$projectLog->project}}: <b>{{format_hours($projectLog->time)}}</b></a>
+                            <a class="accordion-title" href="#">{{$projectLog->project}}: <b>{{format_hours($projectLog->time)}}</b></a>
                             <ul>
                                 @foreach($projectLog->taskLogs as $taskLog)
                                 <li>
-                                    <a href="#">{{$taskLog->task_name}}: <b>{{format_hours($taskLog->time)}}</b></a>
+                                    <a class="accordion-title" href="#">{{$taskLog->task_name}}: <b>{{format_hours($taskLog->time)}}</b></a>
                                     <ul>
-                                        <li>{{$taskLog->task_description}}</li>
+                                        <li><a href="{{route('time.time_logs.edit', $taskLog->log_id)}}">{{$taskLog->task_description}}</a></li>
                                     </ul>
                                 </li>
                                 @endforeach
@@ -49,7 +49,7 @@
 @section('additionalJS')
 <script>
     $(document).ready(function() {
-        $('.nested-accordion a').click(function(e) {
+        $('.nested-accordion .accordion-title').click(function(e) {
             e.preventDefault();
             $(this).toggleClass('expanded');
         })

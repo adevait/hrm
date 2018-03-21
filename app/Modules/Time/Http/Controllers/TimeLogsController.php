@@ -57,51 +57,16 @@ class TimeLogsController extends Controller
             'operator' => 'between', 
             'value' => [$start, $end]
         ];
-        return Datatables::of($this->timeLogRepository->getCollection(
-                $filter, 
-                ['id', 'task_name', 'project_id', 'user_id', 'time', 'date'],
-                ['order' => ['date', 'desc']]
-            ))
-            ->editColumn('project_id', function($time_log) {
-                return $time_log->project->name;
-            })
-            ->editColumn('user_id', function($time_log) {
-                return $time_log->employee->first_name.' '.$time_log->employee->last_name;
-            })
-            ->addColumn('actions', function($time_log){
-                return view('includes._datatable_actions', [
-                    'deleteUrl' => route('time.time_logs.destroy', $time_log->id), 
-                    'editUrl' => route('time.time_logs.edit', $time_log->id)
-                ]);
-            })
-            ->make();
-    }
-
-    public function getMonthlyDatatable(Request $request)
-    {
-        $filter = [];
-        $order = [];
-        if($request->date_from && $request->date_to) {
-            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_from.' 00:00:00');
-            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_to.' 23:59:59');
-        } else {
-            $start = Carbon::now()->subMonth();
-            $end = Carbon::now();
-        }  
-        $filter[] = [
-            'key' => 'date', 
-            'operator' => 'between', 
-            'value' => [$start, $end]
-        ];
         return Datatables::of($this->timeLogRepository->getMonthlySummary(
                 $filter, 
-                ['project_id', 'user_id', 'time']
+                ['user_id', 'time']
             ))
-            ->editColumn('project_id', function($time_log) {
-                return $time_log->project->name;
-            })
             ->editColumn('user_id', function($time_log) {
-                return $time_log->employee->first_name.' '.$time_log->employee->last_name;
+                $url = route('time.time_logs.employee_report', $time_log->user_id);
+                return '<a class="employeeLog" href="'.$url.'" data-url="'.$url.'">'.$time_log->employee->first_name.' '.$time_log->employee->last_name.'</a>';
+            })
+            ->editColumn('time', function($time_log) {
+                return format_hours($time_log->time);
             })
             ->make();
     }
@@ -187,5 +152,39 @@ class TimeLogsController extends Controller
         $this->timeLogRepository->delete($id);
         $request->session()->flash('success', trans('app.time.time_logs.delete_success'));
         return redirect()->route('time.time_logs.index');
+    }
+
+    /**
+     * Show the time log report for the given employee
+     * @param  integer $userId
+     * @param  App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
+     * @return \Illuminate\Http\Response
+     */
+    public function employeeReport(
+        $userId, 
+        Request $request,
+        EmployeeRepository $employeeRepository,
+        TimeLogRepository $timeLogRepository
+    )
+    {
+        if($request->date_start && $request->date_end) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_start.' 00:00:00');
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_end.' 23:59:59');
+        } else {
+            $start = Carbon::now()->subMonth();
+            $end = Carbon::now();
+        }  
+        $employee = $employeeRepository->getById($userId);
+        $breadcrumb = ['title' => $employee->first_name.' '.$employee->last_name, 'id' => $employee->id];
+        $clientLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'client');
+        $totalHours = 0;
+        foreach ($clientLogs as $i => $clientLog) {
+            $totalHours += $clientLog->time;
+            $clientLogs[$i]->projectLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'project', ['projects.client_id' => $clientLog->client_id]);
+            foreach ($clientLogs[$i]->projectLogs as $j => $projectLog) {
+                $clientLogs[$i]->projectLogs[$j]->taskLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'task', ['time_logs.project_id' => $projectLog->project_id]);
+            }
+        }
+        return view('time::time_logs.employee_report', compact('breadcrumb', 'clientLogs', 'totalHours', 'request'));
     }
 }

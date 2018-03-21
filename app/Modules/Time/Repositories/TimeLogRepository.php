@@ -15,17 +15,7 @@ class TimeLogRepository extends EloquentRepository implements TimeLogRepositoryI
         $this->model = $model;
     }
 
-    public function weeklySummary()
-    {
-        return $this->model
-            ->select(DB::raw('SUM(time) as time, user_id, project_id'))
-            ->where('date', '>=', Carbon::now()->addWeeks(-1))
-            ->where('date', '<=', Carbon::now())
-            ->groupBy(DB::raw('user_id, project_id'))
-            ->get();
-    }
-
-    public function getMonthlySummary($filter = array(), $columns = [], $other = false)
+    public function getMonthlySummary($filter = array(), $columns = [])
     {
         $response = $this->model->whereNull('deleted_at');
 
@@ -37,15 +27,55 @@ class TimeLogRepository extends EloquentRepository implements TimeLogRepositoryI
             }
         }
 
-        if($other) {
-            if(isset($other['order'])) {
-                $response->orderBy($other['order'][0], $other['order'][1]);
-            }
-        }
-
         $response->groupBy('user_id');
-        $response->groupBy('project_id');
 
-        return $response->select(DB::raw('project_id, user_id, SUM(time) as t'));
+        return $response->select(DB::raw('user_id, SUM(time) as t'));
+    }
+
+    public function getEmployeeReport($userId, $dateFrom, $dateTo, $group = 'task', $where = [])
+    {
+        switch ($group) {
+            case 'client':
+                $groupBy = 'projects.client_id';
+                $select = [
+                    'clients.name as client',
+                    DB::raw('sum(time) as time'),
+                    'projects.client_id',
+                ];
+                break;
+            case 'project':
+                $groupBy = 'time_logs.project_id';
+                $select = [
+                    'clients.name as client', 
+                    'projects.name as project', 
+                    DB::raw('sum(time) as time'), 
+                    'projects.client_id', 
+                    'time_logs.project_id',
+                ];
+                break;
+            default:
+                $groupBy = 'time_logs.id';
+                $select = [
+                    'clients.name as client', 
+                    'projects.name as project', 
+                    DB::raw('sum(time) as time'), 
+                    'projects.client_id', 
+                    'time_logs.project_id',
+                    'time_logs.task_name',
+                ];
+                break;
+        }
+        $timeLog = TimeLog::join('projects', 'projects.id', '=', 'time_logs.project_id')
+            ->join('clients', 'clients.id', '=', 'projects.client_id')
+            ->whereBetween('date', [$dateFrom, $dateTo])
+            ->where('user_id', $userId)
+            ->whereNull('time_logs.deleted_at');
+        if(!empty($where)) {
+            $timeLog = $timeLog->where($where);
+        }
+        $timeLog = $timeLog->groupBy($groupBy)
+            ->select($select)
+            ->get();
+        return $timeLog;
     }
 }

@@ -410,7 +410,7 @@ return [
             'task_description' => 'Task description',
             'project' => 'Project',
             'employee' => 'Employee',
-            'time' => 'Spent time',
+            'time' => 'Logged time',
             'date' => 'Date',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',

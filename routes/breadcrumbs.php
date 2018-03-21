@@ -977,6 +977,12 @@ Breadcrumbs::register('time.time_logs.show', function($breadcrumbs, $breadcrumb)
     $breadcrumbs->push($breadcrumb['title'], route('time.time_logs.show', $breadcrumb['id']));
 });
 
+Breadcrumbs::register('time.time_logs.employee_report', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('time.time_logs.index');
+    $breadcrumbs->push($breadcrumb['title'], route('time.time_logs.employee_report', $breadcrumb['id']));
+});
+
 /**
  * Time logs breadcrumbs end here
  */

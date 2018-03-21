@@ -381,6 +381,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'update' => 'time_logs.update',
             'destroy' => 'time_logs.destroy'
         ]]);
+        Route::get('{userId}/report', '\App\Modules\Time\Http\Controllers\TimeLogsController@employeeReport')->name('time_logs.employee_report');
     });
 
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'admin']], function() {

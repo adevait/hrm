@@ -177,3 +177,8 @@ function checkValidity($id)
         abort(403, 'Unauthorized action.'); 
     }
 }
+
+function format_hours($hours)
+{
+    return $hours.' hrs';
+}

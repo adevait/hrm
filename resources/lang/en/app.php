@@ -411,6 +411,7 @@ return [
             'project' => 'Project',
             'employee' => 'Employee',
             'time' => 'Logged time',
+            'report' => 'Report',
             'date' => 'Date',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',

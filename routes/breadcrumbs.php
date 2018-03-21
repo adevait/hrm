@@ -1072,6 +1072,12 @@ Breadcrumbs::register('employee.time.edit', function($breadcrumbs, $breadcrumb)
     $breadcrumbs->push(trans('app.edit').': '.$breadcrumb['title'], route('employee.time.edit', $breadcrumb['id']));
 });
 
+Breadcrumbs::register('employee.time.report', function($breadcrumbs, $breadcrumb)
+{
+    $breadcrumbs->parent('employee.time.index');
+    $breadcrumbs->push(trans('app.time.time_logs.report'));
+});
+
 Breadcrumbs::register('employee.leaves.index', function($breadcrumbs)
 {
     $breadcrumbs->parent('employee.home');

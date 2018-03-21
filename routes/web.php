@@ -434,6 +434,9 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
 
     Route::get('time/datatable', '\App\Modules\Employee\Time\Http\Controllers\TimeController@getDatatable')
             ->name('time.datatable');
+    
+    Route::get('time/report', '\App\Modules\Employee\Time\Http\Controllers\TimeController@report')->name('time.report');
+    
     Route::resource('time', '\App\Modules\Employee\Time\Http\Controllers\TimeController', ['names' => [
             'index' => 'time.index',
             'create' => 'time.create',

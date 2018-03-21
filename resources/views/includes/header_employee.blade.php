@@ -22,12 +22,16 @@
               @endif
           </a>
         </li>
-        <li class="{{ $current == 'employee.time' ? 'active' : ''}}">
-          <a href="{{route('employee.time.index')}}"> {{trans('app.time.main')}}
+        <li class="dropdown {{ $current == 'employee.time' ? 'active' : ''}}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{trans('app.time.main')}} <span class="caret"></span>
               @if($current == 'employee.time') 
               <span class="sr-only">({{trans('app.current')}})</span>
               @endif
           </a>
+          <ul class="dropdown-menu">
+            <li><a href="{{route('employee.time.index')}}">{{trans('app.time.time_logs.main')}}</a></li>
+            <li><a href="{{route('employee.time.report')}}">{{trans('app.time.time_logs.report')}}</a></li>
+          </ul>
         </li>
         <li class="{{ $current == 'employee.salary' ? 'active' : ''}}">
           <a href="{{route('employee.salary.index')}}"> {{trans('app.employee.salary.main')}}

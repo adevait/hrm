@@ -10,6 +10,7 @@ use App\Modules\Time\Repositories\Interfaces\TimeLogRepositoryInterface as TimeL
 use Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TimeController extends Controller {
 	private $timeLogRepository;
@@ -132,5 +133,38 @@ class TimeController extends Controller {
         $this->timeLogRepository->delete($id);
         $request->session()->flash('success', trans('app.time.time_logs.delete_success'));
         return redirect()->route('employee.time.index');
+    }
+
+    /**
+     * Show the time log report for the given employee
+     * @param  App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
+     * @return \Illuminate\Http\Response
+     */
+    public function report(
+        Request $request,
+        EmployeeRepository $employeeRepository,
+        TimeLogRepository $timeLogRepository
+    )
+    {
+        $userId = Auth::user()->id;
+        if($request->date_start && $request->date_end) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_start.' 00:00:00');
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_end.' 23:59:59');
+        } else {
+            $start = Carbon::now()->subMonth();
+            $end = Carbon::now();
+        }  
+        $employee = $employeeRepository->getById($userId);
+        $breadcrumb = ['title' => $employee->first_name.' '.$employee->last_name, 'id' => $employee->id];
+        $clientLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'client');
+        $totalHours = 0;
+        foreach ($clientLogs as $i => $clientLog) {
+            $totalHours += $clientLog->time;
+            $clientLogs[$i]->projectLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'project', ['projects.client_id' => $clientLog->client_id]);
+            foreach ($clientLogs[$i]->projectLogs as $j => $projectLog) {
+                $clientLogs[$i]->projectLogs[$j]->taskLogs = $timeLogRepository->getEmployeeReport($userId, $start, $end, 'task', ['time_logs.project_id' => $projectLog->project_id]);
+            }
+        }
+        return view('employee.time::report', compact('breadcrumb', 'clientLogs', 'totalHours', 'request'));
     }
 }

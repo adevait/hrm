@@ -31,7 +31,7 @@
                                 <li>
                                     <a class="accordion-title" href="#">{{$taskLog->task_name}}: <b>{{format_hours($taskLog->time)}}</b></a>
                                     <ul>
-                                        <li><a href="{{route('time.time_logs.edit', $taskLog->log_id)}}">{{$taskLog->task_description}}</a></li>
+                                        <li>{{$taskLog->task_description}} <a href="{{route('time.time_logs.edit', $taskLog->log_id)}}" class="btn btn-default btn-xs">{{trans('app.edit')}}</a></li>
                                     </ul>
                                 </li>
                                 @endforeach

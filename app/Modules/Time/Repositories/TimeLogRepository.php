@@ -62,6 +62,7 @@ class TimeLogRepository extends EloquentRepository implements TimeLogRepositoryI
                     'projects.client_id', 
                     'time_logs.project_id',
                     'time_logs.task_name',
+                    'time_logs.task_description',
                 ];
                 break;
         }

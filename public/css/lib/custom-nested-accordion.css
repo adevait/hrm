@@ -1,0 +1,24 @@
+.nested-accordion a+div {
+    display: none;
+}
+.nested-accordion a {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+.nested-accordion li a {
+    font-size: 15px;
+}
+.nested-accordion > li div {
+    padding: 5px 0 5px 10px;
+}
+.nested-accordion a:before {
+    padding: 5px;
+    content: '\25B8';
+}
+.nested-accordion a.expanded:before {
+    content: '\25BE';
+}
+.nested-accordion a.expanded + div {
+    display: block;
+}

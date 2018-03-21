@@ -17,27 +17,43 @@
                 </div>
             </form>
             </div>
-            <h2>{{trans('app.time.time_logs.time')}}: {{format_hours($totalHours)}}</h2>
-            @foreach($clientLogs as $clientLog)
-            <div class="accordion">
-                <h3>{{$clientLog->client}} {{format_hours($clientLog->time)}}</h3>
-                @foreach($clientLog->projectLogs as $projectLog)
-                <div>
-                    <b>{{$projectLog->project}} {{format_hours($projectLog->time)}}</b>
+            <h3>{{trans('app.time.time_logs.total_time')}}: {{format_hours($totalHours)}}</h3>
+            <ul class="list-group nested-accordion">
+                @foreach($clientLogs as $clientLog)
+                <li class="list-group-item">
+                    <a href="#">{{$clientLog->client}}: <b>{{format_hours($clientLog->time)}}</b></a>
                     <div>
-                        @foreach($projectLog->taskLogs as $taskLog)
-                        <p>{{$taskLog->task_name}} {{format_hours($taskLog->time)}}</p>
+                        @foreach($clientLog->projectLogs as $projectLog)
+                        <div>
+                            <a href="#">{{$projectLog->project}}: <b>{{format_hours($projectLog->time)}}</b></a>
+                            <div>
+                                @foreach($projectLog->taskLogs as $taskLog)
+                                <div>
+                                    <a href="#">{{$taskLog->task_name}}: <b>{{format_hours($taskLog->time)}}</b></a>
+                                    <div>{{$taskLog->task_description}}</div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                         @endforeach
                     </div>
-                </div>
+                </li>
                 @endforeach
-            </div>
-            @endforeach
+            </ul>
         </div>
     </div>
 </div>
 @endsection
 @section('additionalJS')
+<script>
+    $(document).ready(function() {
+        $('.nested-accordion a').click(function(e) {
+            e.preventDefault();
+            $(this).toggleClass('expanded');
+        })
+    });
+</script>
 @endsection
 @section('additionalCSS')
+<link rel="stylesheet" href="/css/lib/custom-nested-accordion.css">
 @endsection

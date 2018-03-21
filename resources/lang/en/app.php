@@ -417,6 +417,7 @@ return [
             'add_new' => 'Add time log',
             'edit_details' => 'Edit time log',
             'monthly_summary' => 'Monthly Summary',
+            'total_time' => 'Total time',
             'store_success' => 'Time log was successfully added.',
             'update_success' => 'Time log was successfully updated.',
             'delete_success' => 'Time log was successfully deleted.',

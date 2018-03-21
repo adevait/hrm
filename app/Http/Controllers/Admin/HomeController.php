@@ -15,7 +15,6 @@ class HomeController extends Controller
      */
     public function index(TimeLogRepository $timeLogRepository)
     {
-        $weekly_summary = $timeLogRepository->weeklySummary();
-        return view('welcome', compact('weekly_summary'));
+        return view('welcome');
     }
 }

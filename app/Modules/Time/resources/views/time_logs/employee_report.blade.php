@@ -22,21 +22,23 @@
                 @foreach($clientLogs as $clientLog)
                 <li class="list-group-item">
                     <a href="#">{{$clientLog->client}}: <b>{{format_hours($clientLog->time)}}</b></a>
-                    <div>
+                    <ul>
                         @foreach($clientLog->projectLogs as $projectLog)
-                        <div>
+                        <li>
                             <a href="#">{{$projectLog->project}}: <b>{{format_hours($projectLog->time)}}</b></a>
-                            <div>
+                            <ul>
                                 @foreach($projectLog->taskLogs as $taskLog)
-                                <div>
+                                <li>
                                     <a href="#">{{$taskLog->task_name}}: <b>{{format_hours($taskLog->time)}}</b></a>
-                                    <div>{{$taskLog->task_description}}</div>
-                                </div>
+                                    <ul>
+                                        <li>{{$taskLog->task_description}}</li>
+                                    </ul>
+                                </li>
                                 @endforeach
-                            </div>
-                        </div>
+                            </ul>
+                        </li>
                         @endforeach
-                    </div>
+                    </ul>
                 </li>
                 @endforeach
             </ul>

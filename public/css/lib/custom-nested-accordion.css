@@ -1,5 +1,6 @@
-.nested-accordion a+div {
+.nested-accordion a+ul {
     display: none;
+    list-style-type: none;
 }
 .nested-accordion a {
     display: block;
@@ -9,8 +10,8 @@
 .nested-accordion li a {
     font-size: 15px;
 }
-.nested-accordion > li div {
-    padding: 5px 0 5px 10px;
+.nested-accordion > li li {
+    padding: 5px 0;
 }
 .nested-accordion a:before {
     padding: 5px;
@@ -19,6 +20,6 @@
 .nested-accordion a.expanded:before {
     content: '\25BE';
 }
-.nested-accordion a.expanded + div {
+.nested-accordion a.expanded + ul {
     display: block;
 }

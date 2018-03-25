@@ -29,4 +29,20 @@ class ProjectRepository extends EloquentRepository implements ProjectRepositoryI
 
         return $response;
     }
+
+    /**
+     * Returns all projects for the given employee
+     * 
+     * @param  integer $id the id of the employee
+     * 
+     * @return Collection
+     */
+    public function getByEmployee($id)
+    {
+        $projects = $this->model::whereHas('assignees', function($query) use ($id) {
+            $query->where('user_id', $id);
+        });
+
+        return $projects;
+    }
 }

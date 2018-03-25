@@ -399,6 +399,7 @@ return [
             'description' => 'Description',
             'client' => 'Client',
             'add_new' => 'Add project',
+            'assignees' => 'Assignees',
             'edit_details' => 'Edit project',
             'store_success' => 'Project was successfully added.',
             'update_success' => 'Project was successfully updated.',

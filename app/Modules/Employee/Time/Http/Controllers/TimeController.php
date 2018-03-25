@@ -29,8 +29,9 @@ class TimeController extends Controller {
      */
     public function index(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
-        $projects = $projectRepository->getAll()->pluck('name', 'id');
-        $employees = $employeeRepository->getById(Auth::user()->id)->pluck('first_name', 'id');
+        $id = Auth::user()->id;
+        $projects = $projectRepository->getByEmployee($id)->pluck('name', 'id');
+        $employees = $employeeRepository->getById($id)->pluck('first_name', 'id');
         return view('employee.time::index', compact('projects', 'employees'));
     }
 
@@ -67,7 +68,7 @@ class TimeController extends Controller {
      */
     public function create(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
-        $projects = $projectRepository->getAll()->pluck('name', 'id');
+        $projects = $projectRepository->getByEmployee(Auth::user()->id)->pluck('name', 'id');
         return view('employee.time::create', compact('projects'));
     }
 
@@ -97,7 +98,7 @@ class TimeController extends Controller {
     {
         $timeLog = $this->timeLogRepository->getById($id);
         checkValidity($timeLog->user_id);
-        $projects = $projectRepository->getAll()->pluck('name', 'id');
+        $projects = $projectRepository->getByEmployee(Auth::user()->id)->pluck('name', 'id');
         $breadcrumb = ['title' => $timeLog->task_name, 'id' => $timeLog->id];
         return view('employee.time::edit', compact('timeLog', 'projects', 'breadcrumb'));
     }

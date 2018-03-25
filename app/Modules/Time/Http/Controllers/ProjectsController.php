@@ -5,6 +5,7 @@ namespace App\Modules\Time\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface as ProjectRepository;
 use App\Modules\Time\Repositories\Interfaces\ClientRepositoryInterface as ClientRepository;
+use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use App\Modules\Time\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Datatables;
@@ -54,12 +55,14 @@ class ProjectsController extends Controller
      * Show the form for creating a new resource.
      *
      * @param  \App\Modules\Time\Repositories\Interfaces\ClientRepositoryInterface  $clientRepository
+     * @param  \App\Modules\PIM\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function create(ClientRepository $clientRepository)
+    public function create(ClientRepository $clientRepository, EmployeeRepository $employeeRepository)
     {
         $clients = $clientRepository->getAll()->pluck('name', 'id');
-        return view('time::projects.create', compact('clients'));
+        $employees = $employeeRepository->pluckName();
+        return view('time::projects.create', compact('clients', 'employees'));
     }
 
     /**
@@ -91,14 +94,17 @@ class ProjectsController extends Controller
      *
      * @param  integer  unique identifier for the resource
      * @param  \App\Modules\Time\Repositories\Interfaces\ClientRepositoryInterface  $clientRepository
+     * @param  \App\Modules\PIM\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, ClientRepository $clientRepository)
+    public function edit($id, ClientRepository $clientRepository, EmployeeRepository $employeeRepository)
     {
         $project = $this->projectRepository->getById($id);
+        $project->assignees = $project->assignees()->pluck('user_id')->toArray();
         $clients = $clientRepository->getAll()->pluck('name', 'id');
+        $employees = $employeeRepository->pluckName();
         $breadcrumb = ['title' => $project->name, 'id' => $project->id];
-        return view('time::projects.edit', compact('project', 'clients', 'breadcrumb'));
+        return view('time::projects.edit', compact('project', 'clients', 'employees' , 'breadcrumb'));
     }
 
     /**

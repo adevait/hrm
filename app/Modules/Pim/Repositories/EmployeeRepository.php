@@ -19,7 +19,7 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
 
     public function getAll()
     {
-        return $this->model->where('role', $this->model->USER_ROLE_EMPLOYEE)->get();
+        return $this->model->where('role', $this->model::USER_ROLE_EMPLOYEE)->get();
     }
  
 

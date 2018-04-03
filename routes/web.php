@@ -201,6 +201,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
                 'update' => 'salaries.update',
                 'destroy' => 'salaries.destroy'
             ]]);  
+            Route::post('salaries/config-salary', '\App\Modules\Pim\Http\Controllers\EmployeeSalaryController@configSalary')
+            ->name('salaries.config_salary');
             Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function($employeeId) {
                 
                 Route::get('/', '\App\Modules\Pim\Http\Controllers\EmployeeQualificationsController@index')->name('index');
@@ -382,6 +384,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
             'destroy' => 'time_logs.destroy'
         ]]);
         Route::get('{userId}/report', '\App\Modules\Time\Http\Controllers\TimeLogsController@employeeReport')->name('time_logs.employee_report');
+        Route::get('salary-report', '\App\Modules\Time\Http\Controllers\TimeLogsController@salaryReport')->name('time_logs.salary_report');
     });
 
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth', 'admin']], function() {

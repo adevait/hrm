@@ -80,4 +80,14 @@ class TimeLogRepository extends EloquentRepository implements TimeLogRepositoryI
             ->get();
         return $timeLog;
     }
+
+    public function getTotalHours($userId, $dateFrom, $dateTo)
+    {
+        return TimeLog::join('projects', 'projects.id', '=', 'time_logs.project_id')
+            ->join('clients', 'clients.id', '=', 'projects.client_id')
+            ->whereBetween('date', [$dateFrom, $dateTo])
+            ->where('user_id', $userId)
+            ->whereNull('time_logs.deleted_at')
+            ->sum('time');
+    }
 }

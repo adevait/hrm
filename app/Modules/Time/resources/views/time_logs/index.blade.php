@@ -3,6 +3,7 @@
 <div class="row">
     <div class="col-sm-12">
         <a href="{{route('time.time_logs.create')}}" class="btn btn-primary pull-right">{{trans('app.time.time_logs.add_new')}}</a>
+        <a href="{{route('time.time_logs.salary_report')}}" class="btn btn-default pull-right">{{trans('app.pim.employees.salaries.salary_report')}}</a>
     </div>
 </div>
 <div class="row">

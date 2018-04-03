@@ -7,6 +7,7 @@ use App\Modules\Time\Repositories\Interfaces\TimeLogRepositoryInterface as TimeL
 use App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface as ProjectRepository;
 use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as EmployeeRepository;
 use App\Modules\Time\Http\Requests\TimeLogRequest;
+use App\Modules\Pim\Repositories\EmployeeSalaryRepository;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Datatables;
@@ -186,5 +187,29 @@ class TimeLogsController extends Controller
             }
         }
         return view('time::time_logs.employee_report', compact('breadcrumb', 'clientLogs', 'totalHours', 'request'));
+    }
+
+    public function salaryReport(
+        Request $request,
+        EmployeeRepository $employeeRepository,
+        EmployeeSalaryRepository $employeeSalaryRepository
+    )
+    {
+        if($request->date_start && $request->date_end) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_start.' 00:00:00');
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $request->date_end.' 23:59:59');
+        } else {
+            $start = Carbon::now()->subMonth();
+            $end = Carbon::now();
+        }
+        $employees = $employeeRepository->getAll();
+        $report = [];
+        foreach ($employees as $key => $employee) {
+            $report[$employee->id] = [
+                'salary' => $employeeSalaryRepository->getCurrentSalary($employee->id),
+                'totalHours' => $this->timeLogRepository->getTotalHours($employee->id, $start, $end),
+            ];
+        }
+        return view('time::time_logs.salary_report', compact('request', 'report', 'employees'));
     }
 }

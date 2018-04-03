@@ -34,11 +34,14 @@ class EmployeeSalaryController extends Controller
     public function index($employeeId)
     {
         $employee = $this->employeeRepository->getById($employeeId);
+        $currentSalary = $this->employeeSalaryRepository->getCurrentSalary($employeeId);
+        $currencies = $this->employeeSalaryRepository->getCurrencies();
+        $types = $this->employeeSalaryRepository->getSalaryTypes();
         $breadcrumb = [
             'parent_id' => $employeeId, 
             'parent_title' => $employee->first_name.' '.$employee->last_name
         ];
-        return view('pim::employee_salaries.index', compact('breadcrumb'));
+        return view('pim::employee_salaries.index', compact('breadcrumb', 'currentSalary', 'currencies', 'types'));
     }
 
     /**
@@ -218,6 +221,30 @@ class EmployeeSalaryController extends Controller
     {
         $this->employeeSalaryRepository->delete($id);
         $request->session()->flash('success', trans('app.pim.employees.salaries.delete_success'));
+        return redirect()->route('pim.employees.salaries.index', $employeeId);
+    }
+
+    /**
+     * Saves the current salary changes
+     * 
+     * @param  integer $employeeId
+     * @param  Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     *
+     * @todo Create a separate request handler
+     */
+    public function configSalary($employeeId, Request $request)
+    {
+        $salary = [
+            'amount' => $request->amount,
+            'type' => $request->type,
+            'currency_id' => $request->currency_id,
+            'bank_account' => $request->bank_account,
+            'id_number' => $request->id_number,
+            'user_id' => $employeeId,
+        ];
+        $this->employeeSalaryRepository->changeCurrentSalary($salary);
         return redirect()->route('pim.employees.salaries.index', $employeeId);
     }
 }

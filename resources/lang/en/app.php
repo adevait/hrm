@@ -265,9 +265,20 @@ return [
                 'payment_date' => 'Payment date',
                 'attachment' => 'Attachment',
                 'attachmed_file' => 'Attached file',
+                'salary_setup' => 'Set Current Salary',
+                'salary_report' => 'Salary Report',
                 'store_success' => 'The salary record was successfully added.',
                 'update_success' => 'The salary details were successfully updated.',
                 'delete_success' => 'The salary record was successfully removed.',
+                'config' => [
+                    'amount' => 'Amount',
+                    'type' => 'Type',
+                    'currency' => 'Currency',
+                    'type_full' => 'Flat',
+                    'type_hour' => 'Hourly',
+                    'bank_account' => 'Bank Account',
+                    'id_number' => 'ID Number',
+                ],
             ]
         ],
         'candidates' => [

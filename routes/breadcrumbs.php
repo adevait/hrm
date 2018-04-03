@@ -983,6 +983,12 @@ Breadcrumbs::register('time.time_logs.employee_report', function($breadcrumbs, $
     $breadcrumbs->push($breadcrumb['title'], route('time.time_logs.employee_report', $breadcrumb['id']));
 });
 
+Breadcrumbs::register('time.time_logs.salary_report', function($breadcrumbs)
+{
+    $breadcrumbs->parent('time.time_logs.index');
+    $breadcrumbs->push(trans('app.pim.employees.salaries.salary_report'), route('time.time_logs.salary_report'));
+});
+
 /**
  * Time logs breadcrumbs end here
  */

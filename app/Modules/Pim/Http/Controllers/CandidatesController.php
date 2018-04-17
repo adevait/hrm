@@ -52,12 +52,15 @@ class CandidatesController extends Controller
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function makeFeatured($id)
+    public function makeFeatured($id, Request $request)
     {
         $candidate = $this->candidateRepository->getById($id);
         $featured = !$candidate->featured;
         $candidate->featured = $featured;
         $candidate->save();
+        if($request->ajax()){
+            return ['isFeatured' => (int)$featured];
+        }
         return redirect()->back();
     }
 

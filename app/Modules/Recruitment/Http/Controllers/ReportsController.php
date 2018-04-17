@@ -45,7 +45,7 @@ class ReportsController extends Controller
 
         return Datatables::of($this->reportRepository->getQry(
                 $inputs, 
-                ['id', 'first_name', 'last_name', 'email', 'how_did_they_hear', 'notes']))
+                ['id', 'first_name', 'last_name', 'email', 'how_did_they_hear', 'notes', 'featured']))
             ->addColumn('skills', function($candidate) {
                 return @implode(', ', $candidate->skills->pluck('name')->toArray());
             })
@@ -60,10 +60,13 @@ class ReportsController extends Controller
             })
             ->addColumn('actions', function($employee){
                 return view('includes._datatable_actions', [
-                    'showUrl' => route('recruitment.reports.show', $employee->id)
+                    'showUrl' => route('recruitment.reports.show', $employee->id),
+                    'featureUrl' => route('pim.candidates.feature', $employee->id),
+                    'isFeatured' => $employee->featured
                 ]);
             })
             ->removeColumn('id')
+            ->removeColumn('featured')
             ->make();
     }
 

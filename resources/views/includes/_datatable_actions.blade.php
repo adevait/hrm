@@ -19,3 +19,6 @@
 	<button type="submit" class="btn btn-sm btn-default">{{trans('app.approve')}}</button>
 </form>
 @endif
+@if(@$featureUrl && isset($isFeatured))
+<a data-href="{{$featureUrl}}" title="{{trans('app.pim.candidates.mark_featured_title')}}" class="btn btn-default feature-candidate"><i style="{{$isFeatured ? 'color: orange' : ''}}" class="glyphicon glyphicon-star" aria-hidden="true"></i></a>
+@endif

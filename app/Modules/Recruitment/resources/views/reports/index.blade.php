@@ -145,6 +145,18 @@
                 {data: 9, name: 'actions', sortable: false, searchable: false}
             ]
         });
+
+        $('#recruitmentTable').on('click', '.feature-candidate', function() {
+            var url = $(this).data('href');
+            var clickedBtn = $(this);
+            $.ajax({
+                url: url,
+                success: function(msg) {
+                    var color = msg.isFeatured == 1 ? 'orange' : '#636b6f';
+                    clickedBtn.find('.glyphicon-star').css('color', color);
+                }
+            });
+        });
     });
 </script>
 @endsection

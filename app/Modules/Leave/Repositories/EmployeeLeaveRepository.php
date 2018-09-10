@@ -11,6 +11,10 @@ use Carbon\Carbon;
 
 class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeaveRepositoryInterface
 {
+
+    const STATUS_APPROVED = 1;
+    const STATUS_PENDING = 0;
+
     public function __construct(EmployeeLeave $model,
         EmployeeLeaveStatusRepositoryInterface $employeeLeaveStatusRepository,
         LeaveTypeRepositoryInterface $leaveTypeRepository)
@@ -108,5 +112,10 @@ class EmployeeLeaveRepository extends EloquentRepository implements EmployeeLeav
             return ['status' => true];
         }
         return ['status' => false, 'availableDays' => $days];
+    }
+
+    public function approveLeaveRequest($id)
+    {
+        return $this->update($id, ['approved' => self::STATUS_APPROVED]);
     }
 }

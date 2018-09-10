@@ -182,3 +182,8 @@ function format_hours($hours)
 {
     return $hours.' hrs';
 }
+
+function get_admin_details()
+{
+    return App\User::where('role', App\User::USER_ROLE_ADMIN)->whereNull('deleted_at')->first();
+}

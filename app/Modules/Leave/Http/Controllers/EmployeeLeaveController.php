@@ -51,7 +51,7 @@ class EmployeeLeaveController extends Controller
                 return view('includes._datatable_actions', [
                     'deleteUrl' => route('leave.employee_leaves.destroy', $leave->id), 
                     'editUrl' => route('leave.employee_leaves.edit', $leave->id),
-                    'approveUrl' => $leave->approved == 'pending' ? route('leave.employee_leaves.approve', $leave->id) : null
+                    'approveUrl' => !$leave->approved ? route('leave.employee_leaves.approve', $leave->id) : null
                 ]);
             })
             ->make();
@@ -165,9 +165,7 @@ class EmployeeLeaveController extends Controller
      */
     public function approve($id, Request $request)
     {
-        $employeeLeaveData = $this->employeeLeaveRepository->getById($id);
-        $employeeLeaveData['approved'] = 'approved';
-        $this->employeeLeaveRepository->update($id, json_decode(json_encode($employeeLeaveData), TRUE));
+        $this->employeeLeaveRepository->approveLeaveRequest($id);
 
         $request->session()->flash('success', trans('app.leave.employee_leaves.approve_success'));
         return redirect()->route('leave.employee_leaves.index');

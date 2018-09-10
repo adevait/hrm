@@ -67,6 +67,11 @@ class User extends Authenticatable
         }
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    }
+
     public function jobs()
     {
         return $this->belongsTo(UserJobs::class);

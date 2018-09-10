@@ -10,6 +10,7 @@ use App\Modules\Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface as Le
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Datatables;
 
 class LeavesController extends Controller
@@ -92,9 +93,16 @@ class LeavesController extends Controller
      */
     public function store(LeaveRequest $request)
     {
-        $employeeLeaveData = $request->all()+['user_id' => Auth::user()->id, 'approved' => 0];
+        $user = Auth::user();
+        $employeeLeaveData = $request->all()+['user_id' => $user->id, 'approved' => 0];
         $employeeLeaveData = $this->employeeLeaveRepository->create($employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
+        $this->sendLeaveRequest($user->id, [
+            'employeeName' => $user->full_name,
+            'dateFrom' => $employeeLeaveData->start_date,
+            'dateTo' => $employeeLeaveData->end_date,
+            'requestId' => $employeeLeaveData->id,
+        ]);
         return redirect()->route('employee.leaves.edit', $employeeLeaveData->id)->with('success', trans('app.employee.leaves.store_success'));
     }
 
@@ -122,6 +130,9 @@ class LeavesController extends Controller
     public function edit($id, LeaveTypeRepository $leaveTypeRepository, EmployeeRepository $employeeRepository)
     {
         $employeeLeave = $this->employeeLeaveRepository->getById($id);
+        if($employeeLeave->approved) {
+            return redirect()->route('employee.leaves.index');
+        } 
         checkValidity($employeeLeave->user_id);
         $leaveTypes = $leaveTypeRepository->getAll()->pluck('name', 'id');
         $breadcrumb = ['title' => '#'.$employeeLeave->id, 'id' => $employeeLeave->id];
@@ -140,10 +151,17 @@ class LeavesController extends Controller
     {
         $employeeLeaveData = $this->employeeLeaveRepository->getById($id);
         checkValidity($employeeLeaveData->user_id);
+        $user = Auth::user();
         $this->employeeLeaveRepository->deleteUsedDays($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
         $employeeLeaveData = $request->all();
         $employeeLeaveData = $this->employeeLeaveRepository->update($id, $employeeLeaveData);
         $this->employeeLeaveRepository->updateStatus($employeeLeaveData->user_id, $employeeLeaveData->leave_type_id, $employeeLeaveData->start_date, $employeeLeaveData->end_date);
+        $this->sendLeaveRequest($user->id, [
+            'employeeName' => $user->full_name,
+            'dateFrom' => $employeeLeaveData->start_date,
+            'dateTo' => $employeeLeaveData->end_date,
+            'requestId' => $employeeLeaveData->id,
+        ]);
         $request->session()->flash('success', trans('app.employee.leaves.update_success'));
         return redirect()->route('employee.leaves.edit', $employeeLeaveData->id);
     }
@@ -163,5 +181,15 @@ class LeavesController extends Controller
         $this->employeeLeaveRepository->delete($id);
         $request->session()->flash('success', trans('app.employee.leaves.delete_success'));
         return redirect()->route('employee.leaves.index');
+    }
+
+    public function sendLeaveRequest($id, $emailDetails)
+    {
+        $adminDetails = get_admin_details();
+        Mail::send('employee.leaves::email_request_leave', $emailDetails, function($message) use ($emailDetails, $adminDetails)
+        {
+            $message->subject(trans('app.employee.leaves.request_leave_email.subject', ['employeeName' => $emailDetails['employeeName']]));
+            $message->to($adminDetails['email']);
+        });
     }
 }

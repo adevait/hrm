@@ -460,6 +460,15 @@ return [
             'store_success' => 'Leave request is successfully sent.',
             'update_success' => 'Leave request is successfully updated.',
             'delete_success' => 'Leave request is successfully deleted.',
+            'request_leave_email' => [
+                'subject' => 'Leave request by :employeeName',
+                'body' => [
+                    'new_request' => 'New leave request by :employeeName',
+                    'date_from' => 'From',
+                    'date_to' => 'To',
+                    'review_request' => 'Review the request:',
+                ],
+            ],
         ],
         'salary' => [
             'main' => 'Salary'

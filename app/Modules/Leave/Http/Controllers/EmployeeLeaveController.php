@@ -188,7 +188,7 @@ class EmployeeLeaveController extends Controller
     {
         Mail::send('leave::employee_leaves.email_approve_leave', $emailDetails, function($message) use ($emailDetails)
         {
-            $message->subject(trans('app.employee_leaves.approve_email.subject'));
+            $message->subject(trans('app.leave.employee_leaves.approve_email.subject'));
             $message->to($emailDetails['employeeEmail']);
         });
     }

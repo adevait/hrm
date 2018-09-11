@@ -8,6 +8,7 @@ use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as Emplo
 use App\Modules\Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface as LeaveTypeRepository;
 use App\Modules\Leave\Http\Requests\EmployeeLeaveRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Datatables;
 
 class EmployeeLeaveController extends Controller
@@ -165,9 +166,30 @@ class EmployeeLeaveController extends Controller
      */
     public function approve($id, Request $request)
     {
-        $this->employeeLeaveRepository->approveLeaveRequest($id);
+        $employeeLeave = $this->employeeLeaveRepository->approveLeaveRequest($id);
+
+        $this->sendLeaveRequest($id, [
+            'employeeEmail' => $employeeLeave->employee->email,
+            'dateFrom' => $employeeLeave->start_date,
+            'dateTo'=> $employeeLeave->end_date,
+            'requestId' => $employeeLeave->id,
+        ]); 
 
         $request->session()->flash('success', trans('app.leave.employee_leaves.approve_success'));
         return redirect()->route('leave.employee_leaves.index');
+    }
+
+    /**
+     * Send leave approval email
+     * @param  integer $id          
+     * @param  array $emailDetails 
+     */
+    public function sendLeaveRequest($id, $emailDetails)
+    {
+        Mail::send('leave::employee_leaves.email_approve_leave', $emailDetails, function($message) use ($emailDetails)
+        {
+            $message->subject(trans('app.employee_leaves.approve_email.subject'));
+            $message->to($emailDetails['employeeEmail']);
+        });
     }
 }

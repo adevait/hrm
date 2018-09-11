@@ -337,6 +337,15 @@ return [
             'approve_success' => 'Leave was successfully approved.',
             'attachment' => 'Attachment',
             'error_no_available_days' => 'The leave request exceeds the total available days. There are :days days left.',
+            'approve_email' => [
+                'subject' => 'Your days off are approved.',
+                'body' => [
+                    'request_approved' => 'Your request for days off is approved.',
+                    'date_from' => 'Start date',
+                    'date_to' => 'End date',
+                    'review_request' => 'Review the request:',
+                ],
+            ],
         ],
         'holidays' => [
             'main' => 'Holidays',

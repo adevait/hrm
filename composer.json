@@ -8,7 +8,7 @@
         "php": ">=5.6.4",
         "barryvdh/laravel-dompdf": "^0.7.1",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
-        "laravel/framework": "5.3.0",
+        "laravel/framework": "5.*",
         "laravelcollective/html": "^5.3",
         "yajra/laravel-datatables-oracle": "~6.0",
         "guzzlehttp/guzzle": "6.*"

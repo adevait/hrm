@@ -31,6 +31,7 @@ class EmployeeRepository extends EloquentRepository implements EmployeeRepositor
             $date = Carbon::createFromFormat('Y-m-d', $date);
         }
         $items = $this->model
+            ->where('role', $this->model::USER_ROLE_EMPLOYEE)
             ->whereRaw('MONTH(birth_date) = ?', [$date->month])
             ->get();
 

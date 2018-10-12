@@ -10,6 +10,8 @@ use App\Modules\Leave\Http\Requests\EmployeeLeaveRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Datatables;
+use Carbon\Carbon;
+use GuzzleHttp\Client as Guzzle;
 
 class EmployeeLeaveController extends Controller
 {
@@ -174,6 +176,19 @@ class EmployeeLeaveController extends Controller
             'dateTo'=> $employeeLeave->end_date,
             'requestId' => $employeeLeave->id,
         ]); 
+
+        $leaveEndDate = Carbon::parse($employeeLeave->end_date)->addDay()->format('Y-m-d');
+
+        if(env('ZAPIER_LEAVE_HOOK')) {
+            $client = new Guzzle();
+            $client->request('POST', env('ZAPIER_LEAVE_HOOK'), [
+                'json' => [
+                    'start_date' => $employeeLeave->start_date,
+                    'end_date' => $leaveEndDate,
+                    'name' => $employeeLeave->employee->first_name.' '.$employeeLeave->employee->last_name,
+                ],
+            ]);
+        }
 
         $request->session()->flash('success', trans('app.leave.employee_leaves.approve_success'));
         return redirect()->route('leave.employee_leaves.index');

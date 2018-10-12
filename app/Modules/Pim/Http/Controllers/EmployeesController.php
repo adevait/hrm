@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Route;
+use GuzzleHttp\Client as Guzzle;
 
 class EmployeesController extends Controller
 {
@@ -103,7 +104,19 @@ class EmployeesController extends Controller
         $employeeData = $this->employeeRepository->create($employeeData);
         $this->sendPassword($employeeData->id);
 
+
+        if(env('ZAPIER_BIRTHDAY_HOOK')) {
+            $client = new Guzzle();
+            $client->request('POST', env('ZAPIER_BIRTHDAY_HOOK'), [
+                'json' => [
+                    'date' => $employeeData->birth_date,
+                    'name' => $employeeData->first_name.' '.$employeeData->last_name,
+                ],
+            ]);
+        }
+
         $request->session()->flash('success', trans('app.pim.employees.store_success'));
+
         return redirect()->route('pim.employees.edit', $employeeData->id);
     }
 

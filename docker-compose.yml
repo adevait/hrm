@@ -1,0 +1,60 @@
+version: '2'
+services:
+  storage:
+    build: ./docker/development/storage
+    entrypoint: /bin/true
+    volumes:
+      - ./:/var/www/html
+    network_mode: "bridge"
+
+  phpfpm:
+    build: ./docker/development/php
+    links:
+      - mysql:mysql
+      - redis:redis
+    expose:
+      - "8080"
+    volumes_from:
+      - storage
+    environment:
+      REDIS_PORT: 6379
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 120s
+    command: php-fpm
+    network_mode: "bridge"
+
+  nginx:
+    build: ./docker/development/nginx
+    links:
+      - phpfpm:phpfpm
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf
+    volumes_from:
+      - storage
+    environment:
+      VIRTUAL_HOST: hrm.local
+    network_mode: "bridge"
+
+  mysql:
+    build: ./docker/development/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: hrm
+      MYSQL_USER: hrm
+      MYSQL_PASSWORD: hrm
+    network_mode: "bridge"
+
+  redis:
+    build: ./docker/development/redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./storage/redis:/data
+      - ./docker/development/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    network_mode: "bridge"
+    entrypoint:
+      - redis-server
+      - "--appendonly yes"

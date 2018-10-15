@@ -60,7 +60,7 @@ class ProjectsController extends Controller
      */
     public function create(ClientRepository $clientRepository, EmployeeRepository $employeeRepository)
     {
-        $clients = $clientRepository->getAll()->pluck('name', 'id');
+        $clients = ['' => 'Select a client'] + $clientRepository->getAll()->pluck('name', 'id')->all();
         $employees = $employeeRepository->pluckName();
         return view('time::projects.create', compact('clients', 'employees'));
     }

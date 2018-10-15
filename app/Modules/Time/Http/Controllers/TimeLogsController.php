@@ -75,13 +75,13 @@ class TimeLogsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface  $projectRepository
-     * @param  App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface  $employeeRepository
+     * @param  \App\Modules\Time\Repositories\Interfaces\ProjectRepositoryInterface $projectRepository
+     * @param EmployeeRepository $employeeRepository
      * @return \Illuminate\Http\Response
      */
     public function create(ProjectRepository $projectRepository, EmployeeRepository $employeeRepository)
     {
-        $projects = $projectRepository->getAll()->pluck('name', 'id');
+        $projects = ['' => 'Select a project'] + $projectRepository->getAll()->pluck('name', 'id')->all();
         $employees = $employeeRepository->pluckName();
         return view('time::time_logs.create', compact('projects','employees'));
     }

@@ -25,7 +25,7 @@ class TimeLogRequest extends FormRequest
     {
         return [
             'task_name' => ['required'],
-            'task_description' => ['required'],
+            'task_description' => ['required', 'max:1000'],
             'project_id' => ['required'],
             'user_id' => ['required'],
             'time' => ['required'],

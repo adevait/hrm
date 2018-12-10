@@ -137,7 +137,7 @@ class EmployeesController extends Controller
             'url' => url('/'),
             'email' =>  $employeeData->email,
             'password' => $password, 
-            'change_pass_route' => url('password/reset'),
+            'change_pass_route' => url('/password/reset'),
             'signature' => env('APP_NAME', 'HRM')
             ];
         Mail::send('emails.employee-login-password', $data, function($message) use ($employeeData)

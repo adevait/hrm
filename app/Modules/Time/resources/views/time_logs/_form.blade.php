@@ -31,7 +31,7 @@
 <div class="form-group">
     {!! Form::label('date', trans('app.time.time_logs.date').':', ['class' => 'col-sm-3']) !!}
     <div class="col-sm-6">
-        {!! Form::input('date', 'date', null, ['class' => 'form-control']) !!}
+        {!! Form::input('date', 'date', $defaultDate, ['class' => 'form-control']) !!}
     </div>
 </div>
 @include('errors._form-errors')

@@ -14,7 +14,7 @@ class ChangeTaskDescriptionFieldToTextInTimeLogsTable extends Migration
     public function up()
     {
         Schema::table('time_logs', function (Blueprint $table) {
-            $table->string('task_description', 1000)->change();
+            $table->text('task_description')->change();
         });
     }
 

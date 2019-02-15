@@ -49,7 +49,10 @@ class EmployeeLeaveRequest extends FormRequest
         if($validator->errors()->any()) {
             return $validator;
         }
+
+        return $validator;
         
+        //skipping this for now
         $validator->after(function($validator) {
 
             $available = $this->employeeLeaveRepository->checkAvailableDays(
@@ -64,7 +67,5 @@ class EmployeeLeaveRequest extends FormRequest
                 $validator->errors()->add('end_date', trans('app.leave.employee_leaves.error_no_available_days', ['days' => $available['availableDays']]));
             }
         });
-
-        return $validator;
     }
 }

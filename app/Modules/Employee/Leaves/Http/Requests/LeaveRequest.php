@@ -37,7 +37,7 @@ class LeaveRequest extends FormRequest
         return [
             'leave_type_id' => ['required'],
             'start_date' => ['required', 'after:now'],
-            'end_date' => ['required', 'after:start_date']
+            'end_date' => ['required', 'after_or_equal:start_date']
         ];
     }
 

@@ -8,6 +8,9 @@ use App\Modules\Pim\Repositories\Interfaces\EmployeeRepositoryInterface as Emplo
 use App\Modules\Discipline\Http\Requests\DisciplinaryCaseRequest;
 use Illuminate\Http\Request;
 use Datatables;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailer;
 
 class DisciplinaryCasesController extends Controller
 {
@@ -56,21 +59,31 @@ class DisciplinaryCasesController extends Controller
      * @param  \App\Modules\Pim\Http\Repositories\Interfaces\EmployeeRepository  $employeeRepository
      * @return \Illuminate\Http\Response
      */
-    public function create(EmployeeRepository $employeeRepository)
+    public function create(EmployeeRepository $employeeRepository, UserRepository $userRepository)
     {
         $employees = $employeeRepository->pluckName();
-        return view('discipline::disciplinary_cases.create', compact('employees'));
+        $users = $userRepository->pluckName();
+
+        return view('discipline::disciplinary_cases.create', compact('employees', 'users'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Modules\Discipline\Http\Requests\DisciplinaryCaseRequest  $request
+     * @param  \App\Modules\Pim\Http\Repositories\Interfaces\EmployeeRepository  $employeeRepository
+     * @param  \App\Repositories\UserRepository  $userRepository
      * @return \Illuminate\Http\Response
      */
-    public function store(DisciplinaryCaseRequest $request)
+    public function store(DisciplinaryCaseRequest $request, EmployeeRepository $employeeRepository)
     {
         $disciplinaryCaseData = $this->disciplinaryCaseRepository->create($request->all());
+        $employee = $employeeRepository->getById($disciplinaryCaseData->user_id);
+        Mail::send('emails.employee-disciplinary-case', json_decode(json_encode($disciplinaryCaseData), true), function($message) use ($employee)
+        {
+            $message->from(env('MAIL_EMAIL_FROM'));
+            $message->to($employee['email']);
+        });
         $request->session()->flash('success', trans('app.discipline.disciplinary_cases.store_success'));
         return redirect()->route('discipline.disciplinary_cases.edit', $disciplinaryCaseData->id);
     }
@@ -91,14 +104,16 @@ class DisciplinaryCasesController extends Controller
      *
      * @param  integer  unique identifier for the resource
      * @param  \App\Modules\Pim\Http\Repositories\Interfaces\EmployeeRepository  $employeeRepository
+     * @param  \App\Repositories\UserRepository  $userRepository
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, EmployeeRepository $employeeRepository)
+    public function edit($id, EmployeeRepository $employeeRepository, UserRepository $userRepository)
     {
         $disciplinary_case = $this->disciplinaryCaseRepository->getById($id);
         $employees = $employeeRepository->pluckName();
+        $users = $userRepository->pluckName();
         $breadcrumb = ['title' => $disciplinary_case->name, 'id' => $disciplinary_case->id];
-        return view('discipline::disciplinary_cases.edit', compact('employees', 'disciplinary_case', 'breadcrumb'));
+        return view('discipline::disciplinary_cases.edit', compact('employees', 'disciplinary_case', 'users', 'breadcrumb'));
     }
 
     /**

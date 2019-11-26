@@ -11,22 +11,16 @@
     </div>
 </div>
 <div class="form-group">
-    {!! Form::label('user_id', trans('app.discipline.disciplinary_cases.employee'), ['class' => 'col-sm-3']) !!}
+    {!! Form::label('disciplinary_case', trans('app.discipline.disciplinary_cases_actions.main'), ['class' => 'col-sm-3']) !!}
     <div class="col-sm-6">
-        {!! Form::select('user_id', $employees, null, ['class' => 'form-control employees']) !!}
-    </div>
-</div>
-<div class="form-group">
-    {!! Form::label('reported_by', trans('app.discipline.disciplinary_cases.reported_by'), ['class' => 'col-sm-3']) !!}
-    <div class="col-sm-6">
-        {!! Form::select('reported_by', $users, null, ['class' => 'form-control users']) !!}
+        {!! Form::select('disciplinary_case_id', $disciplinary_cases, null, ['class' => 'form-control disciplinaryCases']) !!}
     </div>
 </div>
 @include('errors._form-errors')
 <hr>
 <div class="form-group">
     <div class="col-sm-6 col-sm-offset-3">
-        <a href="{{route('discipline.disciplinary_cases.index')}}" class="btn btn-default">{{trans('app.cancel')}}</a>
+        <a href="{{route('discipline.disciplinary_cases_actions.index')}}" class="btn btn-default">{{trans('app.cancel')}}</a>
         {!! Form::submit($submitName, ['class' => 'btn btn-primary']) !!}
     </div>
 </div>
@@ -36,7 +30,6 @@
 @section('additionalJS')
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
-    $(".employees").select2();
-    $(".users").select2();
+    $(".disciplinaryCases").select2();
 </script>
 @endsection

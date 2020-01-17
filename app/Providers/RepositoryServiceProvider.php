@@ -34,6 +34,7 @@ class RepositoryServiceProvider extends ServiceProvider
             Pim\Repositories\EmployeeLanguageRepository::class => [Pim\Repositories\Interfaces\EmployeeLanguageRepositoryInterface::class],
             Pim\Repositories\EmployeeSalaryRepository::class => [Pim\Repositories\Interfaces\EmployeeSalaryRepositoryInterface::class],
             Pim\Repositories\EmployeePreferencesRepository::class => [Pim\Repositories\Interfaces\EmployeePreferencesRepositoryInterface::class],
+            Pim\Repositories\EmployeeTasksRepository::class => [Pim\Repositories\Interfaces\EmployeeTasksRepositoryInterface::class],
             Pim\Repositories\EmployeeDocumentRepository::class => [Pim\Repositories\Interfaces\EmployeeDocumentRepositoryInterface::class],
             Pim\Repositories\SalariesSalaryComponentsRepository::class => [Pim\Repositories\Interfaces\SalariesSalaryComponentsRepositoryInterface::class],
             Leave\Repositories\LeaveTypeRepository::class => [Leave\Repositories\Interfaces\LeaveTypeRepositoryInterface::class],

@@ -115,6 +115,7 @@ class LeavesController extends Controller
     public function show($id)
     {
         $leave = $this->employeeLeaveRepository->getById($id);
+        checkValidity($leave->user_id);
         $breadcrumb = ['title' => '#'.$leave->id, 'id' => $leave->id];
         return view('employee.leaves::show', compact('leave', 'breadcrumb'));
     }
